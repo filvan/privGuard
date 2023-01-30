@@ -1,0 +1,71 @@
+#1798.100 c
+ALLOW ROLE Business
+    AND SCHEMA PersonalInformation
+    AND ((FILTER ConsentUse = 'Y'
+    AND PURPOSE BusinessPurpose)
+    OR (FILTER ConsentCollection = 'Y'
+    AND PURPOSE BusinessPurpose )
+    OR (FILTER ConsentShare = 'Y'
+    AND PURPOSE Share)
+    OR (FILTER ConsentSell = 'Y'
+    AND PURPOSE Sell)
+    OR (FILTER ConsentRetention = 'Y'
+    AND PURPOSE BusinessPurpose)
+    )
+#e
+ALLOW ROLE Business
+    AND SCHEMA PersonalInformation
+    AND PRIVACY DP(1.0, 1e-5)
+    AND FILTER ConsentRetention = 'Y'
+
+#1798.105 c.1 +c.3
+ALLOW ROLE Business OR ROLE Provider
+    AND FILTER consumerID = n AND FILTER RequestDeletion = 'Y'
+    AND PURPOSE DeletionData
+#try to manage deletion when not necessary
+
+#1798.106
+ALLOW ROLE Business
+    AND SCHEMA PersonalInformation
+    AND FILTER RequestInaccuarate = 'Y' AND FILTER consumerID = n
+    AND PURPOSE ModificationData
+
+#1798.110 a.5
+ALLOW ROLE ConsumerId
+    AND SCHEMA PersonalInformation
+    AND FILTER RequestDisclosure = 'Y' AND FILTER consumerID = n
+
+#1798.120
+ALLOW ROLE Consumer
+    AND ((PURPOSE OptOutSell
+    AND FILTER ConsentSell = 'N')
+    OR (Purpose OptOutShare
+    AND FILTER ConsentShare = 'N'))
+
+#check age
+ALLOW ROLE Business
+    AND (FILTER (Age <16 AND Age >=13) AND GuardianConsent = 'Y')
+        OR (FILTER Age >=16))
+    (AND (FILTER ConsentShare = 'Y'
+    AND PURPOSE Share)
+    OR (FILTER ConsentSell = 'Y'
+    AND PURPOSE Sell))
+
+#1798.121
+ALLOW ROLE Business OR Provider OR Contractor
+    AND SCHEMA SensitivePI
+    AND PURPOSE BusinessPurpose
+    AND FILTER LimitUse = 'Y'
+
+#1798.140 a.4
+ALLOW ROLE GovernamentAgency
+    AND SCHEMA PersonalInformation
+    AND FILTER ConsumerID = n
+
+#a.6
+ALLOW ROLE Business
+    AND SCHEMA PersonalInformation
+    AND PURPOSE Retention OR BusinessPuprose OR Sell OR Share
+    AND PRIVACY DP(1.0, 1e-5) OR Aggregation
+
+

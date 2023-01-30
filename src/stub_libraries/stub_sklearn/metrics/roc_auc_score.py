@@ -22,7 +22,8 @@
 
 import os
 import sys
-sys.path.append(os.path.join(os.environ['PRIVGUARD'], 'src/stub_libraries'))
+privguard_path = os.getcwd()
+sys.path.append(os.path.join(privguard_path, 'src/stub_libraries'))
 
 from blackbox import Blackbox
 

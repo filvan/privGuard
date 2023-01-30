@@ -24,7 +24,8 @@
 
 import os
 import sys
-sys.path.append(os.path.join(os.environ.get('PRIVGUARD'), "src/parser"))
+privguard_path = os.getcwd()
+sys.path.append(os.path.join(privguard_path, "parser"))
 
 from tabular import Tabular
 from blackbox import Blackbox
@@ -46,7 +47,7 @@ def read_csv(filename, schema=[], usecols=None, **kwargs):
     with open(data_folder + 'meta.txt', 'r') as f:
         complete_schema = f.readline().strip().replace('"', '').split(',')
         rows = int(f.readline())
-        # print('Data Schema: ' + str(schema))
+        # print('Data Schema: ' + str(complete_schema))
 
     if not schema and usecols == None:
         return DataFrame(complete_schema, policy, shape=[len(schema), rows])

@@ -24,9 +24,10 @@
 
 import os
 import sys
-sys.path.append(os.path.join(os.environ.get('PRIVGUARD'), 'src/parser'))
-sys.path.append(os.path.join(os.environ.get('PRIVGUARD'), "src/stub_libraries"))
 
+privguard_path = os.getcwd()
+sys.path.append(os.path.join(privguard_path, 'parser'))
+sys.path.append(os.path.join(privguard_path, "stub_libraries"))
 from importlib.util import spec_from_file_location, module_from_spec
 import json
 from shutil import copyfile

@@ -24,7 +24,8 @@
 
 import os
 import sys
-sys.path.append(os.path.join(os.environ.get('PRIVGUARD'), "src/parser"))
+privguard_path = os.getcwd()
+sys.path.append(os.path.join(privguard_path, "parser"))
 
 import stub_pandas as pd
 from functools import partial, reduce
