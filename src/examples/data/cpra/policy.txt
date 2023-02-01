@@ -1,4 +1,34 @@
-#1798.100 c
+PersonalInformation:
+- Name, LastName
+- PostalAddress, Address
+- OnlineID
+- IPAddress
+- EmailAddress
+- PersonalProperties ( record of everything owned by user)
+- ProductsHistory/ ServicesHistory (contains all products/services considered, purchased or obtaiened)
+- BrowsingHistory
+- ProfessionalInfos ( Information about work and employment of user)
+- EducationInfos( Informations about education not publicly available)
+- InferenceInfos ( generated to understand consumer's profile, based on his/her history)
+- BiometricInfos
+- SensitivePI
+
+SensitivePI(subgroup of personal information of consumer)
+- SSN (Social security number)
+- DriversLicenceNumber
+- PassportNumber
+- GeolocationData
+- GeneticData
+- AccountCredentials
+- DebitCardNumber/CreditCardNumber
+- MailContent/ TextContent
+- HealthHistory
+- SexualOrientation
+#1798.100
+# unable to manage a.3 to define limit of time for use of collected data
+
+
+# c
 ALLOW ROLE Business
     AND SCHEMA PersonalInformation
     AND ((FILTER ConsentUse = 'Y'
@@ -12,6 +42,14 @@ ALLOW ROLE Business
     OR (FILTER ConsentRetention = 'Y'
     AND PURPOSE BusinessPurpose)
     )
+#d
+ALLOW ROLE ServiceProvider OR Contractor OR ThirdParty
+    AND (PURPOSE Share
+    AND FILTER ConsentShare = 'Y')
+    OR (PURPOSE Sell
+    AND FILTER ConsentSell = 'Y')
+    )AND PURPOSE BusinessPurpose
+    AND PRIVACY DP(1.0, 1e-5)
 #e
 ALLOW ROLE Business
     AND SCHEMA PersonalInformation
@@ -19,15 +57,15 @@ ALLOW ROLE Business
     AND FILTER ConsentRetention = 'Y'
 
 #1798.105 c.1 +c.3
-ALLOW ROLE Business OR ROLE Provider
+ALLOW ROLE Business OR ServiceProvider OR Contractor OR ThirdParty
     AND FILTER consumerID = n AND FILTER RequestDeletion = 'Y'
     AND PURPOSE DeletionData
-#try to manage deletion when not necessary
+
 
 #1798.106
 ALLOW ROLE Business
     AND SCHEMA PersonalInformation
-    AND FILTER RequestInaccuarate = 'Y' AND FILTER consumerID = n
+    AND FILTER RequestInaccurate = 'Y' AND FILTER consumerID = n
     AND PURPOSE ModificationData
 
 #1798.110 a.5
@@ -36,11 +74,12 @@ ALLOW ROLE ConsumerId
     AND FILTER RequestDisclosure = 'Y' AND FILTER consumerID = n
 
 #1798.120
-ALLOW ROLE Consumer
+ALLOW ROLE ConsumerId
     AND ((PURPOSE OptOutSell
     AND FILTER ConsentSell = 'N')
-    OR (Purpose OptOutShare
+    OR (PURPOSE OptOutShare
     AND FILTER ConsentShare = 'N'))
+    AND FILTER ConsumerId = n
 
 #check age
 ALLOW ROLE Business
@@ -52,12 +91,12 @@ ALLOW ROLE Business
     AND PURPOSE Sell))
 
 #1798.121
-ALLOW ROLE Business OR Provider OR Contractor
+ALLOW ROLE Business OR ServiceProvider OR Contractor OR ThirdParty
     AND SCHEMA SensitivePI
     AND PURPOSE BusinessPurpose
-    AND FILTER LimitUse = 'Y'
+    AND FILTER LimitUse = 'N'
 
-#1798.140 a.4
+#1798.145 a.4
 ALLOW ROLE GovernamentAgency
     AND SCHEMA PersonalInformation
     AND FILTER ConsumerID = n
@@ -65,7 +104,7 @@ ALLOW ROLE GovernamentAgency
 #a.6
 ALLOW ROLE Business
     AND SCHEMA PersonalInformation
-    AND PURPOSE Retention OR BusinessPuprose OR Sell OR Share
+    AND PURPOSE Retention OR BusinessPurPose OR Sell OR Share
     AND PRIVACY DP(1.0, 1e-5) OR Aggregation
 
 
