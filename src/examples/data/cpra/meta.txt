@@ -1,0 +1,2 @@
+ConsumerID,ConsentUse,ConsentShare,ConsentSell,ConsentRetetention,RequestDeletion,RequestDisclosure,LimitUse,Age,GuardianConsent,PersonalInformation,SensitivePI,ConsentCollection,ConsentRetention
+100
