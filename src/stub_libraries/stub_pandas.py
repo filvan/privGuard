@@ -213,11 +213,16 @@ class DataFrame(Tabular):
                 # TODO: assert newvalue is an instance of Tabular
                 self.policy = self.policy.join(newvalue.policy)
             else:
+                self.policy = self.policy.runPurpose('ModificationData', [key])
+
                 if isinstance(newvalue, Blackbox):
+
                     if newvalue.policy == Policy([[Satisfied()]]):
                         self.policy = self.policy.runProject([col for col in schema if col != key])
                     else:
                         self.policy = Policy([[Unsatisfiable()]])
+
+
         else:
             raise NotImplementedError('Pandas Dataframe __setitem__ only supports key of type string now.')
 

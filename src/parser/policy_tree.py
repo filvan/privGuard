@@ -24,7 +24,7 @@
 
 from typing import List
 from copy import deepcopy
-from attribute import Attribute, Satisfied, Unsatisfiable, FilterAttribute, SchemaAttribute, PrivacyAttribute, RedactAttribute
+from attribute import Attribute, Satisfied, Unsatisfiable, FilterAttribute, SchemaAttribute, PrivacyAttribute, RedactAttribute, PurposeAttribute
 from typed_value import ExtendV
 from abstract_domain import ClosedIntervalL
 from policy_parser import policy_parser
@@ -64,6 +64,9 @@ class ConjunctClause:
 
     def copy(self):
         return ConjunctClause(self.attr_lst.copy())
+
+    def list_attr(self):
+        return self.attr_lst.copy()
 
     def add(self, req):
         """
@@ -406,6 +409,34 @@ class Policy(object):
                 return True
         return False
 
+    def runPurpose(self,purpose, col):
+
+        newPolicy = [self._runPurpose(clause, col, purpose) for clause in self.policy]
+        return Policy(newPolicy).dealSat().dealUnsat()
+
+    def _runPurpose(self,clause, col, purpose):
+        attributes = []
+        flag = False
+        newClause = []
+        for req in clause:
+            if isinstance(req, SchemaAttribute):
+                newClause.append(req)
+                for attr in req.cols():
+                    if attr in col:
+                        attributes.append(attr)
+                    else:
+                        newClause.append(req)
+
+            elif isinstance(req, PurposeAttribute):
+                if req.purpose == purpose:
+                    flag = True
+            else:
+                newClause.append(req)
+
+        if flag & attributes.__len__():
+            return newClause
+        return clause.list_attr()
+
 
     def runPrivacy(self, priv_tech, **kwargs):
         newPolicy = [[self._runPrivacy(req, priv_tech) for req in clause] for clause in self.policy]
@@ -495,18 +526,19 @@ class Policy(object):
 
 if __name__ == '__main__':
 
-    policy_str = "ALLOW FILTER age >= 18 AND (SCHEMA age OR (FILTER gender == 'M' AND (ROLE MANAGER OR FILTER age <= 90)))"
-
+    #policy_str = "ALLOW FILTER age >= 18 AND (SCHEMA age OR (FILTER gender == 'M' AND (ROLE MANAGER OR FILTER age <= 90)))"
+    policy_str = "ALLOW PURPOSE BUSINESS AND SCHEMA age"
     # Test policy parsing
     policy = Policy(policy_str)
     print(policy)
 
     # Test runFilter
-    print(policy.runFilter('age', 18, 'ge'))
-    print(policy.runFilter('age', 17, 'le'))
+    #print(policy.runFilter('age', 18, 'ge'))
+    print(policy.runPurpose('BUSINESS', ['age']))
+    # print(policy.runFilter('age', 17, 'le'))
 
     # TODO: Test runProject
-    print(policy.runProject(['age']))
-    print(policy.runProject(['age', 'gender']))
-    print(policy.runProject(['gender']))
+    #print(policy.runProject(['age']))
+    #print(policy.runProject(['age', 'gender','purpose']))
+    #print(policy.runProject(['gender']))
 

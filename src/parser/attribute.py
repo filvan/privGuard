@@ -175,7 +175,7 @@ class SchemaAttribute(Attribute):
     # TODO: re-write this
     def is_stricter_than(self, other: Attribute):
         if isinstance(other, SchemaAttribute):
-            print(f'Warning: imprecise schema comparison: {self} vs {other}: {self.schema == other.schema}')
+            # print(f'Warning: imprecise schema comparison: {self} vs {other}: {self.schema == other.schema}')
             if self.schema == other.schema:
                 return True
             # if self.schema.is_subset_of(other.schema):

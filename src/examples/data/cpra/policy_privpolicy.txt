@@ -1,0 +1,112 @@
+PersonalInformation:
+- Name, LastName
+- PostalAddress, Address
+- ZIPCode/CAP
+- OnlineID
+- IPAddress
+- EmailAddress
+- PersonalProperties ( record of everything owned by user)
+- ProductsHistory/ ServicesHistory (contains all products/services considered, purchased or obtaiened)
+- BrowsingHistory
+- ProfessionalInfos ( Information about work and employment of user)
+- EducationInfos( Informations about education not publicly available)
+- InferenceInfos ( generated to understand consumer's profile, based on his/her history)
+- BiometricInfos
+- SensitivePI
+
+SensitivePI(subgroup of personal information of consumer)
+- SSN (Social security number)
+- DriversLicenceNumber
+- PassportNumber
+- GeolocationData
+- GeneticData
+- AccountCredentials
+- DebitCardNumber/CreditCardNumber
+- MailContent/ TextContent
+- HealthHistory
+- SexualOrientation
+
+
+#1798.100
+# unable to manage a.3 to define limit of time for use of collected data
+
+
+# c
+ALLOW ROLE Business
+    AND SCHEMA PersonalInformation
+    AND (((FILTER ConsentUse == 'Y' OR FILTER ConsentCollection == 'Y' OR FILTER ConsentRetention == 'Y')
+    AND PURPOSE BusinessPurpose)
+    OR (FILTER ConsentShare == 'Y'
+    AND PURPOSE Share)
+    OR (FILTER ConsentSell == 'Y'
+    AND PURPOSE Sell)
+    )
+#d
+ALLOW (ROLE ServiceProvider OR ROLE Contractor OR ROLE ThirdParty)
+    AND ((PURPOSE Share
+    AND FILTER ConsentShare == 'Y')
+    OR (PURPOSE Sell
+    AND FILTER ConsentSell == 'Y')
+    )AND PURPOSE BusinessPurpose
+    AND PRIVACY DP(1.0, 1e-5)
+#e
+ALLOW ROLE Business
+    AND SCHEMA PersonalInformation
+    AND PRIVACY DP(1.0, 1e-5)
+    AND FILTER ConsentRetention == 'Y'
+
+#1798.105 c.1 +c.3
+ALLOW (ROLE Business OR ROLE ServiceProvider OR ROLE Contractor OR ROLE ThirdParty)
+    AND FILTER ConsumerID == 'n_consumer'
+    AND FILTER RequestDeletion == 'Y'
+    AND PURPOSE DeletionData
+
+
+#1798.106
+ALLOW ROLE Business
+    AND SCHEMA PersonalInformation
+    AND FILTER RequestInaccurate == 'Y' AND FILTER ConsumerID == 'n_consumer'
+    AND PURPOSE ModificationData
+
+#1798.110 a.5
+ALLOW ROLE ConsumerID
+    AND SCHEMA PersonalInformation
+    AND FILTER RequestDisclosure == 'Y' AND FILTER ConsumerID == 'n_consumer'
+
+#1798.120
+ALLOW ROLE ConsumerID
+    AND ((PURPOSE OptOutSell
+    AND FILTER ConsentSell == 'N')
+    OR (PURPOSE OptOutShare
+    AND FILTER ConsentShare == 'N'))
+    AND FILTER ConsumerID == 'n_consumer'
+
+#check age
+ALLOW ROLE Business
+    AND ((FILTER ConsentShare == 'Y'
+    AND PURPOSE Share)
+    OR (FILTER ConsentSell == 'Y'
+    AND PURPOSE Sell))
+    AND ((FILTER Age <16 AND FILTER Age >=13 AND FILTER GuardianConsent == 'Y')
+        OR (FILTER Age >=16))
+
+
+#1798.121
+ALLOW (ROLE Business OR ROLE ServiceProvider OR ROLE Contractor OR ROLE ThirdParty)
+    AND SCHEMA SensitivePI
+    AND PURPOSE BusinessPurpose
+    AND FILTER LimitUse == 'N'
+
+#1798.145 a.4
+ALLOW ROLE GovernamentAgency
+    AND SCHEMA PersonalInformation
+    AND FILTER ConsumerID == 'n_consumer'
+
+#a.6
+ALLOW ROLE Business
+    AND SCHEMA PersonalInformation
+    AND (PURPOSE Retention OR PURPOSE BusinessPurpose OR PURPOSE Sell OR PURPOSE Share)
+    AND (PRIVACY DP(1.0, 1e-5) OR PRIVACY Aggregation)
+
+
+

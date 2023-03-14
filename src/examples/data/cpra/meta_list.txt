@@ -1,0 +1,33 @@
+ConsumerID
+
+ConsentUse
+ConsentShare
+ConsentSell
+ConsentRetetention
+ConsentCollection
+ConsentRetention
+GuardianConsent
+
+RequestDeletion
+RequestDisclosure
+RequestInaccurate
+
+LimitUse
+Age
+Date
+
+PersonalInformation:
+- UserId
+- MenuId
+- Username
+- FirstName
+- LastName
+- Longitude
+- Latitude
+- LanguageCode
+- ReportCnt
+- ShadowBanned
+- MessageText
+
+SensitivePI
+

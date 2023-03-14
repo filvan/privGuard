@@ -71,6 +71,16 @@ program_map = {
     # 21: "./examples/program/21_home_value_prediction.py",
     # 22: "./examples/program/22_malware_prediction.py",
     23: "./examples/program/23_web_traffic_forecasting.py",
+    24: "./examples/program/cpra_example.py",
+    25: "./examples/program/Libretaxi/libretaxi_example.py",
+    26: "./examples/program/Libretaxi/libretaxi_saveUser.py",
+    27: "./examples/program/Libretaxi/libretaxi_ModifyUser.py",
+    28: "./examples/program/Libretaxi/libretaxi_callback.py",
+    29: "./examples/program/Libretaxi/libretaxi_validation.py",
+    30: "./examples/program/Libretaxi/libretaxi_savePost.py",
+    31: "./examples/program/Libretaxi/libretaxi_findUserAround.py",
+    32: "./examples/program/Libretaxi/libretaxi_recentPosts.py",
+
 }
 
 data_map = {
@@ -98,6 +108,16 @@ data_map = {
     # 21: "./examples/data/home_value_prediction/",
     # 22: "./examples/data/malware_prediction/",
     23: "./examples/data/web_traffic_forecasting/",
+    24: "./examples/data/cpra/",
+    25: "./examples/data/libretaxi_cpra/",
+    26: "./examples/data/libretaxi_cpra/",
+    27: "./examples/data/libretaxi_cpra/",
+    28: "./examples/data/libretaxi_cpra/",
+    29: "./examples/data/libretaxi_cpra/",
+    30: "./examples/data/libretaxi_cpra/",
+    31: "./examples/data/libretaxi_cpra/",
+    32: "./examples/data/libretaxi_cpra/",
+
 }
 
 lib_map = {
@@ -106,6 +126,16 @@ lib_map = {
     5: {'lgb':stub_lightgbm, 'metrics': stub_metrics, 'model_selection':stub_model_selection, 'numpy':stub_numpy, 'pandas':stub_pandas, 'random':stub_random},
     6: {'numpy':stub_numpy, 'pandas':stub_pandas},
     23: {'numpy':stub_numpy, 'pandas':stub_pandas, 'arima': stub_arima},
+    24: {'numpy':stub_numpy, 'pandas':stub_pandas},
+    25: {'numpy': stub_numpy, 'pandas': stub_pandas},
+    26: {'numpy': stub_numpy, 'pandas': stub_pandas},
+    27: {'numpy': stub_numpy, 'pandas': stub_pandas},
+    28: {'numpy': stub_numpy, 'pandas': stub_pandas},
+    29: {'numpy': stub_numpy, 'pandas': stub_pandas},
+    30: {'numpy': stub_numpy, 'pandas': stub_pandas},
+    31: {'numpy': stub_numpy, 'pandas': stub_pandas},
+    32: {'numpy': stub_numpy, 'pandas': stub_pandas},
+
 }
 
 def analyze(module, data_folder, lib_list):
@@ -114,16 +144,22 @@ def analyze(module, data_folder, lib_list):
 def parse():
     parser = argparse.ArgumentParser()
     parser.add_argument('--example_id', help='The example program ID', type=int, default=6)
+    parser.add_argument('--post_report', help='Post action', type=str, default='REPORT_POST')
+    parser.add_argument('--lat', help="Latitude for user", type=str, default="")
+    parser.add_argument('--lon', help="Longitude for user", type=str, default="")
     args = parser.parse_args()
-    return program_map[args.example_id], data_map[args.example_id], lib_map[args.example_id]
+    extra_args = {'post_report': args.post_report,'lat': args.lat,'lon':args.lon}
+    return program_map[args.example_id], data_map[args.example_id], lib_map[args.example_id], extra_args
 
 if __name__ == '__main__':
 
-    script, data_folder, lib_list = parse()
+    script, data_folder, lib_list, extra_args = parse()
 
     spec = spec_from_file_location("default_module", script)
     module = module_from_spec(spec)
     spec.loader.exec_module(module)
-
+    lib_list.__setitem__('extra_args',extra_args)
     result = analyze(module, data_folder, lib_list)
-    print("\nResidual policy of the output:\n" + str(result))
+    result = analyze(module, data_folder, lib_list)
+    print("\nResidual policy of the output:" + str(result))
+

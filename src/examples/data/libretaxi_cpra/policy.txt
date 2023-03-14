@@ -1,0 +1,2 @@
+ALLOW (SCHEMA Username OR SCHEMA FirstName OR SCHEMA LastName OR SCHEMA Longitude OR SCHEMA Latitude)
+    AND PURPOSE ModificationData
