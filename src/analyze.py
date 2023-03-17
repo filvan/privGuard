@@ -73,13 +73,21 @@ program_map = {
     23: "./examples/program/23_web_traffic_forecasting.py",
     24: "./examples/program/cpra_example.py",
     25: "./examples/program/Libretaxi/libretaxi_example.py",
-    26: "./examples/program/Libretaxi/libretaxi_saveUser.py",
+    26: "./examples/program/Libretaxi/repository/libretaxi_saveUser.py",
     27: "./examples/program/Libretaxi/libretaxi_ModifyUser.py",
     28: "./examples/program/Libretaxi/libretaxi_callback.py",
     29: "./examples/program/Libretaxi/libretaxi_validation.py",
-    30: "./examples/program/Libretaxi/libretaxi_savePost.py",
-    31: "./examples/program/Libretaxi/libretaxi_findUserAround.py",
-    32: "./examples/program/Libretaxi/libretaxi_recentPosts.py",
+    30: "./examples/program/Libretaxi/repository/libretaxi_savePost.py",
+    31: "./examples/program/Libretaxi/repository/libretaxi_findUserAround.py",
+    32: "./examples/program/Libretaxi/repository/libretaxi_recentPosts.py",
+    33: "./examples/program/Libretaxi/menu/libretaxi_ask_location.py",
+    34: "./examples/program/Libretaxi/menu/libretaxi_feed_menu.py",
+    35: "./examples/program/Libretaxi/menu/libretaxi_init_menu.py",
+    36: "./examples/program/Libretaxi/menu/libretaxi_menu.py",
+    37: "./examples/program/Libretaxi/menu/libretaxi_post_menu.py",
+    38: "./examples/program/Libretaxi/repository/libretaxi_findPost.py",
+    39: "./examples/program/Libretaxi/repository/libretaxi_findUser.py",
+    40: "./examples/program/Libretaxi/libretaxi_locale.py",
 
 }
 
@@ -117,6 +125,14 @@ data_map = {
     30: "./examples/data/libretaxi_cpra/",
     31: "./examples/data/libretaxi_cpra/",
     32: "./examples/data/libretaxi_cpra/",
+    33: "./examples/data/libretaxi_cpra/",
+    34: "./examples/data/libretaxi_cpra/",
+    35: "./examples/data/libretaxi_cpra/",
+    36: "./examples/data/libretaxi_cpra/",
+    37: "./examples/data/libretaxi_cpra/",
+    38: "./examples/data/libretaxi_cpra/",
+    39: "./examples/data/libretaxi_cpra/",
+    40: "./examples/data/libretaxi_cpra/",
 
 }
 
@@ -135,6 +151,14 @@ lib_map = {
     30: {'numpy': stub_numpy, 'pandas': stub_pandas},
     31: {'numpy': stub_numpy, 'pandas': stub_pandas},
     32: {'numpy': stub_numpy, 'pandas': stub_pandas},
+    33: {'numpy': stub_numpy, 'pandas': stub_pandas},
+    34: {'numpy': stub_numpy, 'pandas': stub_pandas},
+    35: {'numpy': stub_numpy, 'pandas': stub_pandas},
+    36: {'numpy': stub_numpy, 'pandas': stub_pandas},
+    37: {'numpy': stub_numpy, 'pandas': stub_pandas},
+    38: {'numpy': stub_numpy, 'pandas': stub_pandas},
+    39: {'numpy': stub_numpy, 'pandas': stub_pandas},
+    40: {'numpy': stub_numpy, 'pandas': stub_pandas},
 
 }
 
@@ -147,8 +171,67 @@ def parse():
     parser.add_argument('--post_report', help='Post action', type=str, default='REPORT_POST')
     parser.add_argument('--lat', help="Latitude for user", type=str, default="")
     parser.add_argument('--lon', help="Longitude for user", type=str, default="")
+    parser.add_argument('--user_id', help='User to find', type = str, default='n_consumer')
+    parser.add_argument('--consent_use', help='Consent use data', type = str, default='N')
+    parser.add_argument('--consent_share', help='Consent share data', type = str, default='N')
+    parser.add_argument('--consent_sell', help='Consent sell data', type = str, default='N')
+    parser.add_argument('--consent_collection', help='Consent collection data', type = str, default='N')
+    parser.add_argument('--consent_retention', help='Consent retention data', type = str, default='N')
+    parser.add_argument('--guardian_consent', help='Consent from guardians data', type = str, default='N')
+    parser.add_argument('--request_deletion', help='Request deletion of data from user', type = str, default='N')
+    parser.add_argument('--request_disclosure', help='Request disclosure of data from user', type = str, default='N')
+    parser.add_argument('--request_inaccurate', help='Request modification of data from user because inaccurate', type = str, default='N')
+    parser.add_argument('--limit_use', help='User request limit use', type = str, default='N')
+    parser.add_argument('--age', help='User age', type = int, default=16)
+    parser.add_argument('--menu_id', help='Menu ID associated to user', type = str, default="")
+    parser.add_argument('--username', help='User username', type = str, default="")
+    parser.add_argument('--first_name', help='User first name', type = str, default="")
+    parser.add_argument('--last_name', help='User last name', type = str, default="")
+    parser.add_argument('--language_code', help='User language code', type = str, default="")
+    parser.add_argument('--report_cnt', help='User report count', type = int, default=0)
+    parser.add_argument('--shadow_banned', help='User is shadow banned', type = str, default="N")
+    parser.add_argument('--text', help='User text message', type = str, default="")
+    parser.add_argument('--post_id', help='Id of post', type = str, default="")
+
+
     args = parser.parse_args()
-    extra_args = {'post_report': args.post_report,'lat': args.lat,'lon':args.lon}
+    user = {'ConsumerID':args.user_id,
+            'ConsentUse':args.consent_use,
+            'ConsentShare':args.consent_share,
+            'ConsentSell': args.consent_sell,
+            'ConsentCollection': args.consent_collection,
+            'ConsentRetention': args.consent_retention,
+            'GuardianConsent': args.guardian_consent,
+            'RequestDeletion': args.request_deletion,
+            'RequestDisclosure': args.request_disclosure,
+            'RequestInaccurate': args.request_inaccurate,
+            'LimitUse': args.limit_use,
+            'MenuID': args.menu_id,
+            'Username': args.username,
+            'FirstName': args.first_name,
+            'LastName': args.last_name,
+            'Longitude': args.lon,
+            'Latitude': args.lat,
+            'LanguageCode':args.language_code,
+            'ReportCnt':args.report_cnt,
+            'ShadowBanned': args.shadow_banned
+            }
+
+    extra_args = {
+        'post_report': args.post_report,
+        'lat': args.lat,
+        'lon':args.lon,
+        'user_id': args.user_id,
+        'user':user,
+        'text':args.text,
+        'post_id': args.post_id,
+        'report_cnt': args.report_cnt,
+        'menu_id': args.menu_id,
+        'first_name': args.first_name,
+        'last_name': args.last_name,
+        'shadow_banned': args.shadow_banned,
+        'language_code': args.language_code
+    }
     return program_map[args.example_id], data_map[args.example_id], lib_map[args.example_id], extra_args
 
 if __name__ == '__main__':

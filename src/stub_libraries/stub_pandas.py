@@ -227,7 +227,7 @@ class DataFrame(Tabular):
             raise NotImplementedError('Pandas Dataframe __setitem__ only supports key of type string now.')
 
     def count(self):
-        return BlackBox(self.policy.runPrivacy('aggregation'))
+        return Blackbox(self.policy.runPrivacy('aggregation'))
 
     def drop(self, labels=None, axis=0, index=None, columns=None, level=None, inplace=False, errors='raise'):
         """ 

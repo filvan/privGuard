@@ -1,13 +1,13 @@
 def run(data_folder, **kwargs):
     pd = kwargs.get('pandas')
-    ConsumerID = kwargs.get('extra_args').get('consumer_id')
+    ConsumerID = kwargs.get('extra_args').get('user_id')
     MenuID = kwargs.get('extra_args').get('menu_id')
     lon = kwargs.get('extra_args').get('lon')
     lat = kwargs.get('extra_args').get('lat')
     FirstName = kwargs.get('extra_args').get('first_name')
     LastName = kwargs.get('extra_args').get('last_name')
     LanguageCode = kwargs.get('extra_args').get('language_code')
-    ReportCnt = kwargs.get('extra_args').get('reportCnt')
+    ReportCnt = kwargs.get('extra_args').get('report_cnt')
     ShadowBanned = kwargs.get('extra_args').get('shadow_banned')
 
     # saving of user based on previous research if user already exists

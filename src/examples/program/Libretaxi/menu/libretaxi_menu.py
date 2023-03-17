@@ -30,7 +30,7 @@ def run(data_folder, **kwargs):
         MenuID = "Menu_Init"
         ReportCnt = 0
         ShadowBanned = False
-        extra_args.__setitem__("consumer_id", ConsumerID)
+        extra_args.__setitem__("user_id", ConsumerID)
         extra_args.__setitem__("menu_txt", MenuID)
         extra_args.__setitem__("shadow_banned", ShadowBanned)
         extra_args.__setitem__("reportCnt", ReportCnt)

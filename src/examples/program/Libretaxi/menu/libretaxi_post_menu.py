@@ -47,7 +47,6 @@ def informUsersAround(data_folder, **kwargs):
     if user.ShadowBanned != "Y":
         postToAdminChannel(textWithContacts,user)
         postToPublicChannel(textWithContacts,user)
-       #print(textWithContacts)
     else:
         #send a message based on user shadow banned and post id so I return
         msg = textWithContacts + user.ConsumerID
@@ -74,7 +73,7 @@ def run(data_folder, **kwargs):
     user_infos = kwargs.get('extra_args').get('user')
     text = kwargs.get('extra_args').get('text')
     if libretaxi_recentPosts.run(data_folder, **kwargs):
-        msg = post_menu_wait + user_infos.ConsumerID
+        msg = post_menu_wait + user_infos['ConsumerID']
         #send previous message
         #update args
         extra_args = kwargs.get('extra_args')
@@ -82,29 +81,29 @@ def run(data_folder, **kwargs):
         kwargs.__setitem__('extra_args',extra_args)
         return libretaxi_saveUser.run(data_folder, **kwargs)
     elif len(text) == 0:
-        msg_driver = post_menu_driver_example + user_infos.ConsumerID
-        msg_passanger = post_menu_passenger_example + user_infos.ConsumerID
+        msg_driver = post_menu_driver_example + user_infos['ConsumerID']
+        msg_passanger = post_menu_passenger_example + user_infos['ConsumerID']
         return user_infos
     else:
 
         errors = libretaxi_validation.run(text)
         if len(errors) > 0:
-            msg = user_infos.Consumer_ID + errors + " "+post_menu_or+"/cancel"
+            msg = user_infos['Consumer_ID'] + errors + " "+post_menu_or+"/cancel"
             return user_infos
         cleanText = text.strip()
         extra_args = kwargs.get('extra_args')
-        extra_args.__setitem__("consumer_id",user_infos.ConsumerID)
+        extra_args.__setitem__("user_id",user_infos['ConsumerID'])
         extra_args.__setitem__("message_txt",cleanText)
-        extra_args.__setitem__("lon", user_infos.Longitude)
-        extra_args.__setitem__("lat", user_infos.Latitude)
+        extra_args.__setitem__("lon", user_infos['Longitude'])
+        extra_args.__setitem__("lat", user_infos['Latitude'])
         extra_args.__setitem__("reportCnt", 0)
         kwargs.__setitem__('extra_args',extra_args)
 
         results = libretaxi_savePost.run(data_folder, **kwargs)
 
-        informUsersAround(user_infos.Longitude, user_infos.Latitude,cleanText, results, user_infos)
+        informUsersAround(user_infos['Longitude'], user_infos['Latitude'],cleanText, results, user_infos)
 
-        msg = user_infos.ConsumerID+post_menu_sent
+        msg = user_infos['ConsumerID']+post_menu_sent
 
         extra_args = kwargs.get('extra_args')
         extra_args.__setitem__("menu_id","Menu_Feed")
