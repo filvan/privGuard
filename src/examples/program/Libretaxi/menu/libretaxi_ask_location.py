@@ -1,13 +1,12 @@
 from src.examples.program.Libretaxi.repository import libretaxi_findUser,libretaxi_saveUser
-from src.examples.program.Libretaxi.locales.english import *
 
 
 def run(data_folder, **kwargs):
     print("Ask location menu")
-
+    locales = kwargs.get('locales')
     user = kwargs.get('extra_args').get('user')
 
-    if (user['Longitude'] != '') & (user['Latitude']!=''):
+    if (user['Longitude'] != '') & (user['Latitude'] != ''):
         #save location
         message = "Saving location:"+ user['Longitude'] + " " + user['Latitude']
         print(message)
@@ -16,7 +15,6 @@ def run(data_folder, **kwargs):
         kwargs.__setitem__('extra_args',extra_args)
         return libretaxi_saveUser.run(data_folder, **kwargs)
     else:
-        buttons = ask_location_menu_next_button
-        msg = user['ConsumerID'] + ask_location_menu_click_next
-
+        buttons = locales.ask_location_menu_next_button
+        msg = user['ConsumerID'] + locales.ask_location_menu_click_next
         return libretaxi_findUser.run(data_folder, **kwargs)

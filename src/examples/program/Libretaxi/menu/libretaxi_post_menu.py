@@ -2,7 +2,6 @@
 from src.examples.program.Libretaxi.repository import libretaxi_findUserAround, libretaxi_saveUser,libretaxi_savePost, \
     libretaxi_recentPosts
 from src.examples.program.Libretaxi.util.util import EscapeMarkdown
-from src.examples.program.Libretaxi.locales.english import *
 from src.examples.program.Libretaxi import libretaxi_validation
 
 def postToAdminChannel(text, user):
@@ -29,6 +28,7 @@ def postToPublicChannel(text,user):
 
 
 def informUsersAround(data_folder, **kwargs):
+    locales = kwargs.get('locales')
     pd = kwargs.get('pandas')
     libretaxi_posts = pd.read_csv(data_folder + "posts/data.csv")
 
@@ -40,9 +40,9 @@ def informUsersAround(data_folder, **kwargs):
 
     if len(user.Username) == 0:
         userTextContact = "["+EscapeMarkdown(user.FirstName)+" "+EscapeMarkdown(user.LastName)+"](tg://user?id="+user.ConsumerID+")"
-        textWithContacts = EscapeMarkdown(text)+"\n\n"+ post_menu_via + " "+ userTextContact
+        textWithContacts = EscapeMarkdown(text)+"\n\n"+ locales.post_menu_via + " "+ userTextContact
     else:
-        textWithContacts = EscapeMarkdown(text)+"\n\n"+ post_menu_via + " "+ EscapeMarkdown(user.Username)
+        textWithContacts = EscapeMarkdown(text)+"\n\n"+ locales.post_menu_via + " "+ EscapeMarkdown(user.Username)
 
     if user.ShadowBanned != "Y":
         postToAdminChannel(textWithContacts,user)
@@ -64,16 +64,17 @@ def informUsersAround(data_folder, **kwargs):
         if len(u.Username) == 0:
             # sets for message a parsingMode based on the username
             ParseMode = "MarkdownV2"
-        btnKeyboard = post_menu_report_button
+        btnKeyboard = locales.post_menu_report_button
         btnClick = "{\"Action\":\"REPORT_POST\",\"Id\":" + post_id
             # message sent
         return libretaxi_posts[libretaxi_posts.PostID == post_id]
 
 def run(data_folder, **kwargs):
+    locales = kwargs.get('locales')
     user_infos = kwargs.get('extra_args').get('user')
     text = kwargs.get('extra_args').get('text')
     if libretaxi_recentPosts.run(data_folder, **kwargs):
-        msg = post_menu_wait + user_infos['ConsumerID']
+        msg = locales.post_menu_wait + user_infos['ConsumerID']
         #send previous message
         #update args
         extra_args = kwargs.get('extra_args')
@@ -81,14 +82,14 @@ def run(data_folder, **kwargs):
         kwargs.__setitem__('extra_args',extra_args)
         return libretaxi_saveUser.run(data_folder, **kwargs)
     elif len(text) == 0:
-        msg_driver = post_menu_driver_example + user_infos['ConsumerID']
-        msg_passanger = post_menu_passenger_example + user_infos['ConsumerID']
+        msg_driver = locales.post_menu_driver_example + user_infos['ConsumerID']
+        msg_passanger = locales.post_menu_passenger_example + user_infos['ConsumerID']
         return user_infos
     else:
 
         errors = libretaxi_validation.run(text)
         if len(errors) > 0:
-            msg = user_infos['Consumer_ID'] + errors + " "+post_menu_or+"/cancel"
+            msg = user_infos['Consumer_ID'] + errors + " "+locales.post_menu_or+"/cancel"
             return user_infos
         cleanText = text.strip()
         extra_args = kwargs.get('extra_args')
@@ -103,7 +104,7 @@ def run(data_folder, **kwargs):
 
         informUsersAround(user_infos['Longitude'], user_infos['Latitude'],cleanText, results, user_infos)
 
-        msg = user_infos['ConsumerID']+post_menu_sent
+        msg = user_infos['ConsumerID']+locales.post_menu_sent
 
         extra_args = kwargs.get('extra_args')
         extra_args.__setitem__("menu_id","Menu_Feed")

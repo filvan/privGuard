@@ -1,12 +1,4 @@
-import numpy as np # linear algebra
-import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
-from fastai.structured import *
-import matplotlib.pyplot as plt
-from sklearn.metrics import mean_squared_error
-from math import sqrt
-from sklearn.ensemble import RandomForestRegressor
-from IPython.core.debugger import set_trace
-from sklearn.model_selection import KFold
+
 
 import os
 print(os.listdir("../input"))
@@ -27,52 +19,7 @@ def score(model, X_train, y_train, X_valid=[], y_valid=[]):
     return score
 
 
-def prcs(df, fe=[]):
-    add_datepart(df, 'Open Date')
 
-    if 'city' in fe:
-        df = df.drop('City', axis=1)
-    # Quitamos el outlier (16)
-    if 'outlier' in fe:
-        df = df.drop(index=16, axis=0)
-
-    if 'MB' in fe:
-        # No hay apenas tipo 'MB'
-        df['Type'] = df['Type'].replace('MB', 'DT')
-
-    if 'city_group' in fe:
-        df = df.drop('City Group', axis=1)
-
-    if 'dummies' in fe:
-        # Get dummies
-        p_cols = [f'P{n}' for n in range(1, 38)]
-
-        df = pd.get_dummies(df, columns=p_cols)
-        if 'city_group' not in fe:
-            df = pd.get_dummies(df, columns=['City Group'], drop_first=True)
-        df = pd.get_dummies(df, columns=['Type'])
-
-    # Train cats
-    train_cats(df)
-
-    X, _, _ = proc_df(df, None)
-    drop_cols = ['Open Year', 'Open Month', 'Open Week', 'Open Day', 'Open Dayofweek',
-                 'Open Dayofyear', 'Open Is_month_end', 'Open Is_month_start',
-                 'Open Is_quarter_end', 'Open Is_quarter_start', 'Open Is_year_end',
-                 'Open Is_year_start']
-
-    X = X.drop(drop_cols, axis=1)
-    # La columna Id no aporta nada
-    if 'id' in fe:
-        X = X.drop('Id', axis=1)
-
-    if 'scale_open' in fe:
-        X['Open Elapsed'] = (X['Open Elapsed'] / 1000).apply(np.log)
-
-    X_train = X[:n_train]
-    X_test = X[n_train:]
-
-    return X_train, X_test
 
 
 def train_cv(X, y):
@@ -100,13 +47,63 @@ def predict(models, X):
         pred += f * m.predict(X)
 
     return pred
-
+from os import path
 def run(data_folder, **kwargs):
-    df_train = pd.read_csv(f'{PATH}train.csv', parse_dates=['Open Date'])
-    df_test = pd.read_csv(f'{PATH}test.csv', parse_dates=['Open Date'])
+    pd = kwargs.get('pandas')
+    np = kwargs.get('numpy')
+    model_selection = kwargs.get('model_selection')
+    KFold = model_selection.kfold
+    df_train = pd.read_csv(path.join(data_folder, 'train/data.csv'))
+    df_test = pd.read_csv(path.join(data_folder, 'test/data.csv'))
 
     df_joined = pd.concat([df_train.drop('revenue', axis=1), df_test], axis=0)
-    n_train = df_train.shape[0]
+
+    def prcs(df, fe=[]):
+        add_datepart(df, 'Open Date')
+
+        if 'city' in fe:
+            df = df.drop('City', axis=1)
+        # Quitamos el outlier (16)
+        if 'outlier' in fe:
+            df = df.drop(index=16, axis=0)
+
+        if 'MB' in fe:
+            # No hay apenas tipo 'MB'
+            df['Type'] = df['Type'].replace('MB', 'DT')
+
+        if 'city_group' in fe:
+            df = df.drop('City Group', axis=1)
+
+        if 'dummies' in fe:
+            # Get dummies
+            p_cols = [f'P{n}' for n in range(1, 38)]
+
+            df = pd.get_dummies(df, columns=p_cols)
+            if 'city_group' not in fe:
+                df = pd.get_dummies(df, columns=['City Group'], drop_first=True)
+            df = pd.get_dummies(df, columns=['Type'])
+
+        # Train cats
+        train_cats(df)
+
+        X, _, _ = proc_df(df, None)
+        drop_cols = ['Open Year', 'Open Month', 'Open Week', 'Open Day', 'Open Dayofweek',
+                     'Open Dayofyear', 'Open Is_month_end', 'Open Is_month_start',
+                     'Open Is_quarter_end', 'Open Is_quarter_start', 'Open Is_year_end',
+                     'Open Is_year_start']
+
+        X = X.drop(drop_cols, axis=1)
+        # La columna Id no aporta nada
+        if 'id' in fe:
+            X = X.drop('Id', axis=1)
+
+        if 'scale_open' in fe:
+            X['Open Elapsed'] = (X['Open Elapsed'] / 1000).apply(np.log)
+
+        X_train = X[:n_train]
+        X_test = X[n_train:]
+
+        return X_train, X_test
     X_train, X_test = prcs(df_joined.copy())
     y_train = df_train['revenue'].copy().apply(np.log)
     m = RandomForestRegressor(n_jobs=-1, n_estimators=150, oob_score=True, max_features=0.5)

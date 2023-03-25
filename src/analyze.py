@@ -45,7 +45,7 @@ import stub_statsmodels.tsa.arima.model as stub_arima
 import stub_sklearn.cross_validation as stub_cross_validation
 import stub_sklearn.metrics as stub_metrics
 import stub_sklearn.model_selection as stub_model_selection
-
+from examples.program.Libretaxi.locales import english, es, fa, pt_br, pt_pt, ru
 program_map = {
     0: "./examples/program/ehr_example.py",
     # 1: "./examples/program/1_fraud_detection.py",
@@ -88,6 +88,8 @@ program_map = {
     38: "./examples/program/Libretaxi/repository/libretaxi_findPost.py",
     39: "./examples/program/Libretaxi/repository/libretaxi_findUser.py",
     40: "./examples/program/Libretaxi/libretaxi_locale.py",
+    41: "./examples/program/extra_examples/bank_customer_churn_prediction.py",
+    42: "./examples/program/extra_examples/bank_customer_classification.py",
 
 }
 
@@ -133,6 +135,8 @@ data_map = {
     38: "./examples/data/libretaxi_cpra/",
     39: "./examples/data/libretaxi_cpra/",
     40: "./examples/data/libretaxi_cpra/",
+    41: "./examples/data/bank_customer_churn/",
+    42: "./examples/data/bank_customer_churn/",
 
 }
 
@@ -159,9 +163,18 @@ lib_map = {
     38: {'numpy': stub_numpy, 'pandas': stub_pandas},
     39: {'numpy': stub_numpy, 'pandas': stub_pandas},
     40: {'numpy': stub_numpy, 'pandas': stub_pandas},
+    41: {'numpy': stub_numpy, 'pandas': stub_pandas},
+    42: {'numpy': stub_numpy, 'pandas': stub_pandas,'cross_validation': stub_cross_validation,},
 
 }
 
+locales = {
+    'english': english,
+    'spanish': es,
+    'portugese': pt_pt,
+    'portugese_brasil':pt_br,
+    'russian': ru
+}
 def analyze(module, data_folder, lib_list):
     return module.run(data_folder, lightgbm=stub_lightgbm, **lib_list)
 
@@ -192,7 +205,7 @@ def parse():
     parser.add_argument('--shadow_banned', help='User is shadow banned', type = str, default="N")
     parser.add_argument('--text', help='User text message', type = str, default="")
     parser.add_argument('--post_id', help='Id of post', type = str, default="")
-
+    parser.add_argument('--locales', help = 'Language code', type = str, default='english')
 
     args = parser.parse_args()
     user = {'ConsumerID':args.user_id,
@@ -232,6 +245,7 @@ def parse():
         'shadow_banned': args.shadow_banned,
         'language_code': args.language_code
     }
+    lib_map[args.example_id].__setitem__('locales',locales[args.locales])
     return program_map[args.example_id], data_map[args.example_id], lib_map[args.example_id], extra_args
 
 if __name__ == '__main__':

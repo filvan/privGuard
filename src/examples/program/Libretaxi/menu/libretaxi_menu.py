@@ -1,11 +1,10 @@
-from src.examples.program.Libretaxi.locales.english import *
 from src.examples.program.Libretaxi.menu import libretaxi_init_menu, libretaxi_ask_location, libretaxi_feed_menu, \
     libretaxi_post_menu
 from src.examples.program.Libretaxi.repository import libretaxi_findUser, libretaxi_saveUser
 
 
-def oneTimeMessages(user):
-    msg = user.ConsumerID + main_welcome_link
+def oneTimeMessages(user, locales):
+    msg = user.ConsumerID + locales.main_welcome_link
     return user
 
 def isStateChanged(data_folder, **kwargs):
@@ -18,6 +17,7 @@ def isStateChanged(data_folder, **kwargs):
 
 def run(data_folder, **kwargs):
     pd = kwargs.get('pandas')
+    locales = kwargs.get('locales')
     text = kwargs.get('extra_args').get('text')
     extra_args = kwargs.get('extra_args')
     #set for this code a true previous state
