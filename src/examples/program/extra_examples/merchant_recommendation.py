@@ -1,4 +1,4 @@
-set(List).intersection(set(All_feature_new_extra))
+
 
 import numpy as np
 import pandas as pd
@@ -14,6 +14,9 @@ from tqdm import tqdm
 import os
 
 def run(data_folder, **kwargs):
+    pd = kwargs.get('pandas')
+    np = kwargs.get('numpy')
+
     print(os.listdir("../input"))
     df_train_old = pd.read_pickle("../input/features-from-old-model/train_old_features.pkl")
     df_test_old = pd.read_pickle("../input/features-from-old-model/test_old_features.pkl")

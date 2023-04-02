@@ -26,28 +26,28 @@ ALLOW SCHEMA Username,FirstName,LastName,Longitude,Latitude
     AND PURPOSE Processing
 
 
-ALLOW SCHEMA PDIdentifiable
+ALLOW SCHEMA Race, PoliticalInfos, Religion, TradeUnionMembership
     AND FILTER ConsentProcessingIdentifiable == 'Y'
     AND PURPOSE BusinessPurpose
-ALLOW SCHEMA PDIdentifiable
+ALLOW SCHEMA Race, PoliticalInfos, Religion, TradeUnionMembership
     AND FILTER ConsentProcessingIdentifiable == 'Y'
     AND PURPOSE Processing AND ( PURPOSE EmploymentPurpose OR PURPOSE SocialSecurity OR PURPOSE SocialProtection)
     AND ROLE Controller
 
-ALLOW SCHEMA PDIdentifiable
+ALLOW SCHEMA Race, PoliticalInfos, Religion, TradeUnionMembership
     AND PURPOSE Processing AND (PURPOSE PoliticalPurpose OR PURPOSE PhilosophicalPurpose OR PURPOSE ReligiousPurpose OR PURPOSE TradeUnionPurpose)
     AND ROLE NonProfit
 
 ALLOW SCHEMA PublicPersonalData
     AND PURPOSE Processing
 
-ALLOW SCHEMA PDIdentifiable
+ALLOW SCHEMA Race, PoliticalInfos, Religion, TradeUnionMembership
     AND PURPOSE Processing AND PURPOSE LegalPurpose
 
-ALLOW SCHEMA PDIdentifiable
+ALLOW SCHEMA Race, PoliticalInfos, Religion, TradeUnionMembership
     AND PURPOSE Processing AND PURPOSE MedicalPurpose
 
-ALLOW SCHEMA PDIdentifiable
+ALLOW SCHEMA Race, PoliticalInfos, Religion, TradeUnionMembership
     AND PURPOSE Processing AND (PURPOSE PublicInterest OR PURPOSE ScientificPurpose OR PURPOSE HistoricalResearchPurpose)
 
 ALLOW SCHEMA CriminalData

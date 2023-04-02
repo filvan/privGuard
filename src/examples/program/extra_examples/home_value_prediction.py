@@ -1,33 +1,18 @@
-import numpy as np # linear algebra
-import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
-import matplotlib.pyplot as plt
-import seaborn as sns
-from subprocess import check_output
-pd.options.mode.chained_assignment = None
-pd.options.display.max_columns = 999
-from ggplot import *
-from sklearn import ensemble
-import xgboost as xgb
-
+#TODO: no ACTUAL CLASSIFIER IN THE EXAMPLE WHY?
+from os import path
 def run(data_folder, **kwargs):
-    color = sns.color_palette()
-    train_df = pd.read_csv("../input/train_2016.csv", parse_dates=["transactiondate"])
+    pd = kwargs.get('pandas')
+    np = kwargs.get('numpy')
+    xgb = kwargs.get('xgboost')
+    train_df = pd.read_csv(path.join(data_folder, 'data.csv'))
     train_df.shape
     train_df.head()
-    plt.figure(figsize=(8,6))
-    plt.scatter(range(train_df.shape[0]), np.sort(train_df.logerror.values))
-    plt.xlabel('index', fontsize=12)
-    plt.ylabel('logerror', fontsize=12)
-    plt.show()
+
     ulimit = np.percentile(train_df.logerror.values, 99)
     llimit = np.percentile(train_df.logerror.values, 1)
     train_df['logerror'].ix[train_df['logerror']>ulimit] = ulimit
     train_df['logerror'].ix[train_df['logerror']<llimit] = llimit
 
-    plt.figure(figsize=(12,8))
-    sns.distplot(train_df.logerror.values, bins=50, kde=False)
-    plt.xlabel('logerror', fontsize=12)
-    plt.show()
     train_df['transaction_month'] = train_df['transactiondate'].dt.month
 
     cnt_srs = train_df['transaction_month'].value_counts()
@@ -129,80 +114,17 @@ def run(data_folder, **kwargs):
     train_df[col].ix[train_df[col]>ulimit] = ulimit
     train_df[col].ix[train_df[col]<llimit] = llimit
 
-    plt.figure(figsize=(12,12))
-    sns.jointplot(x=train_df.calculatedfinishedsquarefeet.values, y=train_df.logerror.values, size=10, color=color[5])
-    plt.ylabel('Log Error', fontsize=12)
-    plt.xlabel('Calculated finished square feet', fontsize=12)
-    plt.title("Calculated finished square feet Vs Log error", fontsize=15)
-    plt.show()
-    plt.figure(figsize=(12,8))
-    sns.countplot(x="bathroomcnt", data=train_df)
-    plt.ylabel('Count', fontsize=12)
-    plt.xlabel('Bathroom', fontsize=12)
-    plt.xticks(rotation='vertical')
-    plt.title("Frequency of Bathroom count", fontsize=15)
-    plt.show()
-    plt.figure(figsize=(12,8))
-    sns.boxplot(x="bathroomcnt", y="logerror", data=train_df)
-    plt.ylabel('Log error', fontsize=12)
-    plt.xlabel('Bathroom Count', fontsize=12)
-    plt.xticks(rotation='vertical')
-    plt.title("How log error changes with bathroom count?", fontsize=15)
-    plt.show()
-    plt.figure(figsize=(12,8))
-    sns.countplot(x="bedroomcnt", data=train_df)
-    plt.ylabel('Frequency', fontsize=12)
-    plt.xlabel('Bedroom Count', fontsize=12)
-    plt.xticks(rotation='vertical')
-    plt.title("Frequency of Bedroom count", fontsize=15)
-    plt.show()
-    train_df['bedroomcnt'].ix[train_df['bedroomcnt']>7] = 7
-    plt.figure(figsize=(12,8))
-    sns.violinplot(x='bedroomcnt', y='logerror', data=train_df)
-    plt.xlabel('Bedroom count', fontsize=12)
-    plt.ylabel('Log Error', fontsize=12)
-    plt.show()
     col = "taxamount"
     ulimit = np.percentile(train_df[col].values, 99.5)
     llimit = np.percentile(train_df[col].values, 0.5)
     train_df[col].ix[train_df[col]>ulimit] = ulimit
     train_df[col].ix[train_df[col]<llimit] = llimit
 
-    plt.figure(figsize=(12,12))
-    sns.jointplot(x=train_df['taxamount'].values, y=train_df['logerror'].values, size=10, color='g')
-    plt.ylabel('Log Error', fontsize=12)
-    plt.xlabel('Tax Amount', fontsize=12)
-    plt.title("Tax Amount Vs Log error", fontsize=15)
-    plt.show()
-    ggplot(aes(x='yearbuilt', y='logerror'), data=train_df) + \
-        geom_point(color='steelblue', size=1) + \
-        stat_smooth()
-    ggplot(aes(x='latitude', y='longitude', color='logerror'), data=train_df) + \
-        geom_point() + \
-        scale_color_gradient(low = 'red', high = 'blue')
-    ggplot(aes(x='finishedsquarefeet12', y='taxamount', color='logerror'), data=train_df) + \
-        geom_point(alpha=0.7) + \
-        scale_color_gradient(low = 'pink', high = 'blue')
-    ggplot(aes(x='finishedsquarefeet12', y='taxamount', color='logerror'), data=train_df) + \
-        geom_now_its_art()
     train_y = train_df['logerror'].values
     cat_cols = ["hashottuborspa", "propertycountylandusecode", "propertyzoningdesc", "fireplaceflag", "taxdelinquencyflag"]
     train_df = train_df.drop(['parcelid', 'logerror', 'transactiondate', 'transaction_month']+cat_cols, axis=1)
-    feat_names = train_df.columns.values
-    model = ensemble.ExtraTreesRegressor(n_estimators=25, max_depth=30, max_features=0.3, n_jobs=-1, random_state=0)
-    model.fit(train_df, train_y)
 
-    ## plot the importances ##
-    importances = model.feature_importances_
-    std = np.std([tree.feature_importances_ for tree in model.estimators_], axis=0)
-    indices = np.argsort(importances)[::-1][:20]
 
-    plt.figure(figsize=(12,12))
-    plt.title("Feature importances")
-    plt.bar(range(len(indices)), importances[indices], color="r", yerr=std[indices], align="center")
-    plt.xticks(range(len(indices)), feat_names[indices], rotation='vertical')
-    plt.xlim([-1, len(indices)])
-    plt.show()
     xgb_params = {
         'eta': 0.05,
         'max_depth': 8,
@@ -216,9 +138,7 @@ def run(data_folder, **kwargs):
     model = xgb.train(dict(xgb_params, silent=0), dtrain, num_boost_round=50)
 
     # plot the important features #
-    fig, ax = plt.subplots(figsize=(12,18))
     xgb.plot_importance(model, max_num_features=50, height=0.8, ax=ax)
-    plt.show()
 
 
 

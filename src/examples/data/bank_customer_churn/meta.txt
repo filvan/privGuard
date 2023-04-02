@@ -1,0 +1,2 @@
+RowNumber,ConsumerID,Surname,CreditScore,Geography,Gender,Age,Tenure,Balance,NumOfProducts,HasCrcard,IsActiveMember,EstimatedSalary,Exited
+10

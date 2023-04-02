@@ -1,2 +1,75 @@
-ALLOW (SCHEMA Username OR SCHEMA FirstName OR SCHEMA LastName OR SCHEMA Longitude OR SCHEMA Latitude)
-    AND PURPOSE ModificationData
+
+ALLOW SCHEMA PublicPersonalData
+    AND PURPOSE Processing
+
+ALLOW SCHEMA Race, PoliticalInfos, Religion, TradeUnionMembership
+    AND PURPOSE Processing AND PURPOSE LegalPurpose
+
+ALLOW SCHEMA Race, PoliticalInfos, Religion, TradeUnionMembership
+    AND PURPOSE Processing AND PURPOSE MedicalPurpose
+
+ALLOW SCHEMA Race, PoliticalInfos, Religion, TradeUnionMembership
+    AND PURPOSE Processing AND (PURPOSE PublicInterest OR PURPOSE ScientificPurpose OR PURPOSE HistoricalResearchPurpose)
+
+ALLOW SCHEMA CriminalData
+    AND ROLE OfficialAuthority
+
+
+ALLOW ROLE DataSubjectId
+    AND SCHEMA ControllerID, ControllerRepresentative, ContactDataProtection
+
+ALLOW (ROLE Controller OR ROLE Processor)
+    AND SCHEMA Username,FirstName,LastName,Longitude,Latitude
+    AND PURPOSE Processing
+    AND FILTER RequestProcessing == 'Y'
+
+ALLOW ROLE DataSubjectID
+    AND SCHEMA Username,FirstName,LastName,Longitude,Latitude
+    AND FILTER RequestRectification == 'Y' AND FILTER dataSubjectID == n
+
+ALLOW (ROLE Controller OR ROLE Processor)
+    AND FILTER dataSubjectID == n AND (FILTER RequestDeletion == 'Y' OR FILTER RequestProcessing == 'N')
+    AND PURPOSE DeletionData
+
+ALLOW ROLE DataSubjectID
+    AND SCHEMA Username,FirstName,LastName,Longitude,Latitude
+    AND FILTER RequestDisclosure == 'Y' AND FILTER dataSubjectID == n
+
+ALLOW (ROLE Controller OR ROLE Processor)
+    AND SCHEMA Username,FirstName,LastName,Longitude,Latitude
+    AND (PURPOSE Processing AND PURPOSE DirectMarketingPurpose)
+    AND FILTER RequestProcessing == 'Y' AND FILTER RequestDirectMarketing == 'Y'
+
+ALLOW ROLE Controller
+    AND SCHEMA Username,FirstName,LastName,Longitude,Latitude
+    AND (PURPOSE Retention OR PURPOSE BusinessPurpose OR PURPOSE Sell OR PURPOSE Share OR PURPOSE Processing)
+    AND PRIVACY DP(1.0, 1e-5)
+
+ALLOW ROLE Processor
+    AND SCHEMA Username,FirstName,LastName,Longitude,Latitude
+    AND PURPOSE Processing
+    AND PRIVACY DP(1.0, 1e-5)
+
+ALLOW ROLE DataProtectionOfficer
+    AND SCHEMA Username,FirstName,LastName,Longitude,Latitude
+    AND PRIVACY DP(1.0, 1e-5)
+    AND PURPOSE MonitorProtection
+
+ALLOW (ROLE ThirdCountry OR ROLE InternationalOrg)
+    AND SCHEMA Username,FirstName,LastName,Longitude,Latitude
+    AND PURPOSE Transfer
+    AND FILTER PRIVACY DP(1.0, 1e-5)
+
+
+ALLOW (ROLE ThirdCountry OR ROLE InternationalOrg)
+    AND SCHEMA Username,FirstName,LastName,Longitude,Latitude
+    AND PURPOSE Transfer
+    AND (FILTER ConsentTransfer == 'Y'
+    OR PURPOSE BusinessPurpose
+    OR PURPOSE PublicInterest
+    OR PURPOSE LegalPurpose)
+
+
+ALLOW ROLE SupervisoryAuthority
+    SCHEMA Username,FirstName,LastName,Longitude,Latitude
+    PURPOSE SupervisionPurpose

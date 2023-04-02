@@ -3,7 +3,8 @@
 ALLOW SCHEMA Username,FirstName,LastName,Longitude,Latitude
     AND FILTER CorrectInfos == 'N'
     AND (PURPOSE DeleteData OR PURPOSE ModificationData)
-ALLOW SCHEMA PersonalData
+
+ALLOW SCHEMA Username,FirstName,LastName,Longitude,Latitude
     AND PRIVACY DP(1.0, 1e-5)
 
 ALLOW SCHEMA Username,FirstName,LastName,Longitude,Latitude
@@ -26,28 +27,29 @@ ALLOW SCHEMA Username,FirstName,LastName,Longitude,Latitude
     AND PURPOSE Processing
 
 
-ALLOW SCHEMA PDIdentifiable
+ALLOW SCHEMA Race, PoliticalInfos, Religion, TradeUnionMembership
     AND FILTER ConsentProcessingIdentifiable == 'Y'
     AND PURPOSE BusinessPurpose
-ALLOW SCHEMA PDIdentifiable
+
+ALLOW SCHEMA Race, PoliticalInfos, Religion, TradeUnionMembership
     AND FILTER ConsentProcessingIdentifiable == 'Y'
     AND PURPOSE Processing AND ( PURPOSE EmploymentPurpose OR PURPOSE SocialSecurity OR PURPOSE SocialProtection)
     AND ROLE Controller
 
-ALLOW SCHEMA PDIdentifiable
+ALLOW SCHEMA Race, PoliticalInfos, Religion, TradeUnionMembership
     AND PURPOSE Processing AND (PURPOSE PoliticalPurpose OR PURPOSE PhilosophicalPurpose OR PURPOSE ReligiousPurpose OR PURPOSE TradeUnionPurpose)
     AND ROLE NonProfit
 
 ALLOW SCHEMA PublicPersonalData
     AND PURPOSE Processing
 
-ALLOW SCHEMA PDIdentifiable
+ALLOW SCHEMA Race, PoliticalInfos, Religion, TradeUnionMembership
     AND PURPOSE Processing AND PURPOSE LegalPurpose
 
-ALLOW SCHEMA PDIdentifiable
+ALLOW SCHEMA Race, PoliticalInfos, Religion, TradeUnionMembership
     AND PURPOSE Processing AND PURPOSE MedicalPurpose
 
-ALLOW SCHEMA PDIdentifiable
+ALLOW SCHEMA Race, PoliticalInfos, Religion, TradeUnionMembership
     AND PURPOSE Processing AND (PURPOSE PublicInterest OR PURPOSE ScientificPurpose OR PURPOSE HistoricalResearchPurpose)
 
 ALLOW SCHEMA CriminalData
@@ -64,15 +66,15 @@ ALLOW (ROLE Controller OR ROLE Processor)
 
 ALLOW ROLE DataSubjectID
     AND SCHEMA Username,FirstName,LastName,Longitude,Latitude
-    AND FILTER RequestRectification == 'Y' AND FILTER dataSubjectID == n
+    AND FILTER RequestRectification == 'Y' AND FILTER ConsumerID == n
 
 ALLOW (ROLE Controller OR ROLE Processor)
-    AND FILTER dataSubjectID == n AND (FILTER RequestDeletion == 'Y' OR FILTER RequestProcessing == 'N')
+    AND FILTER ConsumerID == n AND (FILTER RequestDeletion == 'Y' OR FILTER RequestProcessing == 'N')
     AND PURPOSE DeletionData
 
 ALLOW ROLE DataSubjectID
     AND SCHEMA Username,FirstName,LastName,Longitude,Latitude
-    AND FILTER RequestDisclosure == 'Y' AND FILTER dataSubjectID == n
+    AND FILTER RequestDisclosure == 'Y' AND FILTER ConsumerID == n
 
 ALLOW (ROLE Controller OR ROLE Processor)
     AND SCHEMA Username,FirstName,LastName,Longitude,Latitude

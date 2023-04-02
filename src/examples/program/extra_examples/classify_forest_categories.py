@@ -1,11 +1,9 @@
-import numpy as np # linear algebra
-import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
+
+#TODO:can't use it need kfold here something else
 
 # Input data files are available in the "../input/" directory.
 # For example, running this (by clicking run or pressing Shift+Enter) will list the files in the input directory
 
-import os
-print(os.listdir("../input"))
 from pyspark import SparkContext
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import *
@@ -17,14 +15,16 @@ from pyspark.ml.classification import RandomForestClassifier, RandomForestClassi
 from pyspark.ml import Pipeline
 from pyspark.ml.tuning import CrossValidator, ParamGridBuilder
 from pyspark.ml.evaluation import MulticlassClassificationEvaluator
-
+from os import path
 def run(data_folder, **kwargs):
-    sc = SparkContext(appName="forest_cover")
-    spark = SparkSession.Builder().getOrCreate()
-    train = spark.read.csv('../input/train.csv',header = True,inferSchema=True)
-    test = spark.read.csv('../input/test.csv',header = True,inferSchema=True)
-    train.limit(5).toPandas()
-    test.count()
+    pd = kwargs.get('pandas')
+    np = kwargs.get('numpy')
+    lgb = kwargs.get('lightgbm')
+    LGBMClassifier = lgb.LGBMClassifier
+
+    train = pd.read_csv(path.join(data_folder, 'train/data.csv'))
+    test = pd.read_csv(path.join(data_folder, 'test/data.csv'))
+
     train_mod = train.withColumn("HF1", train.Horizontal_Distance_To_Hydrology + train.Horizontal_Distance_To_Fire_Points) \
     .withColumn("HF2", abs(train.Horizontal_Distance_To_Hydrology - train.Horizontal_Distance_To_Fire_Points)) \
     .withColumn("HR1", abs(train.Horizontal_Distance_To_Hydrology + train.Horizontal_Distance_To_Roadways)) \
@@ -59,6 +59,11 @@ def run(data_folder, **kwargs):
     train_mod02 = train_mod01.select("features","Cover_Type")
     test_mod01 = assembler.transform(test_mod)
     test_mod02 = test_mod01.select("Id","features")
+
+    cls = LGBMClassifier(learning_rate=0.06, max_bin=165, max_depth=5, min_child_samples=153, min_child_weight=0.1, min_split_gain=0.0018, n_estimators=41, num_leaves=6, reg_alpha=2.1, reg_lambda=2.54, objective='binary', n_jobs=-1)
+    model = cls.fit(features.values, target.values)
+
+    return model
     rfClassifer = RandomForestClassifier(labelCol = "Cover_Type", numTrees = 100)
     pipeline = Pipeline(stages = [rfClassifer])
     paramGrid = ParamGridBuilder()\
