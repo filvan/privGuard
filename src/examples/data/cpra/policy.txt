@@ -1,10 +1,5 @@
-
 ALLOW ROLE Business
-    AND SCHEMA Username,FirstName,LastName,Longitude,Latitude,MessageText
-    AND (((FILTER ConsentUse == 'Y' OR FILTER ConsentCollection == 'Y' OR FILTER ConsentRetention == 'Y')
-    AND PURPOSE BusinessPurpose)
-    OR (FILTER ConsentShare == 'Y'
-    AND PURPOSE Share)
-    OR (FILTER ConsentSell == 'Y'
-    AND PURPOSE Sell)
-    )
+    AND SCHEMA PersonalInformation
+    AND (PURPOSE Retention OR PURPOSE BusinessPurpose OR PURPOSE Sell OR PURPOSE Share)
+    AND (PRIVACY Anonymization OR PRIVACY Aggregation)
+

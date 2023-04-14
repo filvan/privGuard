@@ -1,0 +1,2 @@
+ConsumerID,ConsentUse,ConsentShare,ConsentSell,ConsentCollection,ConsentRetention,GuardianConsent,RequestDeletion,RequestDisclosure,RequestInaccurate,LimitUse,Age,MenuID,Username,FirstName,LastName,Longitude,Latitude,LanguageCode,ReportCnt,ShadowBanned
+10

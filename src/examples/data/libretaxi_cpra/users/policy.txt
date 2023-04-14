@@ -1,40 +1,48 @@
 
 
-ALLOW SCHEMA Username,FirstName,LastName,Longitude,Latitude
+ALLOW ROLE Controller
+    AND SCHEMA ConsumerID,Username,FirstName,LastName,Longitude,Latitude
     AND FILTER CorrectInfos == 'N'
     AND (PURPOSE DeleteData OR PURPOSE ModificationData)
 
-ALLOW SCHEMA Username,FirstName,LastName,Longitude,Latitude
-    AND PRIVACY DP(1.0, 1e-5)
+ALLOW ROLE Controller
+    AND SCHEMA ConsumerID,Username,FirstName,LastName,Longitude,Latitude
+    AND PRIVACY Anonymization
 
-ALLOW SCHEMA Username,FirstName,LastName,Longitude,Latitude
+ALLOW ROLE Controller
+    AND SCHEMA ConsumerID,Username,FirstName,LastName,Longitude,Latitude
     AND FILTER ConsentProcessing == 'Y' AND FILTER Age >= 16
     AND PURPOSE Processing
 
-ALLOW SCHEMA Username,FirstName,LastName,Longitude,Latitude
+ALLOW ROLE Controller
+    AND SCHEMA ConsumerID,Username,FirstName,LastName,Longitude,Latitude
     AND PURPOSE Processing AND PURPOSE BusinessPurpose
-ALLOW SCHEMA Username,FirstName,LastName,Longitude,Latitude
+
+ALLOW SCHEMA ConsumerID,Username,FirstName,LastName,Longitude,Latitude
     AND PURPOSE Processing AND PURPOSE PublicInterest
     AND ROLE Controller
 
-ALLOW SCHEMA Username,FirstName,LastName,Longitude,Latitude
+ALLOW SCHEMA ConsumerID,Username,FirstName,LastName,Longitude,Latitude
     AND (ROLE PublicAuthority OR ROLE LegalAuthority)
     AND PURPOSE Processing
 
-ALLOW SCHEMA Username,FirstName,LastName,Longitude,Latitude
-    AND FILTER ConsentProcessing == 'Y' AND FILTER ConsentGuardian == 'Y'
+ALLOW ROLE Controller
+    AND SCHEMA ConsumerID,Username,FirstName,LastName,Longitude,Latitude
+    AND FILTER ConsentProcessing == 'Y' AND FILTER GuardianConsent == 'Y'
     AND FILTER Age < 16 AND FILTER Age >= 13
     AND PURPOSE Processing
 
 
-ALLOW SCHEMA Race, PoliticalInfos, Religion, TradeUnionMembership
+ALLOW ROLE Controller
+    AND SCHEMA Race, PoliticalInfos, Religion, TradeUnionMembership
     AND FILTER ConsentProcessingIdentifiable == 'Y'
     AND PURPOSE BusinessPurpose
 
-ALLOW SCHEMA Race, PoliticalInfos, Religion, TradeUnionMembership
+ALLOW ROLE Controller
+    AND SCHEMA Race, PoliticalInfos, Religion, TradeUnionMembership
     AND FILTER ConsentProcessingIdentifiable == 'Y'
     AND PURPOSE Processing AND ( PURPOSE EmploymentPurpose OR PURPOSE SocialSecurity OR PURPOSE SocialProtection)
-    AND ROLE Controller
+
 
 ALLOW SCHEMA Race, PoliticalInfos, Religion, TradeUnionMembership
     AND PURPOSE Processing AND (PURPOSE PoliticalPurpose OR PURPOSE PhilosophicalPurpose OR PURPOSE ReligiousPurpose OR PURPOSE TradeUnionPurpose)
@@ -56,10 +64,10 @@ ALLOW SCHEMA CriminalData
     AND ROLE OfficialAuthority
 
 
-ALLOW ROLE DataSubjectId
+ALLOW ROLE DataSubjectID
     AND SCHEMA ControllerID, ControllerRepresentative, ContactDataProtection
 
-ALLOW (ROLE Controller OR ROLE Processor)
+ALLOW ROLE DataSubjectID
     AND SCHEMA Username,FirstName,LastName,Longitude,Latitude
     AND PURPOSE Processing
     AND FILTER RequestProcessing == 'Y'
@@ -73,37 +81,37 @@ ALLOW (ROLE Controller OR ROLE Processor)
     AND PURPOSE DeletionData
 
 ALLOW ROLE DataSubjectID
-    AND SCHEMA Username,FirstName,LastName,Longitude,Latitude
+    AND SCHEMA ConsumerID,Username,FirstName,LastName,Longitude,Latitude
     AND FILTER RequestDisclosure == 'Y' AND FILTER ConsumerID == n
 
 ALLOW (ROLE Controller OR ROLE Processor)
-    AND SCHEMA Username,FirstName,LastName,Longitude,Latitude
+    AND SCHEMA ConsumerID,Username,FirstName,LastName,Longitude,Latitude
     AND (PURPOSE Processing AND PURPOSE DirectMarketingPurpose)
     AND FILTER RequestProcessing == 'Y' AND FILTER RequestDirectMarketing == 'Y'
 
 ALLOW ROLE Controller
-    AND SCHEMA Username,FirstName,LastName,Longitude,Latitude
+    AND SCHEMA ConsumerID,Username,FirstName,LastName,Longitude,Latitude
     AND (PURPOSE Retention OR PURPOSE BusinessPurpose OR PURPOSE Sell OR PURPOSE Share OR PURPOSE Processing)
-    AND PRIVACY DP(1.0, 1e-5)
+    AND PRIVACY Anonymization
 
 ALLOW ROLE Processor
-    AND SCHEMA Username,FirstName,LastName,Longitude,Latitude
+    AND SCHEMA ConsumerID,Username,FirstName,LastName,Longitude,Latitude
     AND PURPOSE Processing
-    AND PRIVACY DP(1.0, 1e-5)
+    AND PRIVACY Anonymization
 
 ALLOW ROLE DataProtectionOfficer
-    AND SCHEMA Username,FirstName,LastName,Longitude,Latitude
-    AND PRIVACY DP(1.0, 1e-5)
+    AND SCHEMA ConsumerID,Username,FirstName,LastName,Longitude,Latitude
+    AND PRIVACY Anonymization
     AND PURPOSE MonitorProtection
 
 ALLOW (ROLE ThirdCountry OR ROLE InternationalOrg)
-    AND SCHEMA Username,FirstName,LastName,Longitude,Latitude
+    AND SCHEMA ConsumerID,Username,FirstName,LastName,Longitude,Latitude
     AND PURPOSE Transfer
-    AND FILTER PRIVACY DP(1.0, 1e-5)
+    AND FILTER PRIVACY Anonymization
 
 
 ALLOW (ROLE ThirdCountry OR ROLE InternationalOrg)
-    AND SCHEMA Username,FirstName,LastName,Longitude,Latitude
+    AND SCHEMA ConsumerID,Username,FirstName,LastName,Longitude,Latitude
     AND PURPOSE Transfer
     AND (FILTER ConsentTransfer == 'Y'
     OR PURPOSE BusinessPurpose
@@ -112,5 +120,5 @@ ALLOW (ROLE ThirdCountry OR ROLE InternationalOrg)
 
 
 ALLOW ROLE SupervisoryAuthority
-    SCHEMA Username,FirstName,LastName,Longitude,Latitude
+    SCHEMA ConsumerID,Username,FirstName,LastName,Longitude,Latitude
     PURPOSE SupervisionPurpose

@@ -1,116 +1,168 @@
+PersonalData:
+- Name, LastName
+- IDNumber
+- LocationData
+- OnlineID
+- PhysicalInfos
+- PhysiologicalInfos
+- GeneticInfos
+- MentalInfos
+- EconomicInfos
+- CulturalInfos
 
 
-ALLOW SCHEMA Username,FirstName,LastName,Longitude,Latitude
+#art 5
+#b -e
+ALLOW ROLE Controller
+    AND SCHEMA PersonalData
+    AND (PURPOSE BusinessPurpose OR PURPOSE PublicInterest OR PURPOSE ScientificResearch OR PURPOSE HistoricalResearch)
+# AND FILTER (DateCollection - CurrentDate) <= TimeLimit
+#d
+ALLOW ROLE Controller
+    AND SCHEMA PersonalData
     AND FILTER CorrectInfos == 'N'
     AND (PURPOSE DeleteData OR PURPOSE ModificationData)
+#f
+ALLOW ROLE Controller
+    AND SCHEMA PersonalData
+    AND PRIVACY Anonymization
 
-ALLOW SCHEMA Username,FirstName,LastName,Longitude,Latitude
-    AND PRIVACY DP(1.0, 1e-5)
-
-ALLOW SCHEMA Username,FirstName,LastName,Longitude,Latitude
+#art 6
+#1.a with also age check
+ALLOW ROLE Controller
+    AND SCHEMA PersonalData
     AND FILTER ConsentProcessing == 'Y' AND FILTER Age >= 16
     AND PURPOSE Processing
-
-ALLOW SCHEMA Username,FirstName,LastName,Longitude,Latitude
+#1.b
+ALLOW ROLE Controller
+    AND SCHEMA PersonalData
     AND PURPOSE Processing AND PURPOSE BusinessPurpose
-ALLOW SCHEMA Username,FirstName,LastName,Longitude,Latitude
+#1.e
+ALLOW SCHEMA PersonalData
     AND PURPOSE Processing AND PURPOSE PublicInterest
     AND ROLE Controller
 
-ALLOW SCHEMA Username,FirstName,LastName,Longitude,Latitude
+#3+ 1.C-D
+ALLOW SCHEMA PersonalData
     AND (ROLE PublicAuthority OR ROLE LegalAuthority)
     AND PURPOSE Processing
 
-ALLOW SCHEMA Username,FirstName,LastName,Longitude,Latitude
-    AND FILTER ConsentProcessing == 'Y' AND FILTER ConsentGuardian == 'Y'
+#art 7
+ALLOW ROLE Controller
+    AND SCHEMA PersonalData
+    AND FILTER ConsentProcessing == 'Y' AND FILTER GuardianConsent == 'Y'
     AND FILTER Age < 16 AND FILTER Age >= 13
     AND PURPOSE Processing
 
 
-ALLOW SCHEMA Race, PoliticalInfos, Religion, TradeUnionMembership
+#art 9
+#2.a
+ALLOW ROLE Controller
+    AND SCHEMA PDIdentifiable
     AND FILTER ConsentProcessingIdentifiable == 'Y'
     AND PURPOSE BusinessPurpose
-
-ALLOW SCHEMA Race, PoliticalInfos, Religion, TradeUnionMembership
+#2.b
+ALLOW SCHEMA PDIdentifiable
     AND FILTER ConsentProcessingIdentifiable == 'Y'
     AND PURPOSE Processing AND ( PURPOSE EmploymentPurpose OR PURPOSE SocialSecurity OR PURPOSE SocialProtection)
     AND ROLE Controller
 
-ALLOW SCHEMA Race, PoliticalInfos, Religion, TradeUnionMembership
+#2.d
+ALLOW SCHEMA PDIdentifiable
     AND PURPOSE Processing AND (PURPOSE PoliticalPurpose OR PURPOSE PhilosophicalPurpose OR PURPOSE ReligiousPurpose OR PURPOSE TradeUnionPurpose)
     AND ROLE NonProfit
 
+#2.e
 ALLOW SCHEMA PublicPersonalData
     AND PURPOSE Processing
 
-ALLOW SCHEMA Race, PoliticalInfos, Religion, TradeUnionMembership
+#2.f
+ALLOW SCHEMA PDIdentifiable
     AND PURPOSE Processing AND PURPOSE LegalPurpose
 
-ALLOW SCHEMA Race, PoliticalInfos, Religion, TradeUnionMembership
+#2.h
+ALLOW SCHEMA PDIdentifiable
     AND PURPOSE Processing AND PURPOSE MedicalPurpose
 
-ALLOW SCHEMA Race, PoliticalInfos, Religion, TradeUnionMembership
+#2.j
+ALLOW SCHEMA PDIdentifiable
     AND PURPOSE Processing AND (PURPOSE PublicInterest OR PURPOSE ScientificPurpose OR PURPOSE HistoricalResearchPurpose)
 
+#art 10
 ALLOW SCHEMA CriminalData
     AND ROLE OfficialAuthority
 
 
+#art 14
 ALLOW ROLE DataSubjectId
     AND SCHEMA ControllerID, ControllerRepresentative, ContactDataProtection
 
-ALLOW (ROLE Controller OR ROLE Processor)
-    AND SCHEMA Username,FirstName,LastName,Longitude,Latitude
+#art 15 3
+ALLOW ROLE DataSubjectID
+    AND SCHEMA PersonalData
     AND PURPOSE Processing
     AND FILTER RequestProcessing == 'Y'
 
+#art 16
 ALLOW ROLE DataSubjectID
-    AND SCHEMA Username,FirstName,LastName,Longitude,Latitude
-    AND FILTER RequestRectification == 'Y' AND FILTER ConsumerID == n
+    AND SCHEMA PersonalData
+    AND FILTER RequestRectification == 'Y' AND FILTER dataSubjectID == n
 
+#art17 1
 ALLOW (ROLE Controller OR ROLE Processor)
-    AND FILTER ConsumerID == n AND (FILTER RequestDeletion == 'Y' OR FILTER RequestProcessing == 'N')
+    AND FILTER DataSubjectID == n AND (FILTER RequestDeletion == 'Y' OR FILTER RequestProcessing == 'N')
     AND PURPOSE DeletionData
 
+#art 20
 ALLOW ROLE DataSubjectID
-    AND SCHEMA Username,FirstName,LastName,Longitude,Latitude
-    AND FILTER RequestDisclosure == 'Y' AND FILTER ConsumerID == n
+    AND SCHEMA PersonalData
+    AND FILTER RequestDisclosure == 'Y' AND FILTER dataSubjectID == n
 
+#art 21 3
 ALLOW (ROLE Controller OR ROLE Processor)
-    AND SCHEMA Username,FirstName,LastName,Longitude,Latitude
+    AND SCHEMA PersonalData
     AND (PURPOSE Processing AND PURPOSE DirectMarketingPurpose)
     AND FILTER RequestProcessing == 'Y' AND FILTER RequestDirectMarketing == 'Y'
 
+#art 25
 ALLOW ROLE Controller
-    AND SCHEMA Username,FirstName,LastName,Longitude,Latitude
+    AND SCHEMA PersonalData
     AND (PURPOSE Retention OR PURPOSE BusinessPurpose OR PURPOSE Sell OR PURPOSE Share OR PURPOSE Processing)
-    AND PRIVACY DP(1.0, 1e-5)
+    AND PRIVACY Anonymization
 
 ALLOW ROLE Processor
-    AND SCHEMA Username,FirstName,LastName,Longitude,Latitude
+    AND SCHEMA PersonalData
     AND PURPOSE Processing
-    AND PRIVACY DP(1.0, 1e-5)
+    AND PRIVACY Anonymization
 
+#art 38-39
 ALLOW ROLE DataProtectionOfficer
-    AND SCHEMA Username,FirstName,LastName,Longitude,Latitude
-    AND PRIVACY DP(1.0, 1e-5)
+    AND SCHEMA PersonalData
+    AND PRIVACY Anonymization
     AND PURPOSE MonitorProtection
 
+#art 44-46.1
 ALLOW (ROLE ThirdCountry OR ROLE InternationalOrg)
-    AND SCHEMA Username,FirstName,LastName,Longitude,Latitude
+    AND SCHEMA PersonalData
     AND PURPOSE Transfer
-    AND FILTER PRIVACY DP(1.0, 1e-5)
+    AND FILTER PRIVACY Anonymization
 
-
+#art 49
+#1
 ALLOW (ROLE ThirdCountry OR ROLE InternationalOrg)
-    AND SCHEMA Username,FirstName,LastName,Longitude,Latitude
+    AND SCHEMA PersonalData
     AND PURPOSE Transfer
     AND (FILTER ConsentTransfer == 'Y'
+    #1.b-c
     OR PURPOSE BusinessPurpose
+    #1.d
     OR PURPOSE PublicInterest
+    #1.e
     OR PURPOSE LegalPurpose)
 
+#1.g-2 ?
 
+#art 58
 ALLOW ROLE SupervisoryAuthority
-    SCHEMA Username,FirstName,LastName,Longitude,Latitude
+    SCHEMA PersonalData
     PURPOSE SupervisionPurpose

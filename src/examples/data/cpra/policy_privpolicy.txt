@@ -106,7 +106,7 @@ ALLOW ROLE GovernamentAgency
 ALLOW ROLE Business
     AND SCHEMA PersonalInformation
     AND (PURPOSE Retention OR PURPOSE BusinessPurpose OR PURPOSE Sell OR PURPOSE Share)
-    AND (PRIVACY DP(1.0, 1e-5) OR PRIVACY Aggregation)
+    AND (PRIVACY Anonymization OR PRIVACY Aggregation)
 
 
 

@@ -1,11 +1,9 @@
-
-
 ALLOW SCHEMA Username,FirstName,LastName,Longitude,Latitude
     AND FILTER CorrectInfos == 'N'
     AND (PURPOSE DeleteData OR PURPOSE ModificationData)
 
 ALLOW SCHEMA Username,FirstName,LastName,Longitude,Latitude
-    AND PRIVACY DP(1.0, 1e-5)
+    AND PRIVACY Anonymization
 
 ALLOW SCHEMA Username,FirstName,LastName,Longitude,Latitude
     AND FILTER ConsentProcessing == 'Y' AND FILTER Age >= 16
@@ -23,7 +21,7 @@ ALLOW SCHEMA Username,FirstName,LastName,Longitude,Latitude
     AND PURPOSE Processing
 
 ALLOW SCHEMA Username,FirstName,LastName,Longitude,Latitude
-    AND FILTER ConsentProcessing == 'Y' AND FILTER ConsentGuardian == 'Y'
+    AND FILTER ConsentProcessing == 'Y' AND FILTER GuardianConsent == 'Y'
     AND FILTER Age < 16 AND FILTER Age >= 13
     AND PURPOSE Processing
 
@@ -85,22 +83,22 @@ ALLOW (ROLE Controller OR ROLE Processor)
 ALLOW ROLE Controller
     AND SCHEMA Username,FirstName,LastName,Longitude,Latitude
     AND (PURPOSE Retention OR PURPOSE BusinessPurpose OR PURPOSE Sell OR PURPOSE Share OR PURPOSE Processing)
-    AND PRIVACY DP(1.0, 1e-5)
+    AND PRIVACY Anonymization
 
 ALLOW ROLE Processor
     AND SCHEMA Username,FirstName,LastName,Longitude,Latitude
     AND PURPOSE Processing
-    AND PRIVACY DP(1.0, 1e-5)
+    AND PRIVACY Anonymization
 
 ALLOW ROLE DataProtectionOfficer
     AND SCHEMA Username,FirstName,LastName,Longitude,Latitude
-    AND PRIVACY DP(1.0, 1e-5)
+    AND PRIVACY Anonymization
     AND PURPOSE MonitorProtection
 
 ALLOW (ROLE ThirdCountry OR ROLE InternationalOrg)
     AND SCHEMA Username,FirstName,LastName,Longitude,Latitude
     AND PURPOSE Transfer
-    AND FILTER PRIVACY DP(1.0, 1e-5)
+    AND FILTER PRIVACY Anonymization
 
 
 ALLOW (ROLE ThirdCountry OR ROLE InternationalOrg)

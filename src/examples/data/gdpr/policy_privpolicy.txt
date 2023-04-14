@@ -22,7 +22,7 @@ ALLOW SCHEMA PersonalData
     AND (PURPOSE DeleteData OR PURPOSE ModificationData)
 #f
 ALLOW SCHEMA PersonalData
-    AND PRIVACY DP(1.0, 1e-5)
+    AND PRIVACY Anonymization
 
 #art 6
 #1.a with also age check
@@ -44,7 +44,7 @@ ALLOW SCHEMA PersonalData
 
 #art 7
 ALLOW SCHEMA PersonalData
-    AND FILTER ConsentProcessing == 'Y' AND FILTER ConsentGuardian == 'Y'
+    AND FILTER ConsentProcessing == 'Y' AND FILTER GuardianConsent == 'Y'
     AND FILTER Age < 16 AND FILTER Age >= 13
     AND PURPOSE Processing
 
@@ -99,46 +99,46 @@ ALLOW (ROLE Controller OR ROLE Processor)
 #art 16
 ALLOW ROLE DataSubjectID
     AND SCHEMA PersonalData
-    AND FILTER RequestRectification == 'Y' AND FILTER dataSubjectID == n
+    AND FILTER RequestRectification == 'Y' AND FILTER DataSubjectID == n
 
 #art17 1
 ALLOW (ROLE Controller OR ROLE Processor)
-    AND FILTER dataSubjectID == n AND (FILTER RequestDeletion == 'Y' OR FILTER RequestProcessing == 'N')
+    AND FILTER DataSubjectID == n AND (FILTER RequestDeletion == 'Y' OR FILTER RequestProcessing == 'N')
     AND PURPOSE DeletionData
 
 #art 20
 ALLOW ROLE DataSubjectID
     AND SCHEMA PersonalData
-    AND FILTER RequestDisclosure == 'Y' AND FILTER dataSubjectID == n
+    AND FILTER RequestDisclosure == 'Y' AND FILTER DataSubjectID == n
 
 #art 21 3
 ALLOW (ROLE Controller OR ROLE Processor)
     AND SCHEMA PersonalData
     AND (PURPOSE Processing AND PURPOSE DirectMarketingPurpose)
-    AND FILTER RequestProcessing == 'Y' AND FILTER RequestDirectMarketing == 'Y'
+    AND FILTER ConsentProcessing == 'Y' AND FILTER ConsentDirectMarketing == 'Y'
 
 #art 25
 ALLOW ROLE Controller
     AND SCHEMA PersonalData
     AND (PURPOSE Retention OR PURPOSE BusinessPurpose OR PURPOSE Sell OR PURPOSE Share OR PURPOSE Processing)
-    AND PRIVACY DP(1.0, 1e-5)
+    AND PRIVACY Anonymization
 
 ALLOW ROLE Processor
     AND SCHEMA PersonalData
     AND PURPOSE Processing
-    AND PRIVACY DP(1.0, 1e-5)
+    AND PRIVACY Anonymization
 
 #art 38-39
 ALLOW ROLE DataProtectionOfficer
     AND SCHEMA PersonalData
-    AND PRIVACY DP(1.0, 1e-5)
+    AND PRIVACY Anonymization
     AND PURPOSE MonitorProtection
 
 #art 44-46.1
 ALLOW (ROLE ThirdCountry OR ROLE InternationalOrg)
     AND SCHEMA PersonalData
     AND PURPOSE Transfer
-    AND FILTER PRIVACY DP(1.0, 1e-5)
+    AND FILTER PRIVACY Anonymization
 
 #art 49
 #1
