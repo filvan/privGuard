@@ -1,0 +1,1 @@
+ConsumerID,Created,Name,Username,Email,IsConfirmed,MessageCnt,ConfirmationLink,ChatIdConsentUse,ConsentShare,ConsentSell,ConsentCollection,ConsentRetention,GuardianConsent,RequestDeletion,RequestDisclosure,RequestInaccurate,LimitUse,Age
