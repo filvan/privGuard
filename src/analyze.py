@@ -90,6 +90,24 @@ program_map = {
     40: "./examples/program/Libretaxi/libretaxi_locale.py",
     41: "./examples/program/extra_examples/bank_customer_churn_prediction.py",
     42: "./examples/program/extra_examples/bank_customer_classification.py",
+    #selfmailbot
+    50: "./examples/program/selfmailbot/app/confirm_email.py",
+    51: "./examples/program/selfmailbot/app/resend.py",
+    52: "./examples/program/selfmailbot/app/reset_email.py",
+    53: "./examples/program/selfmailbot/app/send_confirmation.py",
+    54: "./examples/program/selfmailbot/app/send_photo.py",
+    55: "./examples/program/selfmailbot/app/send_text_message.py",
+    56: "./examples/program/selfmailbot/app/start.py",
+
+    57: "./examples/program/selfmailbot/celery/send_confirmation_mail.py",
+    58: "./examples/program/selfmailbot/celery/send_file.py",
+    59: "./examples/program/selfmailbot/celery/send_text.py",
+
+    60: "./examples/program/selfmailbot/mail/send_confirmation_mail.py",
+    61: "./examples/program/selfmailbot/mail/send_mail.py",
+    62: "./examples/program/selfmailbot/models/get_user_by_confirmation_link.py",
+    63: "./examples/program/selfmailbot/models/get_user_instance.py",
+    64: "./examples/program/selfmailbot/web.py",
 
 }
 
@@ -137,6 +155,21 @@ data_map = {
     40: "./examples/data/libretaxi_cpra/",
     41: "./examples/data/bank_customer_churn/",
     42: "./examples/data/bank_customer_churn/",
+    50: "./examples/data/selfmailbot/",
+    51: "./examples/data/selfmailbot/",
+    52: "./examples/data/selfmailbot/",
+    53: "./examples/data/selfmailbot/",
+    54: "./examples/data/selfmailbot/",
+    55: "./examples/data/selfmailbot/",
+    56: "./examples/data/selfmailbot/",
+    57: "./examples/data/selfmailbot/",
+    58: "./examples/data/selfmailbot/",
+    59: "./examples/data/selfmailbot/",
+    60: "./examples/data/selfmailbot/",
+    61: "./examples/data/selfmailbot/",
+    62: "./examples/data/selfmailbot/",
+    63: "./examples/data/selfmailbot/",
+    64: "./examples/data/selfmailbot/",
 
 }
 
@@ -165,6 +198,21 @@ lib_map = {
     40: {'numpy': stub_numpy, 'pandas': stub_pandas},
     41: {'numpy': stub_numpy, 'pandas': stub_pandas},
     42: {'numpy': stub_numpy, 'pandas': stub_pandas,'cross_validation': stub_cross_validation,},
+    50: {'pandas': stub_pandas},
+    51: {'pandas': stub_pandas},
+    52: {'pandas': stub_pandas},
+    53: {'pandas': stub_pandas},
+    54: {'pandas': stub_pandas},
+    55: {'pandas': stub_pandas},
+    56: {'pandas': stub_pandas},
+    57: {'pandas': stub_pandas},
+    58: {'pandas': stub_pandas},
+    59: {'pandas': stub_pandas},
+    60: {'pandas': stub_pandas},
+    61: {'pandas': stub_pandas},
+    62: {'pandas': stub_pandas},
+    63: {'pandas': stub_pandas},
+    64: {'pandas': stub_pandas},
 
 }
 
@@ -207,6 +255,13 @@ def parse():
     parser.add_argument('--post_id', help='Id of post', type = str, default="")
     parser.add_argument('--locales', help = 'Language code', type = str, default='english')
 
+    parser.add_argument('--attachment', help = 'Attachment email', type = int, default=None)
+    parser.add_argument('--attachment_name', help = 'Attachment name for email', type = str, default='')
+    parser.add_argument('--email', help = 'Attachment name for email', type = str, default='')
+    parser.add_argument('--subject', help = 'Subject for email', type = str, default='')
+    parser.add_argument('--link', help = 'Confirmation link', type = str, default='')
+
+    parser.add_argument('--key',help ='Confirmation key for email', type = str, default = '')
     args = parser.parse_args()
     user = {'ConsumerID':args.user_id,
             'ConsentUse':args.consent_use,
@@ -243,7 +298,13 @@ def parse():
         'first_name': args.first_name,
         'last_name': args.last_name,
         'shadow_banned': args.shadow_banned,
-        'language_code': args.language_code
+        'language_code': args.language_code,
+        'key': args.key,
+        'email': args.email,
+        'attachment': args.attachment,
+        'attachment_name': args.attachment_name,
+        'subject': args.subject,
+        'link': args.link
     }
     lib_map[args.example_id].__setitem__('locales',locales[args.locales])
     return program_map[args.example_id], data_map[args.example_id], lib_map[args.example_id], extra_args
