@@ -1,2 +1,124 @@
-ALLOW ROLE ADMINISTRATOR
-  AND SCHEMA var3,var15,TARGET
+ALLOW SCHEMA var3, var15, TARGET
+    AND FILTER CorrectInfos == 'N'
+    AND PURPOSE DeletionData
+
+ALLOW SCHEMA var3, var15, TARGET
+    AND FILTER CorrectInfos == 'N'
+    AND PURPOSE ModificationData
+
+ALLOW SCHEMA var3, var15, TARGET
+    AND PRIVACY Anonymization
+
+ALLOW ROLE DataSubjectID
+    AND SCHEMA var3, var15, TARGET
+    AND PURPOSE Processing
+    AND FILTER RequestProcessing == 'Y'
+
+ALLOW SCHEMA var3, var15, TARGET
+    AND FILTER ConsentProcessing == 'Y' AND FILTER Age >= 16
+    AND PURPOSE Processing
+
+ALLOW SCHEMA var3, var15, TARGET
+    AND PURPOSE Processing AND PURPOSE BusinessPurpose
+
+ALLOW SCHEMA var3, var15, TARGET
+    AND PURPOSE Processing AND PURPOSE PublicInterest
+    AND ROLE Controller
+
+ALLOW SCHEMA var3, var15, TARGET
+    AND (ROLE PublicAuthority OR ROLE LegalAuthority)
+    AND PURPOSE Processing
+
+ALLOW SCHEMA var3, var15, TARGET
+    AND FILTER ConsentProcessing == 'Y' AND FILTER ConsentGuardian == 'Y'
+    AND FILTER Age < 16 AND FILTER Age >= 13
+    AND PURPOSE Processing
+
+
+ALLOW SCHEMA var3, var15, TARGET
+    AND FILTER ConsentProcessingIdentifiable == 'Y'
+    AND PURPOSE BusinessPurpose
+
+ALLOW SCHEMA var3, var15, TARGET
+    AND FILTER ConsentProcessingIdentifiable == 'Y'
+    AND PURPOSE Processing AND ( PURPOSE EmploymentPurpose OR PURPOSE SocialSecurity OR PURPOSE SocialProtection)
+    AND ROLE Controller
+
+ALLOW SCHEMA var3, var15, TARGET
+    AND PURPOSE Processing AND (PURPOSE PoliticalPurpose OR PURPOSE PhilosophicalPurpose OR PURPOSE ReligiousPurpose OR PURPOSE TradeUnionPurpose)
+    AND ROLE NonProfit
+
+ALLOW SCHEMA var3, var15, TARGET
+    AND PURPOSE Processing
+
+ALLOW SCHEMA var3, var15, TARGET
+    AND PURPOSE Processing AND PURPOSE LegalPurpose
+
+ALLOW SCHEMA var3, var15, TARGET
+    AND PURPOSE Processing AND PURPOSE MedicalPurpose
+
+ALLOW SCHEMA var3, var15, TARGET
+    AND PURPOSE Processing AND (PURPOSE PublicInterest OR PURPOSE ScientificPurpose OR PURPOSE HistoricalResearchPurpose)
+
+ALLOW SCHEMA var3, var15, TARGET
+    AND ROLE OfficialAuthority
+
+
+ALLOW ROLE DataSubjectID
+    AND SCHEMA var3, var15, TARGET
+
+ALLOW (ROLE Controller OR ROLE Processor)
+    AND SCHEMA var3, var15, TARGET
+    AND PURPOSE Processing
+    AND FILTER RequestProcessing == 'Y'
+
+ALLOW ROLE DataSubjectID
+    AND SCHEMA var3, var15, TARGET
+    AND FILTER RequestRectification == 'Y' AND FILTER ConsumerID == 'n_consumer'
+
+ALLOW (ROLE Controller OR ROLE Processor)
+    AND FILTER ConsumerID == 'n_consumer' AND (FILTER RequestDeletion == 'Y' OR FILTER RequestProcessing == 'N')
+    AND PURPOSE DeletionData
+
+ALLOW ROLE DataSubjectID
+    AND SCHEMA var3, var15, TARGET
+    AND FILTER RequestDisclosure == 'Y' AND FILTER ConsumerID == 'n_consumer'
+
+ALLOW (ROLE Controller OR ROLE Processor)
+    AND SCHEMA var3, var15, TARGET
+    AND (PURPOSE Processing AND PURPOSE DirectMarketingPurpose)
+    AND FILTER RequestProcessing == 'Y' AND FILTER RequestDirectMarketing == 'Y'
+
+ALLOW ROLE Controller
+    AND SCHEMA var3, var15, TARGET
+    AND (PURPOSE Retention OR PURPOSE BusinessPurpose OR PURPOSE Sell OR PURPOSE Share OR PURPOSE Processing)
+    AND PRIVACY Anonymization
+
+ALLOW ROLE Processor
+    AND SCHEMA var3, var15, TARGET
+    AND PURPOSE Processing
+    AND PRIVACY Anonymization
+
+ALLOW ROLE DataProtectionOfficer
+    AND SCHEMA var3, var15, TARGET
+    AND PRIVACY Anonymization
+    AND PURPOSE MonitorProtection
+
+ALLOW (ROLE ThirdCountry OR ROLE InternationalOrg)
+    AND SCHEMA var3, var15, TARGET
+    AND PURPOSE Transfer
+    AND FILTER PRIVACY Anonymization
+
+
+ALLOW (ROLE ThirdCountry OR ROLE InternationalOrg)
+    AND SCHEMA var3, var15, TARGET
+    AND PURPOSE Transfer
+    AND (FILTER ConsentTransfer == 'Y'
+    OR PURPOSE BusinessPurpose
+    OR PURPOSE PublicInterest
+    OR PURPOSE LegalPurpose)
+
+
+ALLOW ROLE SupervisoryAuthority
+    AND SCHEMA var3, var15, TARGET
+    PURPOSE SupervisionPurpose

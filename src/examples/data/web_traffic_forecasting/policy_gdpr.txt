@@ -100,7 +100,3 @@ ALLOW (ROLE ThirdCountry OR ROLE InternationalOrg)
 
 ALLOW ROLE SupervisoryAuthority
     PURPOSE SupervisionPurpose
-
-ALLOW ROLE WikiAdministrator
-  AND PURPOSE TimeSeriesAnalysis
-  AND PRIVACY Aggregation

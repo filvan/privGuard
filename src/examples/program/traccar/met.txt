@@ -1,0 +1,39 @@
+User
+    -id
+    -name
+    -email
+    -hashedpassword
+    --salt
+    -readonly
+    -administrator
+    -map
+    -language
+    -distanceunit
+    -speedunit
+    -latitude
+    -longitude
+    -zoom
+
+Devices
+    -id
+    -name
+    -uniqueid
+    status
+    -lastupdate
+    -postionid
+
+positions
+    -id
+    -protocol
+    -deviceid
+    -servertime
+    -devicetime
+    -fixtime
+    valid
+    -latitude
+    -longitude
+    -altitude
+    -speed
+    -course
+    -address
+    -attributes

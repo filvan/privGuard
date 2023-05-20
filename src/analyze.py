@@ -54,7 +54,7 @@ program_map = {
     4: "./examples/program/4_customer_satisfaction_prediction.py",
     5: "./examples/program/5_customer_transaction_prediction.py",
     6: "./examples/program/6_customer_transaction_prediction.py",
-    # 7: "./examples/program/7_bank_customer_classification.py",
+    7: "./examples/program/extra_examples/bank_customer_classification.py",
     # 8: "./examples/program/8_bank_customer_segmentation.py",
     # 9: "./examples/program/9_credit_risk_analysis.py",
     # 10: "./examples/program/10_customer_churn_prediction.py",
@@ -72,6 +72,8 @@ program_map = {
     # 22: "./examples/program/22_malware_prediction.py",
     23: "./examples/program/23_web_traffic_forecasting.py",
     24: "./examples/program/cpra_example.py",
+
+
     25: "./examples/program/Libretaxi/libretaxi_example.py",
     26: "./examples/program/Libretaxi/repository/libretaxi_saveUser.py",
     27: "./examples/program/Libretaxi/libretaxi_ModifyUser.py",
@@ -119,7 +121,7 @@ data_map = {
     4: "./examples/data/customer_satisfaction_prediction/",
     5: "./examples/data/customer_transaction_prediction/",
     6: "./examples/data/customer_transaction_prediction/",
-    # 7: "./examples/data/bank_customer_classification/",
+    7: "./examples/data/bank_customer_churn/",
     # 8: "./examples/data/bank_customer_segmentation/",
     # 9: "./examples/data/credit_risk_analysis/",
     # 10: "./examples/data/customer_churn_prediction/",
@@ -178,6 +180,9 @@ lib_map = {
     4: {'cross_validation': stub_cross_validation, 'metrics': stub_metrics, 'numpy': stub_numpy, 'pandas': stub_pandas, 'xgboost': stub_xgboost},
     5: {'lgb':stub_lightgbm, 'metrics': stub_metrics, 'model_selection':stub_model_selection, 'numpy':stub_numpy, 'pandas':stub_pandas, 'random':stub_random},
     6: {'numpy':stub_numpy, 'pandas':stub_pandas},
+
+    7: {'numpy': stub_numpy, 'pandas': stub_pandas,'lgb':stub_lightgbm, 'metrics': stub_metrics, 'model_selection':stub_model_selection},
+
     23: {'numpy':stub_numpy, 'pandas':stub_pandas, 'arima': stub_arima},
     24: {'numpy':stub_numpy, 'pandas':stub_pandas},
     25: {'numpy': stub_numpy, 'pandas': stub_pandas},
@@ -197,7 +202,7 @@ lib_map = {
     39: {'numpy': stub_numpy, 'pandas': stub_pandas},
     40: {'numpy': stub_numpy, 'pandas': stub_pandas},
     41: {'numpy': stub_numpy, 'pandas': stub_pandas},
-    42: {'numpy': stub_numpy, 'pandas': stub_pandas,'cross_validation': stub_cross_validation,},
+    42: {'numpy': stub_numpy, 'pandas': stub_pandas,'cross_validation': stub_cross_validation},
     50: {'pandas': stub_pandas},
     51: {'pandas': stub_pandas},
     52: {'pandas': stub_pandas},
