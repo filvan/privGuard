@@ -4,11 +4,7 @@ from numpy import array
 
 from .query.columns import Columns
 from .query.condition import Condition
-from .query.order import Order
-from .query.request import Request
 from .queryBuilder import QueryBuilder
-from src.examples.program.traccar.config.config import Config
-from src.examples.program.traccar.model.baseModel import BaseModel
 from src.examples.program.traccar.model.device import Device
 from src.examples.program.traccar.model.group import Group
 from src.examples.program.traccar.model.groupModel import GroupedModel

@@ -1,4 +1,3 @@
-from src.examples.program.traccar.config.configSuffix import *
 from array import *
 from .keyType import KeyType
 class Keys:

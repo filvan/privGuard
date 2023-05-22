@@ -1,5 +1,4 @@
-from src.examples.program.traccar.config.config import Config
-from src.examples.program.traccar.config.keys import Keys
+from src.examples.program.traccar.config.config import Keys
 from src.examples.program.traccar.helper.distanceCalculator import DistanceCalculator
 from .geofenceGeometry import GeofenceGeometry
 

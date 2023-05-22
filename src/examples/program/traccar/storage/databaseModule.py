@@ -1,7 +1,6 @@
 import this
 
-from src.examples.program.traccar.config.config import Config
-from src.examples.program.traccar.config.keys import Keys
+from src.examples.program.traccar.config.config import Keys
 
 class DatabaseModule():
 

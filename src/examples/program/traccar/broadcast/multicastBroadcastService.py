@@ -2,13 +2,8 @@ from collections import OrderedDict
 
 from numpy import array
 
-from src.examples.program.traccar.config.config import Config
-from src.examples.program.traccar.config.keys import Keys
-from src.examples.program.traccar.model.baseModel import BaseModel
-from src.examples.program.traccar.model.device import Device
-from src.examples.program.traccar.model.event import Event
+from src.examples.program.traccar.config.config import Keys
 from src.examples.program.traccar.model.permission import Permission
-from src.examples.program.traccar.model.position import Position
 from .broadcastMessage import BroadcastMessage
 from .broadcastService import BroadcastService
 

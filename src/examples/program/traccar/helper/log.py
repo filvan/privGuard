@@ -1,8 +1,8 @@
 import os
-import sys
 from logging.handlers import *
 from datetime import *
-from src.examples.program.traccar.config.keys import *
+
+
 class Log:
 
     def __init__(self):

@@ -1,5 +1,4 @@
 from .geofenceGeometry import GeofenceGeometry
-from src.examples.program.traccar.config.config import Config
 from src.examples.program.traccar.helper.distanceCalculator import DistanceCalculator
 
 import math

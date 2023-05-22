@@ -1,5 +1,3 @@
-from src.examples.program.traccar.config.config import Config
-
 class GeofenceGeometry:
 
     def containsPoint(self, config, geofence, latitude, longitude):
