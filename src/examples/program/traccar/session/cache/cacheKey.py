@@ -24,7 +24,7 @@ class CacheKey:
     def equals(self, o):
         if self is o:
             return True
-        if o is None or o.__class__ != type(o):
+        if o is None or self.__class__ != type(o):
             return False
         cacheKey = o
         return self._id == cacheKey._id and self._clazz == cacheKey._clazz
