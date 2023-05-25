@@ -1,9 +1,9 @@
 import http
 
 from src.examples.program.traccar.model.command import Command
-from src.examples.program.traccar.protocol import Protocol
+from src.examples.program.traccar.protocol_file import Protocol
 from src.examples.program.traccar.basePipelineFactory import BasePipelineFactory
-from src.examples.program.traccar.protocol import Protocol
+from src.examples.program.traccar.protocol_file import Protocol
 from src.examples.program.traccar.model.command import Command
 
 class DeviceSession:

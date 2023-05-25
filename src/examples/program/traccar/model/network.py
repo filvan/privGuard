@@ -93,7 +93,7 @@ class Network:
     def equals(self, o):
         if self is o:
             return True
-        if o is None or o.__class__ != type(o):
+        if o is None or self.__class__ != type(o):
             return False
         network = o
         return self._homeMobileCountryCode == network._homeMobileCountryCode and self._homeMobileNetworkCode == network._homeMobileNetworkCode and self._radioType == network._radioType and self._carrier == network._carrier and self._cellTowers == network._cellTowers and self._wifiAccessPoints == network._wifiAccessPoints

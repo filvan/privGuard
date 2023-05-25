@@ -88,7 +88,7 @@ class CellTower:
     def equals(self, o):
         if self is o:
             return True
-        if o is None or o.__class__ != type(o):
+        if o is None or self.__class__ != type(o):
             return False
         cellTower = o
         return self._radioType == cellTower._radioType and self._cellId == cellTower._cellId and self._locationAreaCode == cellTower._locationAreaCode and self._mobileCountryCode == cellTower._mobileCountryCode and self._mobileNetworkCode == cellTower._mobileNetworkCode and self._signalStrength == cellTower._signalStrength

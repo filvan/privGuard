@@ -18,7 +18,7 @@ class Pair:
     def equals(self, o):
         if self is o:
             return True
-        if o is None or o.__class__ != type(o):
+        if o is None or self.__class__ != type(o):
             return False
 
         pair = o

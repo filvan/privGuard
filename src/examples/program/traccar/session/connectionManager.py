@@ -3,7 +3,7 @@ import collections
 from numpy import array
 
 from src.examples.program.traccar.broadcast import broadcastService
-from src.examples.program.traccar.protocol import Protocol
+from src.examples.program.traccar.protocol_file import Protocol
 from src.examples.program.traccar.broadcast.broadcastInterface import BroadcastInterface
 from src.examples.program.traccar.broadcast.broadcastService import BroadcastService
 from src.examples.program.traccar.config.config import Config

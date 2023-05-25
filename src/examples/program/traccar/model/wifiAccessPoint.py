@@ -46,7 +46,7 @@ class WifiAccessPoint:
     def equals(self, o):
         if self is o:
             return True
-        if o is None or o.__class__ != type(o):
+        if o is None or self.__class__ != type(o):
             return False
         that = o
         return self._macAddress == that._macAddress and self._signalStrength == that._signalStrength and self._channel == that._channel
