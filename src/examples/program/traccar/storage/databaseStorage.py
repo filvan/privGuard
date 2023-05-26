@@ -1,5 +1,4 @@
 
-
 from numpy import array
 
 from .query.columns import Columns

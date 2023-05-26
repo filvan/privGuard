@@ -1,0 +1,1 @@
+ConsumerID,Name,Mail,HashedPassword,Salt,ReadOnly,Administrator,Map,Language,DistanceUnit,SpeedUnit,Latitude,Longitude,Zoom

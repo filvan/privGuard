@@ -1,0 +1,1 @@
+DeviceID,Name,UniqueID,Status,LastUpdate,PositionID,CorrectInfos,ConsentUse,ConsentProcessing,GuardianConsent,ConsentProcessingIdentifiable,RequestRectification,RequestDeletion,RequestDisclosure,RequestProcessing,RequestDirectMarketing,ConsentTransfer

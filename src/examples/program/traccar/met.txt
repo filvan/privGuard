@@ -29,7 +29,7 @@ positions
     -servertime
     -devicetime
     -fixtime
-    valid
+    -valid
     -latitude
     -longitude
     -altitude

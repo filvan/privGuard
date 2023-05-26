@@ -1,32 +1,32 @@
 
 ALLOW ROLE Controller
-    AND SCHEMA ConsumerID,Username,FirstName,LastName,Longitude,Latitude
+    AND SCHEMA ConsumerID, Name,Mail,HashedPassword,Salt,Latitude,Longitude
     AND FILTER CorrectInfos == 'N'
     AND (PURPOSE DeleteData OR PURPOSE ModificationData)
 
 ALLOW ROLE Controller
-    AND SCHEMA ConsumerID,Username,FirstName,LastName,Longitude,Latitude
+    AND SCHEMA ConsumerID, Name,Mail,HashedPassword,Salt,Latitude,Longitude
     AND PRIVACY Anonymization
 
 ALLOW ROLE Controller
-    AND SCHEMA ConsumerID,Username,FirstName,LastName,Longitude,Latitude
+    AND SCHEMA ConsumerID, Name,Mail,HashedPassword,Salt,Latitude,Longitude
     AND FILTER ConsentProcessing == 'Y' AND FILTER Age >= 16
     AND PURPOSE Processing
 
 ALLOW ROLE Controller
-    AND SCHEMA ConsumerID,Username,FirstName,LastName,Longitude,Latitude
+    AND SCHEMA ConsumerID, Name,Mail,HashedPassword,Salt,Latitude,Longitude
     AND PURPOSE Processing AND PURPOSE BusinessPurpose
 
-ALLOW SCHEMA ConsumerID,Username,FirstName,LastName,Longitude,Latitude
+ALLOW SCHEMA ConsumerID, Name,Mail,HashedPassword,Salt,Latitude,Longitude
     AND PURPOSE Processing AND PURPOSE PublicInterest
     AND ROLE Controller
 
-ALLOW SCHEMA ConsumerID,Username,FirstName,LastName,Longitude,Latitude
+ALLOW SCHEMA ConsumerID, Name,Mail,HashedPassword,Salt,Latitude,Longitude
     AND (ROLE PublicAuthority OR ROLE LegalAuthority)
     AND PURPOSE Processing
 
 ALLOW ROLE Controller
-    AND SCHEMA ConsumerID,Username,FirstName,LastName,Longitude,Latitude
+    AND SCHEMA ConsumerID, Name,Mail,HashedPassword,Salt,Latitude,Longitude
     AND FILTER ConsentProcessing == 'Y' AND FILTER GuardianConsent == 'Y'
     AND FILTER Age < 16 AND FILTER Age >= 13
     AND PURPOSE Processing
@@ -67,12 +67,12 @@ ALLOW ROLE DataSubjectID
     AND SCHEMA ControllerID, ControllerRepresentative, ContactDataProtection
 
 ALLOW ROLE DataSubjectID
-    AND SCHEMA Username,FirstName,LastName,Longitude,Latitude
+    AND SCHEMA ConsumerID, Name,Mail,HashedPassword,Salt,Latitude,Longitude
     AND PURPOSE Processing
     AND FILTER RequestProcessing == 'Y'
 
 ALLOW ROLE DataSubjectID
-    AND SCHEMA Username,FirstName,LastName,Longitude,Latitude
+    AND SCHEMA ConsumerID, Name,Mail,HashedPassword,Salt,Latitude,Longitude
     AND FILTER RequestRectification == 'Y' AND FILTER ConsumerID == n
 
 ALLOW (ROLE Controller OR ROLE Processor)
@@ -80,37 +80,37 @@ ALLOW (ROLE Controller OR ROLE Processor)
     AND PURPOSE DeletionData
 
 ALLOW ROLE DataSubjectID
-    AND SCHEMA ConsumerID,Username,FirstName,LastName,Longitude,Latitude
+    AND SCHEMA ConsumerID, Name,Mail,HashedPassword,Salt,Latitude,Longitude
     AND FILTER RequestDisclosure == 'Y' AND FILTER ConsumerID == n
 
 ALLOW (ROLE Controller OR ROLE Processor)
-    AND SCHEMA ConsumerID,Username,FirstName,LastName,Longitude,Latitude
+    AND SCHEMA ConsumerID, Name,Mail,HashedPassword,Salt,Latitude,Longitude
     AND (PURPOSE Processing AND PURPOSE DirectMarketingPurpose)
     AND FILTER RequestProcessing == 'Y' AND FILTER RequestDirectMarketing == 'Y'
 
 ALLOW ROLE Controller
-    AND SCHEMA ConsumerID,Username,FirstName,LastName,Longitude,Latitude
+    AND SCHEMA ConsumerID, Name,Mail,HashedPassword,Salt,Latitude,Longitude
     AND (PURPOSE Retention OR PURPOSE BusinessPurpose OR PURPOSE Sell OR PURPOSE Share OR PURPOSE Processing)
     AND PRIVACY Anonymization
 
 ALLOW ROLE Processor
-    AND SCHEMA ConsumerID,Username,FirstName,LastName,Longitude,Latitude
+    AND SCHEMA ConsumerID, Name,Mail,HashedPassword,Salt,Latitude,Longitude
     AND PURPOSE Processing
     AND PRIVACY Anonymization
 
 ALLOW ROLE DataProtectionOfficer
-    AND SCHEMA ConsumerID,Username,FirstName,LastName,Longitude,Latitude
+    AND SCHEMA ConsumerID, Name,Mail,HashedPassword,Salt,Latitude,Longitude
     AND PRIVACY Anonymization
     AND PURPOSE MonitorProtection
 
 ALLOW (ROLE ThirdCountry OR ROLE InternationalOrg)
-    AND SCHEMA ConsumerID,Username,FirstName,LastName,Longitude,Latitude
+    AND SCHEMA ConsumerID, Name,Mail,HashedPassword,Salt,Latitude,Longitude
     AND PURPOSE Transfer
     AND FILTER PRIVACY Anonymization
 
 
 ALLOW (ROLE ThirdCountry OR ROLE InternationalOrg)
-    AND SCHEMA ConsumerID,Username,FirstName,LastName,Longitude,Latitude
+    AND SCHEMA ConsumerID, Name,Mail,HashedPassword,Salt,Latitude,Longitude
     AND PURPOSE Transfer
     AND (FILTER ConsentTransfer == 'Y'
     OR PURPOSE BusinessPurpose
@@ -119,5 +119,5 @@ ALLOW (ROLE ThirdCountry OR ROLE InternationalOrg)
 
 
 ALLOW ROLE SupervisoryAuthority
-    SCHEMA ConsumerID,Username,FirstName,LastName,Longitude,Latitude
-    PURPOSE SupervisionPurpose
+    AND SCHEMA ConsumerID, Name,Mail,HashedPassword,Salt,Latitude,Longitude
+    AND PURPOSE SupervisionPurpose

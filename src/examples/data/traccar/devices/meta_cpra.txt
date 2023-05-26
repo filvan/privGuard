@@ -1,0 +1,1 @@
+DeviceID,Name,UniqueID,Status,LastUpdate,PositionID,ConsentUse,ConsentShare,ConsentSell,ConsentCollection,ConsentRetention,GuardianConsent,RequestDeletion,RequestDisclosure,RequestInaccurate,LimitUse

@@ -1,0 +1,67 @@
+ALLOW ROLE Business
+    AND SCHEMA DeviceID,UniqueID,Name,PositionID
+    AND (((FILTER ConsentUse == 'Y' OR FILTER ConsentCollection == 'Y' OR FILTER ConsentRetention == 'Y')
+    AND PURPOSE BusinessPurpose)
+    OR (FILTER ConsentShare == 'Y'
+    AND PURPOSE Share)
+    OR (FILTER ConsentSell == 'Y'
+    AND PURPOSE Sell)
+    )
+
+ALLOW (ROLE ServiceProvider OR ROLE Contractor OR ROLE ThirdParty)
+    AND ((PURPOSE Share
+    AND FILTER ConsentShare == 'Y')
+    OR (PURPOSE Sell
+    AND FILTER ConsentSell == 'Y')
+    )AND PURPOSE BusinessPurpose
+    AND PRIVACY DP(1.0, 1e-5)
+
+ALLOW ROLE Business
+    AND SCHEMA DeviceID,UniqueID,Name,PositionID
+    AND PRIVACY DP(1.0, 1e-5)
+    AND FILTER ConsentRetention == 'Y'
+
+ALLOW (ROLE Business OR ROLE ServiceProvider OR ROLE Contractor OR ROLE ThirdParty)
+    AND FILTER ConsumerID == 'n_consumer'
+    AND FILTER RequestDeletion == 'Y'
+    AND PURPOSE DeletionData
+
+
+ALLOW ROLE Business
+    AND SCHEMA DeviceID,UniqueID,Name,PositionID
+    AND FILTER RequestInaccurate == 'Y' AND FILTER ConsumerID == 'n_consumer'
+    AND PURPOSE ModificationData
+
+ALLOW ROLE ConsumerID
+    AND SCHEMA DeviceID,UniqueID,Name,PositionID
+    AND FILTER RequestDisclosure == 'Y' AND FILTER ConsumerID == 'n_consumer'
+
+ALLOW ROLE ConsumerID
+    AND ((PURPOSE OptOutSell
+    AND FILTER ConsentSell == 'N')
+    OR (PURPOSE OptOutShare
+    AND FILTER ConsentShare == 'N'))
+    AND FILTER ConsumerID == 'n_consumer'
+
+ALLOW ROLE Business
+    AND ((FILTER ConsentShare == 'Y'
+    AND PURPOSE Share)
+    OR (FILTER ConsentSell == 'Y'
+    AND PURPOSE Sell))
+    AND ((FILTER Age <16 AND FILTER Age >=13 AND FILTER GuardianConsent == 'Y')
+        OR (FILTER Age >=16))
+
+
+ALLOW (ROLE Business OR ROLE ServiceProvider OR ROLE Contractor OR ROLE ThirdParty)
+    AND SCHEMA PositionID
+    AND PURPOSE BusinessPurpose
+    AND FILTER LimitUse == 'N'
+
+ALLOW ROLE GovernamentAgency
+    AND SCHEMA DeviceID,UniqueID,Name,PositionID
+    AND FILTER ConsumerID == 'n_consumer'
+
+ALLOW ROLE Business
+    AND SCHEMA DeviceID,UniqueID,Name,PositionID
+    AND (PURPOSE Retention OR PURPOSE BusinessPurpose OR PURPOSE Sell OR PURPOSE Share)
+    AND (PRIVACY Anonymization OR PRIVACY Aggregation)

@@ -1,0 +1,1 @@
+PositonID,Protocol,DeviceID,ServerTime,DeviceTime,FixTime,Valid,Latitude,Longitude,Altitude,Speed,Course,Address,Attribute,CorrectInfos,ConsentUse,ConsentProcessing,GuardianConsent,ConsentProcessingIdentifiable,RequestRectification,RequestDeletion,RequestDisclosure,RequestProcessing,RequestDirectMarketing,ConsentTransfer

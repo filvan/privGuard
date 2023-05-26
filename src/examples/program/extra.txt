@@ -1,0 +1,19 @@
+def run(data_folder, **kwargs):
+    pd = kwargs.get('pandas')
+    np = kwargs.get('numpy')
+    cross_validation = kwargs.get('cross_validation')
+    lgb = kwargs.get('lightgbm')
+    LGBMClassifier = lgb.LGBMClassifier
+
+    train_test_split = cross_validation.train_test_split
+
+    df = pd.read_csv(path.join(data_folder, 'data.csv'))
+
+    df = df.drop(['RowNumber', 'CustomerId', 'Surname'], axis=1)
+
+    X = df.drop("Exited", axis=1)
+    y = df['Exited']
+    cls = LGBMClassifier(learning_rate=0.06, max_bin=165, max_depth=5, min_child_samples=153, min_child_weight=0.1, min_split_gain=0.0018, n_estimators=41, num_leaves=6, reg_alpha=2.1, reg_lambda=2.54, objective='binary', n_jobs=-1)
+    model = cls.fit(X.values, y.values)
+
+    return model
