@@ -22,11 +22,11 @@
 
 """ Function summaries for the lightgbm library. """
 
-import stub_numpy as np
-import stub_pandas as pd
+from src.stub_libraries import stub_numpy as np
+from src.stub_libraries import stub_pandas as pd
 import math
-from blackbox import Blackbox
-from stub_numpy import ndarray
+from src.stub_libraries.blackbox import Blackbox
+from src.stub_libraries.stub_numpy import ndarray
 
 class Dataset(Blackbox):
     

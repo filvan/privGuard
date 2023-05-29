@@ -23,9 +23,9 @@
 """ The parser for Legalease policy. """
 
 from pyparsing import oneOf, Word, Literal, pyparsing_common, Regex, Optional, Suppress, infix_notation, OneOrMore, OpAssoc, nums, alphanums, delimitedList
-from typed_value import IntegerV, StringV, ExtendV
-from abstract_domain import ClosedIntervalL
-from attribute import RoleAttribute, PurposeAttribute, RedactAttribute, PrivacyAttribute, FilterAttribute, SchemaAttribute
+from src.parser.typed_value import IntegerV, StringV, ExtendV
+from src.parser.abstract_domain import ClosedIntervalL
+from src.parser.attribute import RoleAttribute, PurposeAttribute, RedactAttribute, PrivacyAttribute, FilterAttribute, SchemaAttribute
 
 # define basic parsers for tokens in the policy.
 COMPARATOR = oneOf(['==', '!=', '>', '>=', '<', '<=']).setName('COMPARATOR')

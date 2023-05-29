@@ -24,17 +24,16 @@
 
 import os
 import sys
-privguard_path = os.getcwd()
-sys.path.append(os.path.join(privguard_path, "parser"))
+sys.path.append(os.path.join(os.environ['PRIVGUARD'], 'src/stub_libraries'))
 
-from tabular import Tabular
-from blackbox import Blackbox
-from utils import UniversalIndex
-from stub_numpy import ndarray
-from policy_tree import DNF, Policy
-from attribute import Satisfied, Unsatisfiable
-from abstract_domain import ClosedIntervalL
-from typed_value import IntegerV, StringV, ExtendV
+from src.stub_libraries.tabular import Tabular
+from src.stub_libraries.blackbox import Blackbox
+from src.stub_libraries.utils import UniversalIndex
+from src.stub_libraries.stub_numpy import ndarray
+from src.parser.policy_tree import DNF, Policy
+from src.parser.attribute import Satisfied, Unsatisfiable
+from src.parser.abstract_domain import ClosedIntervalL
+from src.parser.typed_value import IntegerV, StringV, ExtendV
 
 def read_csv(filename, schema=[], usecols=None, **kwargs):
 

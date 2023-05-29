@@ -24,16 +24,15 @@
 
 import os
 import sys
-privguard_path = os.getcwd()
-sys.path.append(os.path.join(privguard_path, "src/parser"))
+sys.path.append(os.path.join(os.environ.get('PRIVGUARD'), "src/parser"))
 
 import numpy as np
-import stub_pandas as pd
+from src.stub_libraries import stub_pandas as pd
 import math
-from blackbox import Blackbox
-from policy_tree import Policy
-from utils import UniversalIndex
-from tabular import Tabular
+from src.stub_libraries.blackbox import Blackbox
+from src.parser.policy_tree import Policy
+from src.stub_libraries.utils import UniversalIndex
+from src.stub_libraries.tabular import Tabular
 
 int8 = np.int8
 int64 = np.int64

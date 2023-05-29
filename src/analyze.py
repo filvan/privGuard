@@ -24,27 +24,26 @@
 
 import os
 import sys
+print(os.getcwd())
+print(os.environ)
+sys.path.append(os.path.join(os.environ.get('PRIVGUARD'), 'src/parser'))
+sys.path.append(os.path.join(os.environ.get('PRIVGUARD'), "src/stub_libraries"))
 
-privguard_path = os.getcwd()
-sys.path.append(os.path.join(privguard_path, 'parser'))
-sys.path.append(os.path.join(privguard_path, "stub_libraries"))
 from importlib.util import spec_from_file_location, module_from_spec
 import json
 from shutil import copyfile
 import argparse
 
-from attribute import Satisfied
-from policy_tree import Policy
+from src.parser.attribute import Satisfied
+from src.parser.policy_tree import Policy
 
-import stub_pandas
-import stub_numpy
-import stub_numpy.random as stub_random
-import stub_lightgbm
-import stub_xgboost
-import stub_statsmodels.tsa.arima.model as stub_arima
-import stub_sklearn.cross_validation as stub_cross_validation
-import stub_sklearn.metrics as stub_metrics
-import stub_sklearn.model_selection as stub_model_selection
+from src.stub_libraries import stub_pandas,stub_numpy,stub_lightgbm,stub_xgboost
+#import stub_numpy
+from src.stub_libraries.stub_numpy import random as stub_random
+from src.stub_libraries.stub_statsmodels.tsa.arima import model as stub_arima
+from src.stub_libraries.stub_sklearn import cross_validation as stub_cross_validation
+from src.stub_libraries.stub_sklearn import metrics as stub_metrics
+from src.stub_libraries.stub_sklearn import model_selection as stub_model_selection
 from examples.program.Libretaxi.locales import english, es, fa, pt_br, pt_pt, ru
 program_map = {
     0: "./examples/program/ehr_example.py",

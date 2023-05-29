@@ -24,10 +24,10 @@
 
 from typing import List
 from copy import deepcopy
-from attribute import Attribute, Satisfied, Unsatisfiable, FilterAttribute, SchemaAttribute, PrivacyAttribute, RedactAttribute, PurposeAttribute
-from typed_value import ExtendV
-from abstract_domain import ClosedIntervalL
-from policy_parser import policy_parser
+from src.parser.attribute import Attribute, Satisfied, Unsatisfiable, FilterAttribute, SchemaAttribute, PrivacyAttribute, RedactAttribute, PurposeAttribute
+from src.parser.typed_value import ExtendV
+from src.parser.abstract_domain import ClosedIntervalL
+from src.parser.policy_parser import policy_parser
 
 class ConjunctClause:
     """

@@ -22,7 +22,7 @@
 
 """ Utility functions and classes + stub built-in functions. """
 
-from tabular import Tabular
+from src.stub_libraries.tabular import Tabular
 
 def len_(arr):
     if isinstance(arr, Tabular):

@@ -22,11 +22,10 @@
 
 import os
 import sys
-privguard_path = os.getcwd()
-sys.path.append(os.path.join(privguard_path, 'src/stub_libraries'))
+sys.path.append(os.path.join(os.environ['PRIVGUARD'], 'src/stub_libraries'))
 
-from utils import UniversalIndex
-from blackbox import Blackbox
+from src.stub_libraries.utils import UniversalIndex
+from src.stub_libraries.blackbox import Blackbox
 
 class KFold():
 

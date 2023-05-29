@@ -22,8 +22,8 @@
 
 """ Function summaries of XGBoost. """
 
-from blackbox import Blackbox
-from stub_numpy import ndarray
+from src.stub_libraries.blackbox import Blackbox
+from src.stub_libraries.stub_numpy import ndarray
 
 class XGBClassifier(Blackbox):
 

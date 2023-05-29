@@ -22,7 +22,7 @@
 
 """ Abstract domains for PrivGuard. """
 
-from typed_value import ExtendV
+from src.parser.typed_value import ExtendV
 
 class Lattice(object):
     """ Parent class for abstract lattices in PrivGuard policies. """

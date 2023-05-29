@@ -24,12 +24,11 @@
 
 import os
 import sys
-privguard_path = os.getcwd()
-sys.path.append(os.path.join(privguard_path, "parser"))
+sys.path.append(os.path.join(os.environ['PRIVGUARD'], 'src/stub_libraries'))
 
-import stub_pandas as pd
+from src.stub_libraries import stub_pandas as pd
 from functools import partial, reduce
-from policy_tree import Policy, DNF, Satisfied
+from src.parser.policy_tree import Policy, DNF, Satisfied
 
 
 class Tabular:
