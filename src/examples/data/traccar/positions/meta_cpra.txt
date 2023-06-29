@@ -1,1 +1,1 @@
-PositonID,Protocol,DeviceID,ServerTime,DeviceTime,FixTime,Valid,Latitude,Longitude,Altitude,Speed,Course,Address,Attribute,ConsentUse,ConsentShare,ConsentSell,ConsentCollection,ConsentRetention,GuardianConsent,RequestDeletion,RequestDisclosure,RequestInaccurate,LimitUse
+PositionID,Protocol,DeviceID,ServerTime,DeviceTime,FixTime,Valid,Latitude,Longitude,Altitude,Speed,Course,Address,Attribute,ConsentUse,ConsentShare,ConsentSell,ConsentCollection,ConsentRetention,GuardianConsent,RequestDeletion,RequestDisclosure,RequestInaccurate,LimitUse

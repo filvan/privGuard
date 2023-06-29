@@ -1,1 +1,2 @@
-ConsumerID,Name,Mail,HashedPassword,Salt,ReadOnly,Administrator,Map,Language,DistanceUnit,SpeedUnit,Latitude,Longitude,Zoom
+ConsumerID,Name,Mail,HashedPassword,Salt,ReadOnly,Administrator,Map,Language,DistanceUnit,SpeedUnit,Latitude,Longitude,Zoom,ConsentUse,ConsentShare,ConsentSell,ConsentCollection,ConsentRetention,GuardianConsent,RequestDeletion,RequestDisclosure,RequestInaccurate,LimitUse
+100

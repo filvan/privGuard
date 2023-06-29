@@ -73,15 +73,15 @@ ALLOW ROLE DataSubjectID
 
 ALLOW ROLE DataSubjectID
     AND SCHEMA ConsumerID, Name,Mail,HashedPassword,Salt,Latitude,Longitude
-    AND FILTER RequestRectification == 'Y' AND FILTER ConsumerID == n
+    AND FILTER RequestRectification == 'Y' AND (FILTER ConsumerID == n OR DeviceID = n)
 
 ALLOW (ROLE Controller OR ROLE Processor)
-    AND FILTER ConsumerID == n AND (FILTER RequestDeletion == 'Y' OR FILTER RequestProcessing == 'N')
+    AND (FILTER ConsumerID == n OR DeviceID = n) AND (FILTER RequestDeletion == 'Y' OR FILTER RequestProcessing == 'N')
     AND PURPOSE DeletionData
 
 ALLOW ROLE DataSubjectID
     AND SCHEMA ConsumerID, Name,Mail,HashedPassword,Salt,Latitude,Longitude
-    AND FILTER RequestDisclosure == 'Y' AND FILTER ConsumerID == n
+    AND FILTER RequestDisclosure == 'Y' AND (FILTER ConsumerID == n OR DeviceID = n)
 
 ALLOW (ROLE Controller OR ROLE Processor)
     AND SCHEMA ConsumerID, Name,Mail,HashedPassword,Salt,Latitude,Longitude

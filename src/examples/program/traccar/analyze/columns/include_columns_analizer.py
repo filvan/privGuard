@@ -2,14 +2,17 @@ def run(data_folder, **kwargs):
 
     pd = kwargs.get('pandas')
     clazz = kwargs.get('extra_args').get('clazz')
-
+    columns = kwargs.get('extra_args').get('columns')
+    conditions = kwargs.get('extra_args').get('conditions')
+    sort_cond = kwargs.get('extra_args').get('sort_cond')
     if str(clazz) == 'Device':
         traccar_data = pd.read_csv(data_folder + "devices/data.csv")
     elif str(clazz) == 'User':
         traccar_data = pd.read_csv(data_folder + "users/data.csv")
     elif str(clazz) == 'Position':
         traccar_data = pd.read_csv(data_folder + "positions/data.csv")
-
-    return traccar_data.iloc[-1:0].drop(
-        ['ConsentUse', 'ConsentShare', 'ConsentSell', 'ConsentRetetention', 'ConsentCollection', 'ConsentRetention',
-         'GuardianConsent', 'RequestDeletion', 'RequestDisclosure', 'RequestInaccurate'], axis=1)
+    traccar_data = traccar_data[columns]
+    for cond in conditions:
+        traccar_data = traccar_data[cond]
+    traccar_data = traccar_data.sort_values(by=sort_cond[0],axis=1,ascending=sort_cond[1])
+    return traccar_data

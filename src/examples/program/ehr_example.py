@@ -20,4 +20,4 @@ def run(data_folder, **kwargs):
     ehr = ehr[ehr.AGE >= 18]
 
     # Aggregate
-    return ehr.groupby(by="RACE").count()
+    return ehr[['CONSENT','DESCRIPTION']]

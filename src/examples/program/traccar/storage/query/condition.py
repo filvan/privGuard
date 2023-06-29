@@ -3,9 +3,7 @@ import this
 from src.examples.program.traccar.model.groupModel import GroupedModel
 
 class Condition:
-
-    @staticmethod
-    def merge(conditions):
+    def merge(self, conditions):
         result = None
         iterator = conditions.iterator()
         if iterator.hasNext():

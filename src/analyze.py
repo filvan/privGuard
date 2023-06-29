@@ -110,6 +110,16 @@ program_map = {
     63: "./examples/program/selfmailbot/models/get_user_instance.py",
     64: "./examples/program/selfmailbot/web.py",
 
+    #traccer
+
+    70: "./examples/program/traccar/analyze/columns/get_all_columns_analizer.py",
+    71: "./examples/program/traccar/analyze/columns/exclude_columns.py",
+    72: "./examples/program/traccar/analyze/columns/include_columns_analizer.py",
+    73: "./examples/program/traccar/analyze/latest_position.py",
+    74: "./examples/program/traccar/analyze/manage_user_getter.py",
+    75: "./examples/program/traccar/analyze/manage_user_setter.py",
+    76: "./examples/program/traccar/analyze/send_mail_analizer.py",
+
 }
 
 data_map = {
@@ -172,6 +182,15 @@ data_map = {
     63: "./examples/data/selfmailbot/",
     64: "./examples/data/selfmailbot/",
 
+    #traccar
+    70: "./examples/data/traccar/",
+    71: "./examples/data/traccar/",
+    72: "./examples/data/traccar/",
+    73: "./examples/data/traccar/",
+    74: "./examples/data/traccar/",
+    75: "./examples/data/traccar/",
+    76: "./examples/data/traccar/",
+
 }
 
 lib_map = {
@@ -217,6 +236,14 @@ lib_map = {
     62: {'pandas': stub_pandas},
     63: {'pandas': stub_pandas},
     64: {'pandas': stub_pandas},
+
+    70: {'pandas': stub_pandas},
+    71: {'pandas': stub_pandas},
+    72: {'pandas': stub_pandas},
+    73: {'pandas': stub_pandas},
+    74: {'pandas': stub_pandas},
+    75: {'pandas': stub_pandas},
+    76: {'pandas': stub_pandas},
 
 }
 
@@ -266,6 +293,10 @@ def parse():
     parser.add_argument('--link', help = 'Confirmation link', type = str, default='')
 
     parser.add_argument('--key',help ='Confirmation key for email', type = str, default = '')
+    parser.add_argument('--clazz',help='class to access', type = str, default='Device' )
+    parser.add_argument('--columns', nargs='*', type=str,default=[])
+    parser.add_argument('--deviceid',help='Identifier device to find', type=str,default='n_device')
+    parser.add_argument('--new_val', help='New value for setter', type = str, default = '')
     args = parser.parse_args()
     user = {'ConsumerID':args.user_id,
             'ConsentUse':args.consent_use,
@@ -308,7 +339,11 @@ def parse():
         'attachment': args.attachment,
         'attachment_name': args.attachment_name,
         'subject': args.subject,
-        'link': args.link
+        'link': args.link,
+        'clazz':args.clazz,
+        'columns':args.columns,
+        'deviceid':args.deviceid,
+        'new_val':args.new_val,
     }
     lib_map[args.example_id].__setitem__('locales',locales[args.locales])
     return program_map[args.example_id], data_map[args.example_id], lib_map[args.example_id], extra_args
@@ -323,5 +358,8 @@ if __name__ == '__main__':
     lib_list.__setitem__('extra_args',extra_args)
     result = analyze(module, data_folder, lib_list)
     result = analyze(module, data_folder, lib_list)
+
+    #file2 = open(r"C:\Users\sofy9\Desktop\TOP-UIC\Tesi\Results\Traccar\CPRA\get_all_columns_cpra_DEVICE.txt", "w+")
+    #file2.writelines(str(result))
     print("\nResidual policy of the output:" + str(result))
 

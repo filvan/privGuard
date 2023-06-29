@@ -1,67 +1,123 @@
-ALLOW ROLE Business
+
+ALLOW ROLE Controller
     AND SCHEMA DeviceID,UniqueID,Name,PositionID
-    AND (((FILTER ConsentUse == 'Y' OR FILTER ConsentCollection == 'Y' OR FILTER ConsentRetention == 'Y')
-    AND PURPOSE BusinessPurpose)
-    OR (FILTER ConsentShare == 'Y'
-    AND PURPOSE Share)
-    OR (FILTER ConsentSell == 'Y'
-    AND PURPOSE Sell)
-    )
+    AND FILTER CorrectInfos == 'N'
+    AND (PURPOSE DeleteData OR PURPOSE ModificationData)
 
-ALLOW (ROLE ServiceProvider OR ROLE Contractor OR ROLE ThirdParty)
-    AND ((PURPOSE Share
-    AND FILTER ConsentShare == 'Y')
-    OR (PURPOSE Sell
-    AND FILTER ConsentSell == 'Y')
-    )AND PURPOSE BusinessPurpose
-    AND PRIVACY DP(1.0, 1e-5)
-
-ALLOW ROLE Business
+ALLOW ROLE Controller
     AND SCHEMA DeviceID,UniqueID,Name,PositionID
-    AND PRIVACY DP(1.0, 1e-5)
-    AND FILTER ConsentRetention == 'Y'
+    AND PRIVACY Anonymization
 
-ALLOW (ROLE Business OR ROLE ServiceProvider OR ROLE Contractor OR ROLE ThirdParty)
-    AND FILTER ConsumerID == 'n_consumer'
-    AND FILTER RequestDeletion == 'Y'
+ALLOW ROLE Controller
+    AND SCHEMA DeviceID,UniqueID,Name,PositionID
+    AND FILTER ConsentProcessing == 'Y' AND FILTER Age >= 16
+    AND PURPOSE Processing
+
+ALLOW ROLE Controller
+    AND SCHEMA DeviceID,UniqueID,Name,PositionID
+    AND PURPOSE Processing AND PURPOSE BusinessPurpose
+
+ALLOW SCHEMA DeviceID,UniqueID,Name,PositionID
+    AND PURPOSE Processing AND PURPOSE PublicInterest
+    AND ROLE Controller
+
+ALLOW SCHEMA DeviceID,UniqueID,Name,PositionID
+    AND (ROLE PublicAuthority OR ROLE LegalAuthority)
+    AND PURPOSE Processing
+
+ALLOW ROLE Controller
+    AND SCHEMA DeviceID,UniqueID,Name,PositionID
+    AND FILTER ConsentProcessing == 'Y' AND FILTER GuardianConsent == 'Y'
+    AND FILTER Age < 16 AND FILTER Age >= 13
+    AND PURPOSE Processing
+
+
+ALLOW ROLE Controller
+    AND SCHEMA Race, PoliticalInfos, Religion, TradeUnionMembership
+    AND FILTER ConsentProcessingIdentifiable == 'Y'
+    AND PURPOSE BusinessPurpose
+
+ALLOW ROLE Controller
+    AND SCHEMA Race, PoliticalInfos, Religion, TradeUnionMembership
+    AND FILTER ConsentProcessingIdentifiable == 'Y'
+    AND PURPOSE Processing AND ( PURPOSE EmploymentPurpose OR PURPOSE SocialSecurity OR PURPOSE SocialProtection)
+
+
+ALLOW SCHEMA Race, PoliticalInfos, Religion, TradeUnionMembership
+    AND PURPOSE Processing AND (PURPOSE PoliticalPurpose OR PURPOSE PhilosophicalPurpose OR PURPOSE ReligiousPurpose OR PURPOSE TradeUnionPurpose)
+    AND ROLE NonProfit
+
+ALLOW SCHEMA PublicPersonalData
+    AND PURPOSE Processing
+
+ALLOW SCHEMA Race, PoliticalInfos, Religion, TradeUnionMembership
+    AND PURPOSE Processing AND PURPOSE LegalPurpose
+
+ALLOW SCHEMA Race, PoliticalInfos, Religion, TradeUnionMembership
+    AND PURPOSE Processing AND PURPOSE MedicalPurpose
+
+ALLOW SCHEMA Race, PoliticalInfos, Religion, TradeUnionMembership
+    AND PURPOSE Processing AND (PURPOSE PublicInterest OR PURPOSE ScientificPurpose OR PURPOSE HistoricalResearchPurpose)
+
+ALLOW SCHEMA CriminalData
+    AND ROLE OfficialAuthority
+
+
+ALLOW ROLE DataSubjectID
+    AND SCHEMA ControllerID, ControllerRepresentative, ContactDataProtection
+
+ALLOW ROLE DataSubjectID
+    AND SCHEMA DeviceID,UniqueID,Name,PositionID
+    AND PURPOSE Processing
+    AND FILTER RequestProcessing == 'Y'
+
+ALLOW ROLE DataSubjectID
+    AND SCHEMA DeviceID,UniqueID,Name,PositionID
+    AND FILTER RequestRectification == 'Y' AND (FILTER ConsumerID == n OR DeviceID = n)
+
+ALLOW (ROLE Controller OR ROLE Processor)
+    AND (FILTER ConsumerID == n OR DeviceID = n) AND (FILTER RequestDeletion == 'Y' OR FILTER RequestProcessing == 'N')
     AND PURPOSE DeletionData
 
-
-ALLOW ROLE Business
+ALLOW ROLE DataSubjectID
     AND SCHEMA DeviceID,UniqueID,Name,PositionID
-    AND FILTER RequestInaccurate == 'Y' AND FILTER ConsumerID == 'n_consumer'
-    AND PURPOSE ModificationData
+    AND FILTER RequestDisclosure == 'Y' AND (FILTER ConsumerID == n OR DeviceID = n)
 
-ALLOW ROLE ConsumerID
+ALLOW (ROLE Controller OR ROLE Processor)
     AND SCHEMA DeviceID,UniqueID,Name,PositionID
-    AND FILTER RequestDisclosure == 'Y' AND FILTER ConsumerID == 'n_consumer'
+    AND (PURPOSE Processing AND PURPOSE DirectMarketingPurpose)
+    AND FILTER RequestProcessing == 'Y' AND FILTER RequestDirectMarketing == 'Y'
 
-ALLOW ROLE ConsumerID
-    AND ((PURPOSE OptOutSell
-    AND FILTER ConsentSell == 'N')
-    OR (PURPOSE OptOutShare
-    AND FILTER ConsentShare == 'N'))
-    AND FILTER ConsumerID == 'n_consumer'
-
-ALLOW ROLE Business
-    AND ((FILTER ConsentShare == 'Y'
-    AND PURPOSE Share)
-    OR (FILTER ConsentSell == 'Y'
-    AND PURPOSE Sell))
-    AND ((FILTER Age <16 AND FILTER Age >=13 AND FILTER GuardianConsent == 'Y')
-        OR (FILTER Age >=16))
-
-
-ALLOW (ROLE Business OR ROLE ServiceProvider OR ROLE Contractor OR ROLE ThirdParty)
-    AND SCHEMA PositionID
-    AND PURPOSE BusinessPurpose
-    AND FILTER LimitUse == 'N'
-
-ALLOW ROLE GovernamentAgency
+ALLOW ROLE Controller
     AND SCHEMA DeviceID,UniqueID,Name,PositionID
-    AND FILTER ConsumerID == 'n_consumer'
+    AND (PURPOSE Retention OR PURPOSE BusinessPurpose OR PURPOSE Sell OR PURPOSE Share OR PURPOSE Processing)
+    AND PRIVACY Anonymization
 
-ALLOW ROLE Business
+ALLOW ROLE Processor
     AND SCHEMA DeviceID,UniqueID,Name,PositionID
-    AND (PURPOSE Retention OR PURPOSE BusinessPurpose OR PURPOSE Sell OR PURPOSE Share)
-    AND (PRIVACY Anonymization OR PRIVACY Aggregation)
+    AND PURPOSE Processing
+    AND PRIVACY Anonymization
+
+ALLOW ROLE DataProtectionOfficer
+    AND SCHEMA DeviceID,UniqueID,Name,PositionID
+    AND PRIVACY Anonymization
+    AND PURPOSE MonitorProtection
+
+ALLOW (ROLE ThirdCountry OR ROLE InternationalOrg)
+    AND SCHEMA DeviceID,UniqueID,Name,PositionID
+    AND PURPOSE Transfer
+    AND FILTER PRIVACY Anonymization
+
+
+ALLOW (ROLE ThirdCountry OR ROLE InternationalOrg)
+    AND SCHEMA DeviceID,UniqueID,Name,PositionID
+    AND PURPOSE Transfer
+    AND (FILTER ConsentTransfer == 'Y'
+    OR PURPOSE BusinessPurpose
+    OR PURPOSE PublicInterest
+    OR PURPOSE LegalPurpose)
+
+
+ALLOW ROLE SupervisoryAuthority
+    AND SCHEMA DeviceID,UniqueID,Name,PositionID
+    AND PURPOSE SupervisionPurpose

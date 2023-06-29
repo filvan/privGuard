@@ -22,26 +22,26 @@ ALLOW ROLE Business
     AND FILTER ConsentRetention == 'Y'
 
 ALLOW (ROLE Business OR ROLE ServiceProvider OR ROLE Contractor OR ROLE ThirdParty)
-    AND FILTER ConsumerID == 'n_consumer'
+    AND (FILTER ConsumerID == 'n_consumer' OR FILTER DeviceID == 'n_device')
     AND FILTER RequestDeletion == 'Y'
     AND PURPOSE DeletionData
 
 
 ALLOW ROLE Business
     AND SCHEMA DeviceID,UniqueID,Name,PositionID
-    AND FILTER RequestInaccurate == 'Y' AND FILTER ConsumerID == 'n_consumer'
+    AND FILTER RequestInaccurate == 'Y' AND (FILTER ConsumerID == 'n_consumer' OR FILTER DeviceID == 'n_device')
     AND PURPOSE ModificationData
 
 ALLOW ROLE ConsumerID
     AND SCHEMA DeviceID,UniqueID,Name,PositionID
-    AND FILTER RequestDisclosure == 'Y' AND FILTER ConsumerID == 'n_consumer'
+    AND FILTER RequestDisclosure == 'Y' AND (FILTER ConsumerID == 'n_consumer' OR FILTER DeviceID == 'n_device')
 
 ALLOW ROLE ConsumerID
     AND ((PURPOSE OptOutSell
     AND FILTER ConsentSell == 'N')
     OR (PURPOSE OptOutShare
     AND FILTER ConsentShare == 'N'))
-    AND FILTER ConsumerID == 'n_consumer'
+    AND (FILTER ConsumerID == 'n_consumer' OR FILTER DeviceID == 'n_device')
 
 ALLOW ROLE Business
     AND ((FILTER ConsentShare == 'Y'
@@ -59,7 +59,7 @@ ALLOW (ROLE Business OR ROLE ServiceProvider OR ROLE Contractor OR ROLE ThirdPar
 
 ALLOW ROLE GovernamentAgency
     AND SCHEMA DeviceID,UniqueID,Name,PositionID
-    AND FILTER ConsumerID == 'n_consumer'
+    AND (FILTER ConsumerID == 'n_consumer' OR FILTER DeviceID == 'n_device')
 
 ALLOW ROLE Business
     AND SCHEMA DeviceID,UniqueID,Name,PositionID
