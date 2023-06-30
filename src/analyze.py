@@ -75,9 +75,9 @@ program_map = {
 
     25: "./examples/program/Libretaxi/libretaxi_example.py",
     26: "./examples/program/Libretaxi/repository/libretaxi_saveUser.py",
-    27: "./examples/program/Libretaxi/libretaxi_ModifyUser.py",
+    #27: "./examples/program/Libretaxi/libretaxi_ModifyUser.py",
     28: "./examples/program/Libretaxi/libretaxi_callback.py",
-    29: "./examples/program/Libretaxi/libretaxi_validation.py",
+    #29: "./examples/program/Libretaxi/libretaxi_validation.py",
     30: "./examples/program/Libretaxi/repository/libretaxi_savePost.py",
     31: "./examples/program/Libretaxi/repository/libretaxi_findUserAround.py",
     32: "./examples/program/Libretaxi/repository/libretaxi_recentPosts.py",
@@ -89,8 +89,6 @@ program_map = {
     38: "./examples/program/Libretaxi/repository/libretaxi_findPost.py",
     39: "./examples/program/Libretaxi/repository/libretaxi_findUser.py",
     40: "./examples/program/Libretaxi/libretaxi_locale.py",
-    41: "./examples/program/extra_examples/bank_customer_churn_prediction.py",
-    42: "./examples/program/extra_examples/bank_customer_classification.py",
     #selfmailbot
     50: "./examples/program/selfmailbot/app/confirm_email.py",
     51: "./examples/program/selfmailbot/app/resend.py",
@@ -98,7 +96,6 @@ program_map = {
     53: "./examples/program/selfmailbot/app/send_confirmation.py",
     54: "./examples/program/selfmailbot/app/send_photo.py",
     55: "./examples/program/selfmailbot/app/send_text_message.py",
-    56: "./examples/program/selfmailbot/app/start.py",
 
     57: "./examples/program/selfmailbot/celery/send_confirmation_mail.py",
     58: "./examples/program/selfmailbot/celery/send_file.py",
@@ -108,9 +105,8 @@ program_map = {
     61: "./examples/program/selfmailbot/mail/send_mail.py",
     62: "./examples/program/selfmailbot/models/get_user_by_confirmation_link.py",
     63: "./examples/program/selfmailbot/models/get_user_instance.py",
-    64: "./examples/program/selfmailbot/web.py",
 
-    #traccer
+    #traccar
 
     70: "./examples/program/traccar/analyze/columns/get_all_columns_analizer.py",
     71: "./examples/program/traccar/analyze/columns/exclude_columns.py",
@@ -150,9 +146,9 @@ data_map = {
     24: "./examples/data/cpra/",
     25: "./examples/data/libretaxi_cpra/",
     26: "./examples/data/libretaxi_cpra/",
-    27: "./examples/data/libretaxi_cpra/",
+    #27: "./examples/data/libretaxi_cpra/",
     28: "./examples/data/libretaxi_cpra/",
-    29: "./examples/data/libretaxi_cpra/",
+    #29: "./examples/data/libretaxi_cpra/",
     30: "./examples/data/libretaxi_cpra/",
     31: "./examples/data/libretaxi_cpra/",
     32: "./examples/data/libretaxi_cpra/",
@@ -205,9 +201,9 @@ lib_map = {
     24: {'numpy':stub_numpy, 'pandas':stub_pandas},
     25: {'numpy': stub_numpy, 'pandas': stub_pandas},
     26: {'numpy': stub_numpy, 'pandas': stub_pandas},
-    27: {'numpy': stub_numpy, 'pandas': stub_pandas},
+    # 27: {'numpy': stub_numpy, 'pandas': stub_pandas},
     28: {'numpy': stub_numpy, 'pandas': stub_pandas},
-    29: {'numpy': stub_numpy, 'pandas': stub_pandas},
+    #29: {'numpy': stub_numpy, 'pandas': stub_pandas},
     30: {'numpy': stub_numpy, 'pandas': stub_pandas},
     31: {'numpy': stub_numpy, 'pandas': stub_pandas},
     32: {'numpy': stub_numpy, 'pandas': stub_pandas},
@@ -288,11 +284,11 @@ def parse():
 
     parser.add_argument('--attachment', help = 'Attachment email', type = int, default=None)
     parser.add_argument('--attachment_name', help = 'Attachment name for email', type = str, default='')
-    parser.add_argument('--email', help = 'Attachment name for email', type = str, default='')
+    parser.add_argument('--email', help = 'email address', type = str, default='')
     parser.add_argument('--subject', help = 'Subject for email', type = str, default='')
     parser.add_argument('--link', help = 'Confirmation link', type = str, default='')
-
     parser.add_argument('--key',help ='Confirmation key for email', type = str, default = '')
+
     parser.add_argument('--clazz',help='class to access', type = str, default='Device' )
     parser.add_argument('--columns', nargs='*', type=str,default=[])
     parser.add_argument('--deviceid',help='Identifier device to find', type=str,default='n_device')

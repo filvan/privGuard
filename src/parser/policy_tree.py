@@ -527,18 +527,21 @@ class Policy(object):
 if __name__ == '__main__':
 
     #policy_str = "ALLOW FILTER age >= 18 AND (SCHEMA age OR (FILTER gender == 'M' AND (ROLE MANAGER OR FILTER age <= 90)))"
-    policy_str = "ALLOW PURPOSE BUSINESS AND SCHEMA age"
+    #policy_str = "ALLOW ROLE Oncologist AND SCHEMA age, condition AND PRIVACY DP(1.0,1e-5) AND FILTER age > 18 AND REDACT zip(2:) AND PURPOSE PublicInterest"
     # Test policy parsing
-    policy = Policy(policy_str)
-    print(policy)
+
 
     # Test runFilter
     #print(policy.runFilter('age', 18, 'ge'))
-    print(policy.runPurpose('BUSINESS', ['age']))
+    #print(policy.runPurpose('BUSINESS', ['age']))
     # print(policy.runFilter('age', 17, 'le'))
 
     # TODO: Test runProject
     #print(policy.runProject(['age']))
     #print(policy.runProject(['age', 'gender','purpose']))
     #print(policy.runProject(['gender']))
+
+    policy_str = input("Please input a valid Legalease policy: \n")
+    policy = Policy(policy_str)
+    print(policy)
 

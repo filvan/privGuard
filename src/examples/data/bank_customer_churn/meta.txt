@@ -1,2 +1,0 @@
-RowNumber,CustomerId,Surname,CreditScore,Geography,Gender,Age,Tenure,Balance,NumOfProducts,HasCrCard,IsActiveMember,EstimatedSalary,Exited,ConsentUse,ConsentShare,ConsentSell,ConsentCollection,ConsentRetention,GuardianConsent,RequestDeletion,RequestDisclosure,RequestInaccurate,LimitUse
-100

@@ -5,7 +5,7 @@ from src.examples.program.Libretaxi.repository import libretaxi_findPost, libret
 
 def run(data_folder, **kwargs):
 
-    action = kwargs.get('extra_args').get('action')
+    action = kwargs.get('extra_args').get('post_report')
 
     if action == 'REPORT_POST':
         libretaxi_posts = libretaxi_findPost.run(data_folder,**kwargs)
