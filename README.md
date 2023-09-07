@@ -1,8 +1,3 @@
-----------------------------------------------------------------
-
-**The PrivGuard code is an academic research prototype, and meant to elucidate protocol details and for proofs-of-concept, and benchmarking. It is still under development in a production environment and is not meant for deployment currently as it only supports limited external functions.**
-
-----------------------------------------------------------------
 
 # PrivGuard
 
