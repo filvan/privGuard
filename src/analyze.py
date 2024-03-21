@@ -24,8 +24,8 @@
 
 import os
 import sys
-print(os.getcwd())
-print(os.environ)
+# print(os.getcwd())
+# print(os.environ)
 sys.path.append(os.path.join(os.environ.get('PRIVGUARD'), 'src/parser'))
 sys.path.append(os.path.join(os.environ.get('PRIVGUARD'), "src/stub_libraries"))
 
@@ -352,7 +352,6 @@ if __name__ == '__main__':
     module = module_from_spec(spec)
     spec.loader.exec_module(module)
     lib_list.__setitem__('extra_args',extra_args)
-    result = analyze(module, data_folder, lib_list)
     result = analyze(module, data_folder, lib_list)
 
     #file2 = open(r"C:\Users\sofy9\Desktop\TOP-UIC\Tesi\Results\Traccar\CPRA\get_all_columns_cpra_DEVICE.txt", "w+")

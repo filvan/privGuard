@@ -12,7 +12,9 @@ def run(data_folder, **kwargs):
     elif str(clazz) == 'Position':
         traccar_data = pd.read_csv(data_folder + "positions/data.csv")
     traccar_data = traccar_data[columns]
-    for cond in conditions:
-        traccar_data = traccar_data[cond]
-    traccar_data = traccar_data.sort_values(by=sort_cond[0],axis=1,ascending=sort_cond[1])
+    if conditions is not None:
+        for cond in conditions:
+            traccar_data = traccar_data[cond]
+    if sort_cond is not None:
+        traccar_data = traccar_data.sort_values(by=sort_cond[0],axis=1,ascending=sort_cond[1])
     return traccar_data
