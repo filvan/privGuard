@@ -5,5 +5,5 @@
 pip install -r requirements.txt
 echo "export PYTHONPATH=\"${PYTHONPATH}:${PWD}\"" | sudo tee -a ~/.bash_profile > /dev/null
 echo "export PRIVGUARD=\"${PWD}\"" | sudo tee -a ~/.bash_profile > /dev/null
-. ~/.bash_profile
+exec bash -l
 echo "Setup complete"
