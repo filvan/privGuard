@@ -9,7 +9,9 @@ Original PrivGuard repository: https://github.com/sunblaze-ucb/privguard-artifac
 
 The static analyzer has been tested in MacOS Sonoma 14.3.1 using a `conda` virtual environment. Personally, I chose to install Anaconda by following the official installation instructions provided by Anaconda.
 You can download the installer for your OS from the Anaconda [website](https://www.anaconda.com/download) and follow the installation instructions.
+
 Miniconda should work as well.
+
 Once Anaconda or Miniconda is installed, you can create a new conda virtual environment tailored for this repository by running:
 
 ```
