@@ -87,8 +87,11 @@ This version comes together with three benchmark open-source programs that can b
 These programs are: LibreTaxi, Selfmailbot and Traccar.
 The codebases of these software have been entirely translated in Python (whenever necessary) to make theme understandable by PrivAnalyzer. The so-generated source code Python files have been grouped in folders, that can be found in the [program](./src/examples/program/) directory.
 These files can then be used as example test cases for the static analyzer in the way I am gonna explain now.
+
 First, make sure to choose the correct filepath for both your policy and your meta data specification files inside the [stub_pandas.py](./src/stub_libraries/stub_pandas.py) file. Indeed, the analyzer will use these files as sources to get the rules to enforce and the conceptual schema.
-Second, choose a source code file to analyze and look for the corresponding `example_id` in the `program_map` dictionary, inside the [analyze.py](./src/analyze.py) file
+
+Second, choose a source code file to analyze and look for the corresponding `example_id` in the `program_map` dictionary, inside the [analyze.py](./src/analyze.py) file.
+
 Now you can run a command like this from your terminal:
 
 ```
