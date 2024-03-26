@@ -23,7 +23,7 @@ If you have an Apple Silicon device, you will have to emulate the x86 architectu
 
 ```
 softwareupdate --install-rosetta
-conda config --env --set subdir osx-64`
+conda config --env --set subdir osx-64
 ```
 
 Please, make sure to install python 3.6 as your python version by executing:
