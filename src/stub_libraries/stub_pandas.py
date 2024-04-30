@@ -53,7 +53,7 @@ def read_csv(filename, schema=[], usecols=None, **kwargs):
     elif schema:
         return DataFrame(schema, policy, shape=[len(schema), rows])
     elif usecols is not None:
-        return DataFrame(usecols, file_policy, shape=[len(usecols), rows])
+        return DataFrame(usecols, policy, shape=[len(usecols), rows])
 
 class Series(Tabular):
 

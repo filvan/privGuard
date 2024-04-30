@@ -400,7 +400,7 @@ class Policy(object):
             return req
 
     def runRedact(self, col, left=None, right=None):
-        newPolicy = [[self._runRedact(req, cols) for req in clause] for clause in self.policy]
+        newPolicy = [[self._runRedact(req, col) for req in clause] for clause in self.policy]
         return Policy(newPolicy).dealSat().dealUnsat()
 
     def _runRedact(self, req, col, left=None, right=None):
