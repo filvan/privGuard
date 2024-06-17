@@ -24,10 +24,12 @@
 
 from typing import List
 from copy import deepcopy
-from src.parser.attribute import Attribute, Satisfied, Unsatisfiable, FilterAttribute, SchemaAttribute, PrivacyAttribute, RedactAttribute, PurposeAttribute
+from src.parser.attribute import Attribute, Satisfied, Unsatisfiable, FilterAttribute, SchemaAttribute, \
+    PrivacyAttribute, RedactAttribute, PurposeAttribute
 from src.parser.typed_value import ExtendV
 from src.parser.abstract_domain import ClosedIntervalL
 from src.parser.policy_parser import policy_parser
+
 
 class ConjunctClause:
     """
@@ -85,17 +87,18 @@ class ConjunctClause:
             if x.is_stricter_than(req):
                 flag = True
             newClause.append(x)
-        
+
         if not flag:
             newClause.append(req)
 
         return ConjunctClause(newClause)
 
+
 class DNF:
     """
     A disjunctive normal form to represent a policy.
     """
-    
+
     def __init__(self, cc_lst: List[ConjunctClause]):
         """
         Initialize the disjunctive normal form.
@@ -110,7 +113,7 @@ class DNF:
 
     def __iter__(self):
         """
-        Iterate over the cojunctive clauses in the disjunctive normal form.
+        Iterate over the conjunctive clauses in the disjunctive normal form.
         """
 
         return iter(self.cc_lst)
@@ -123,7 +126,7 @@ class DNF:
     def copy(self):
         return DNF(self.cc_lst.copy())
 
-    def add(self, cc: ConjunctClause):
+    def add(self, clause: ConjunctClause):
         """
         Add a clause to the disjunctive normal form. If the clause is subsumed, drop it.
 
@@ -133,9 +136,10 @@ class DNF:
             A new clause to include in the disjunctive normal form.
         """
 
-        subsumed = any([all([any([r1.is_stricter_than(r2) for r1 in c1]) for r2 in cc]) for c1 in self.cc_lst])
+        subsumed = any([all([any([r1.is_stricter_than(r2) for r1 in c1]) for r2 in clause]) for c1 in self.cc_lst])
         if not subsumed:
-            self.cc_lst.append(cc)
+            self.cc_lst.append(clause)
+
 
 def clause2DNF(clause):
     """
@@ -171,16 +175,15 @@ def clause2DNF(clause):
         return lhs
     else:
         raise ValueError("Invalid input policy.")
-        
-        
-        
-def policy2DNF(policy):
+
+
+def policy2DNF(policy_to_convert):
     """
     Convert a policy to disjunctive normal form (DNF)
 
     Parameters
     ----------
-    policy : List
+    policy_to_convert : List
         A list of clauses.
 
     Returns
@@ -190,35 +193,35 @@ def policy2DNF(policy):
     """
 
     result = []
-    for clause in policy:
+    for clause in policy_to_convert:
         result.extend(clause2DNF(clause))
     return result
+
 
 class Policy(object):
     """
     A Legalease policy in PrivGuard.
     """
 
-
-    def __init__(self, policy_str=None):
+    def __init__(self, policy_parameter=None):
         """
         Initialize the policy object; flexible in the representation of the input policy.
 
         Parameters
         ----------
-        policy_str : String | list | DNF
+        policy_parameter : String | list | DNF
             The policy, represented as a string (surface syntax), list of clauses, or set.
         """
 
         p = None
-        if isinstance(policy_str, str):
-            p = policy2DNF(policy_parser.parseString(policy_str))
-        elif isinstance(policy_str, list):
-            p = policy_str
-        elif isinstance(policy_str, DNF):
-            self.policy = policy_str
+        if isinstance(policy_parameter, str):
+            p = policy2DNF(policy_parser.parseString(policy_parameter))
+        elif isinstance(policy_parameter, list):
+            p = policy_parameter
+        elif isinstance(policy_parameter, DNF):
+            self.policy = policy_parameter
             return
-        elif policy_str is None:
+        elif policy_parameter is None:
             self.policy = Policy([[Satisfied()]])
             return
         else:
@@ -229,13 +232,13 @@ class Policy(object):
             self.policy.add(ConjunctClause(clause))
 
     def copy(self):
-        return Policy(policy_str=self.policy.copy())
+        return Policy(policy_parameter=self.policy.copy())
 
     def __str__(self):
         return ",\n  ".join([str(clause) for clause in self.policy])
 
     __repr__ = __str__
-        
+
     def join(self, other):
         """
         *Join* two policies (i.e. take their least upper bound). The new policy is at
@@ -252,13 +255,14 @@ class Policy(object):
             The least upper bound of self and other
         """
 
-        if other == None:
+        if other is None:
             return Policy(self.policy)
 
         assert isinstance(other, Policy)
 
         newPolicy = []
-        
+        newClause = ConjunctClause([])
+
         for c1 in self.policy:
             for c2 in other.policy:
                 newClause = c1.copy()
@@ -304,13 +308,13 @@ class Policy(object):
 
         if isinstance(req, FilterAttribute) and req.col == col:
             assert isinstance(other, (int, float, str))
-            
+
             l = req.interval.lower
             u = req.interval.upper
             c = ExtendV(other)
 
             if op == 'eq':
-                if (l <= c and u >= c):
+                if l <= c <= u:
                     return Satisfied()
                 else:
                     return Unsatisfiable()
@@ -387,12 +391,12 @@ class Policy(object):
                 return SchemaAttribute(new_cols)
 
         elif isinstance(req, FilterAttribute):
-            if not req.col in cols:
+            if req.col not in cols:
                 return Unsatisfiable()
             return req
 
         elif isinstance(req, RedactAttribute):
-            if not req.col in cols:
+            if req.col not in cols:
                 return Satisfied()
             return req
 
@@ -409,12 +413,12 @@ class Policy(object):
                 return True
         return False
 
-    def runPurpose(self,purpose, col):
+    def runPurpose(self, purpose, col):
 
         newPolicy = [self._runPurpose(clause, col, purpose) for clause in self.policy]
         return Policy(newPolicy).dealSat().dealUnsat()
 
-    def _runPurpose(self,clause, col, purpose):
+    def _runPurpose(self, clause, col, purpose):
         attributes = []
         flag = False
         newClause = []
@@ -437,13 +441,12 @@ class Policy(object):
             return newClause
         return clause.list_attr()
 
-
     def runPrivacy(self, priv_tech, **kwargs):
         newPolicy = [[self._runPrivacy(req, priv_tech) for req in clause] for clause in self.policy]
         return Policy(newPolicy).dealSat().dealUnsat()
 
     def _runPrivacy(self, req, priv_tech, **kwargs):
-        if isinstance(req, PrivacyAttribute) and req.priv_tech == priv_tech: 
+        if isinstance(req, PrivacyAttribute) and req.priv_tech == priv_tech:
             if priv_tech == 'k-anonymity':
                 if kwargs['k'] >= req.k:
                     return Satisfied()
@@ -498,18 +501,17 @@ class Policy(object):
             raise ValueError(f'Unsupported attribute: {attr}')
 
         for clause in self.policy:
-           newClause = []
-           for req in clause:
-               if attr == 'filter' and isinstance(req, FilterAttribute) and req.col == col:
-                   newClause.append(Unsatisfiable())
-               elif attr == 'privacy' and isinstance(req, PrivacyAttribute) and req.priv_tech == priv_tech:
-                   newClause.append(Unsatisfiable())
-               else:
-                   newClause.append(req)
-           newPolicy.append(newClause)
+            newClause = []
+            for req in clause:
+                if attr == 'filter' and isinstance(req, FilterAttribute) and req.col == col:
+                    newClause.append(Unsatisfiable())
+                elif attr == 'privacy' and isinstance(req, PrivacyAttribute) and req.priv_tech == priv_tech:
+                    newClause.append(Unsatisfiable())
+                else:
+                    newClause.append(req)
+            newPolicy.append(newClause)
 
         return Policy(newPolicy).dealUnsat()
-
 
     def isSat(self):
 
@@ -525,23 +527,20 @@ class Policy(object):
 
 
 if __name__ == '__main__':
-
-    #policy_str = "ALLOW FILTER age >= 18 AND (SCHEMA age OR (FILTER gender == 'M' AND (ROLE MANAGER OR FILTER age <= 90)))"
-    #policy_str = "ALLOW ROLE Oncologist AND SCHEMA age, condition AND PRIVACY DP(1.0,1e-5) AND FILTER age > 18 AND REDACT zip(2:) AND PURPOSE PublicInterest"
+    # policy_str = "ALLOW FILTER age >= 18 AND (SCHEMA age OR (FILTER gender == 'M' AND (ROLE MANAGER OR FILTER age <= 90)))"
+    # policy_str = "ALLOW ROLE Oncologist AND SCHEMA age, condition AND PRIVACY DP(1.0,1e-5) AND FILTER age > 18 AND REDACT zip(2:) AND PURPOSE PublicInterest"
     # Test policy parsing
 
-
     # Test runFilter
-    #print(policy.runFilter('age', 18, 'ge'))
-    #print(policy.runPurpose('BUSINESS', ['age']))
+    # print(policy.runFilter('age', 18, 'ge'))
+    # print(policy.runPurpose('BUSINESS', ['age']))
     # print(policy.runFilter('age', 17, 'le'))
 
     # TODO: Test runProject
-    #print(policy.runProject(['age']))
-    #print(policy.runProject(['age', 'gender','purpose']))
-    #print(policy.runProject(['gender']))
+    # print(policy.runProject(['age']))
+    # print(policy.runProject(['age', 'gender','purpose']))
+    # print(policy.runProject(['gender']))
 
     policy_str = input("Please input a valid Legalease policy: \n")
     policy = Policy(policy_str)
     print(policy)
-
