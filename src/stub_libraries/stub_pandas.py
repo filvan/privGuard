@@ -48,7 +48,7 @@ def read_csv(filename, schema=[], usecols=None, **kwargs):
         rows = int(f.readline())
         # print('Data Schema: ' + str(complete_schema))
 
-    if not schema and usecols == None:
+    if not schema and usecols is None:
         return DataFrame(complete_schema, policy, shape=[len(schema), rows])
     elif schema:
         return DataFrame(schema, policy, shape=[len(schema), rows])
@@ -222,8 +222,6 @@ class DataFrame(Tabular):
                         self.policy = self.policy.runProject([col for col in self.schema if col != key])
                     else:
                         self.policy = Policy([[Unsatisfiable()]])
-
-
         else:
             raise NotImplementedError('Pandas Dataframe __setitem__ only supports key of type string now.')
 

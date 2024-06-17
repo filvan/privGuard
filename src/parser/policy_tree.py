@@ -261,7 +261,7 @@ class Policy(object):
         assert isinstance(other, Policy)
 
         newPolicy = []
-        newClause = ConjunctClause([])
+        newClause = []
 
         for c1 in self.policy:
             for c2 in other.policy:
@@ -272,7 +272,7 @@ class Policy(object):
 
         return Policy(newPolicy).dealSat().dealUnsat()
 
-    def runFilter(self, col, other, op):
+    def runFilter(self, col, value, op):
         """
         Return a new policy based on the policy effects of a filter operation. This method
         should be run when the analysis program performs an operation like:
@@ -288,12 +288,12 @@ class Policy(object):
         col : String
             The column on whose value rows are filtered
 
-        other : Val
+        value : Val
             The value being compared to column values (usually a constant, string or 
             integer representation)
 
         op : String
-            The filtering operation: one of 'eq', 'lt', 'gt'
+            The filtering operation: one of 'eq', 'le', 'ge'
 
         Returns
         ----------
@@ -301,17 +301,17 @@ class Policy(object):
             The updated policy after filtering.
         """
 
-        newPolicy = [[self._runFilter(req, col, other, op) for req in clause] for clause in self.policy]
+        newPolicy = [[self._runFilter(attr, col, value, op) for attr in clause] for clause in self.policy]
         return Policy(newPolicy).dealSat().dealUnsat()
 
-    def _runFilter(self, req, col, other, op):
+    def _runFilter(self, attr: Attribute, col, value, op):
 
-        if isinstance(req, FilterAttribute) and req.col == col:
-            assert isinstance(other, (int, float, str))
+        if isinstance(attr, FilterAttribute) and attr.col == col:
+            assert isinstance(value, (int, float, str))
 
-            l = req.interval.lower
-            u = req.interval.upper
-            c = ExtendV(other)
+            l = attr.interval.lower
+            u = attr.interval.upper
+            c = ExtendV(value)
 
             if op == 'eq':
                 if l <= c <= u:
@@ -327,9 +327,9 @@ class Policy(object):
                         return Unsatisfiable()
                     else:
                         newInterval = ClosedIntervalL(l, ExtendV('inf'))
-                        return FilterAttribute(req.col, newInterval)
+                        return FilterAttribute(attr.col, newInterval)
                 else:
-                    return req
+                    return attr
 
             elif op == 'ge':
                 if c >= l:
@@ -339,16 +339,16 @@ class Policy(object):
                         return Unsatisfiable()
                     else:
                         newInterval = ClosedIntervalL(ExtendV('ninf'), u)
-                        return FilterAttribute(req.col, newInterval)
+                        return FilterAttribute(attr.col, newInterval)
                 else:
-                    return req
+                    return attr
 
             # TODO: add support for le, neq, ge
             else:
                 raise ValueError(f'Invalid operator: {op}')
 
         else:
-            return req
+            return attr
 
     def runProject(self, cols):
         """
@@ -371,15 +371,15 @@ class Policy(object):
         result : Policy
             The updated policy after projection
         """
-        newPolicy = [[self._runProject(req, cols) for req in clause] for clause in self.policy]
+        newPolicy = [[self._runProject(attr, cols) for attr in clause] for clause in self.policy]
         return Policy(newPolicy).dealSat().dealUnsat()
 
-    def _runProject(self, req, cols):
-        if isinstance(req, SchemaAttribute):
+    def _runProject(self, attr, cols):
+        if isinstance(attr, SchemaAttribute):
             new_cols = []
             flag = False
             for col in cols:
-                if col in req.cols():
+                if col in attr.cols():
                     new_cols.append(col)
                 else:
                     flag = True
@@ -390,31 +390,30 @@ class Policy(object):
             else:
                 return SchemaAttribute(new_cols)
 
-        elif isinstance(req, FilterAttribute):
-            if req.col not in cols:
+        elif isinstance(attr, FilterAttribute):
+            if attr.col not in cols:
                 return Unsatisfiable()
-            return req
+            return attr
 
-        elif isinstance(req, RedactAttribute):
-            if req.col not in cols:
+        elif isinstance(attr, RedactAttribute):
+            if attr.col not in cols:
                 return Satisfied()
-            return req
+            return attr
 
         else:
-            return req
+            return attr
 
     def runRedact(self, col, left=None, right=None):
-        newPolicy = [[self._runRedact(req, col) for req in clause] for clause in self.policy]
+        newPolicy = [[self._runRedact(attr, col) for attr in clause] for clause in self.policy]
         return Policy(newPolicy).dealSat().dealUnsat()
 
-    def _runRedact(self, req, col, left=None, right=None):
-        if isinstance(req, RedactAttribute) and req.col == col:
-            if (left is None or left <= req.slice[0]) and (right is None or right >= req.slice[1]):
+    def _runRedact(self, attr: Attribute, col, left=None, right=None):
+        if isinstance(attr, RedactAttribute) and attr.col == col:
+            if (left is None or left <= attr.slice[0]) and (right is None or right >= attr.slice[1]):
                 return True
         return False
 
     def runPurpose(self, purpose, col):
-
         newPolicy = [self._runPurpose(clause, col, purpose) for clause in self.policy]
         return Policy(newPolicy).dealSat().dealUnsat()
 
@@ -422,51 +421,51 @@ class Policy(object):
         attributes = []
         flag = False
         newClause = []
-        for req in clause:
-            if isinstance(req, SchemaAttribute):
-                newClause.append(req)
-                for attr in req.cols():
+        for attribute in clause:
+            if isinstance(attribute, SchemaAttribute):
+                newClause.append(attribute)
+                for attr in attribute.cols():
                     if attr in col:
                         attributes.append(attr)
                     else:
-                        newClause.append(req)
+                        newClause.append(attribute)
 
-            elif isinstance(req, PurposeAttribute):
-                if req.purpose == purpose:
+            elif isinstance(attribute, PurposeAttribute):
+                if attribute.purpose == purpose:
                     flag = True
             else:
-                newClause.append(req)
+                newClause.append(attribute)
 
         if flag & attributes.__len__():
             return newClause
         return clause.list_attr()
 
     def runPrivacy(self, priv_tech, **kwargs):
-        newPolicy = [[self._runPrivacy(req, priv_tech) for req in clause] for clause in self.policy]
+        newPolicy = [[self._runPrivacy(attr, priv_tech) for attr in clause] for clause in self.policy]
         return Policy(newPolicy).dealSat().dealUnsat()
 
-    def _runPrivacy(self, req, priv_tech, **kwargs):
-        if isinstance(req, PrivacyAttribute) and req.priv_tech == priv_tech:
+    def _runPrivacy(self, attr: Attribute, priv_tech, **kwargs):
+        if isinstance(attr, PrivacyAttribute) and attr.priv_tech == priv_tech:
             if priv_tech == 'k-anonymity':
-                if kwargs['k'] >= req.k:
+                if kwargs['k'] >= attr.k:
                     return Satisfied()
             elif priv_tech == 'l-diversity':
                 raise NotImplemented
             elif priv_tech == 't-closenss':
                 raise NotImplemented
             elif priv_tech == 'DP':
-                if kwargs['eps'] < req.eps and kwargs['delta'] < req.delta:
+                if kwargs['eps'] < attr.eps and kwargs['delta'] < attr.delta:
                     return Satisfied()
             else:
                 return Satisfied()
-        return req
+        return attr
 
     def dealUnsat(self):
         newPolicy = []
         for idx, clause in enumerate(self.policy):
             clause_flag = False
-            for req in clause:
-                if isinstance(req, Unsatisfiable):
+            for attr in clause:
+                if isinstance(attr, Unsatisfiable):
                     clause_flag = True
                     break
             if not clause_flag:
@@ -480,10 +479,10 @@ class Policy(object):
         for clause in self.policy:
             newClause = []
             clause_flag = True
-            for req in clause:
-                if not isinstance(req, Satisfied):
+            for attr in clause:
+                if not isinstance(attr, Satisfied):
                     clause_flag = False
-                    newClause.append(req)
+                    newClause.append(attr)
             if clause_flag:
                 newPolicy = [[Satisfied()]]
                 break
@@ -514,13 +513,11 @@ class Policy(object):
         return Policy(newPolicy).dealUnsat()
 
     def isSat(self):
-
         if len(self.policy) == 1 and len(self.policy[0]) == 1 and isinstance(self.policy[0][0], Satisfied):
             return True
         return False
 
     def isUnsat(self):
-
         if len(self.policy) == 1 and len(self.policy[0]) == 1 and isinstance(self.policy[0][0], Unsatisfiable):
             return True
         return False
