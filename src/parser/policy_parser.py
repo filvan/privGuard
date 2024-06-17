@@ -22,10 +22,12 @@
 
 """ The parser for Legalease policy. """
 
-from pyparsing import oneOf, Word, Literal, pyparsing_common, Regex, Optional, Suppress, infix_notation, OneOrMore, OpAssoc, nums, alphanums, delimitedList
+from pyparsing import oneOf, Word, Literal, pyparsing_common, Regex, Optional, Suppress, infix_notation, OneOrMore, \
+    OpAssoc, nums, alphanums, delimitedList
 from src.parser.typed_value import IntegerV, StringV, ExtendV
 from src.parser.abstract_domain import ClosedIntervalL
-from src.parser.attribute import RoleAttribute, PurposeAttribute, RedactAttribute, PrivacyAttribute, FilterAttribute, SchemaAttribute
+from src.parser.attribute import RoleAttribute, PurposeAttribute, RedactAttribute, PrivacyAttribute, FilterAttribute, \
+    SchemaAttribute, AlertAttribute
 
 # define basic parsers for tokens in the policy.
 COMPARATOR = oneOf(['==', '!=', '>', '>=', '<', '<=']).setName('COMPARATOR')
@@ -36,6 +38,7 @@ SCALAR_FLOAT = pyparsing_common.fnumber
 STRING = Regex("'(''|[^'])*'").setName('STRING').addParseAction(lambda toks: StringV(toks[0][1:-1]))
 LIST = delimitedList(COLUMN)
 VARIABLE = Word(alphanums).setName('VARIABLE')
+
 
 def filter_action(toks):
     """ How to parse a filter attribute. """
@@ -51,15 +54,16 @@ def filter_action(toks):
         interval = ClosedIntervalL(ExtendV(toks[3]), ExtendV('inf'))
     if toks[2] == '<':
         if isinstance(toks[3], IntegerV):
-            interval = ClosedIntervalL(ExtendV('ninf'), ExtendV(toks[3]-1))
+            interval = ClosedIntervalL(ExtendV('ninf'), ExtendV(toks[3] - 1))
         else:
             raise NotImplemented("'<' is only implemented for integer types. Please try '<='.")
     if toks[2] == '>':
         if isinstance(toks[3], IntegerV):
-            interval = ClosedIntervalL(ExtendV(toks[3]+1), ExtendV('inf'))
+            interval = ClosedIntervalL(ExtendV(toks[3] + 1), ExtendV('inf'))
         else:
             raise NotImplemented("'>' is only implemented for integer types. Please try '>='.")
     return FilterAttribute(col, interval)
+
 
 def redact_action(toks):
     """ How to parse a redact attribute. """
@@ -73,9 +77,11 @@ def redact_action(toks):
     elif len(toks) == 5:
         return RedactAttribute(toks[1], (toks[2], toks[4]))
 
+
 def schema_action(toks):
     """ How to parse a schema attribute. """
     return SchemaAttribute(toks[1:])
+
 
 def privacy_action(toks):
     """ How to parse a privacy attribute. """
@@ -90,22 +96,35 @@ def privacy_action(toks):
     else:
         return PrivacyAttribute(toks[1])
 
+
 def role_action(toks):
     """ How to parse a role attribute. """
     return RoleAttribute(toks[1])
+
 
 def purpose_action(toks):
     """ How to parse a purpose attribute. """
     return PurposeAttribute(toks[1])
 
+
+def alert_action(toks):
+    """ How to parse an alert attribute. """
+    return AlertAttribute(toks[1])
+
+
 # parsers for attributes.
 FILTER_ATTRIBUTE = ('FILTER' + COLUMN + COMPARATOR + (INTEGER | STRING)).addParseAction(filter_action)
-REDACT_ATTRIBUTE = ('REDACT' + COLUMN + Suppress('(') + Optional(SCALAR_INT) + ':' + Optional(SCALAR_INT) + Suppress(')')).addParseAction(redact_action)
+REDACT_ATTRIBUTE = ('REDACT' + COLUMN + Suppress('(') + Optional(SCALAR_INT) + ':' + Optional(SCALAR_INT) + Suppress(
+    ')')).addParseAction(redact_action)
 SCHEMA_ATTRIBUTE = ('SCHEMA' + LIST).addParseAction(schema_action)
-PRIVACY_ATTRIBUTE = ('PRIVACY' + ( Literal('Anonymization') | Literal('Aggregation') | ('k-anonymity' + SCALAR_INT) | ('l-diversity' + SCALAR_INT) | ('t-closeness' + SCALAR_INT) | ('DP' + Suppress('(') + SCALAR_FLOAT + Suppress(',') + SCALAR_FLOAT + Suppress(')')) )).addParseAction(privacy_action)
+PRIVACY_ATTRIBUTE = ('PRIVACY' + (Literal('Anonymization') | Literal('Aggregation') | ('k-anonymity' + SCALAR_INT) | (
+        'l-diversity' + SCALAR_INT) | ('t-closeness' + SCALAR_INT) | (
+                                          'DP' + Suppress('(') + SCALAR_FLOAT + Suppress(
+                                      ',') + SCALAR_FLOAT + Suppress(')')))).addParseAction(privacy_action)
 ROLE_ATTRIBUTE = ('ROLE' + VARIABLE).addParseAction(role_action)
 PURPOSE_ATTRIBUTE = ('PURPOSE' + VARIABLE).addParseAction(purpose_action)
-ATTRIBUTE = FILTER_ATTRIBUTE | REDACT_ATTRIBUTE | SCHEMA_ATTRIBUTE | PRIVACY_ATTRIBUTE | ROLE_ATTRIBUTE | PURPOSE_ATTRIBUTE
+ALERT_ATTRIBUTE = ('ALERT' + VARIABLE).addParseAction(alert_action)
+ATTRIBUTE = FILTER_ATTRIBUTE | REDACT_ATTRIBUTE | SCHEMA_ATTRIBUTE | PRIVACY_ATTRIBUTE | ROLE_ATTRIBUTE | PURPOSE_ATTRIBUTE | ALERT_ATTRIBUTE
 
 # the parser for clauses
 CLAUSE = (Suppress('ALLOW') + infix_notation(ATTRIBUTE, [('AND', 2, OpAssoc.RIGHT), ('OR', 2, OpAssoc.RIGHT)]))
@@ -114,7 +133,6 @@ CLAUSE = (Suppress('ALLOW') + infix_notation(ATTRIBUTE, [('AND', 2, OpAssoc.RIGH
 policy_parser = OneOrMore(CLAUSE)
 
 if __name__ == '__main__':
-
     policy_str = input("Please input a valid Legalease policy: \n")
     print(policy_parser.parseString(policy_str))
 
