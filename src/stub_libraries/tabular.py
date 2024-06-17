@@ -22,19 +22,18 @@
 
 """ Tabular data. """
 
-import os
-import sys
-sys.path.append(os.path.join(os.environ['PRIVGUARD'], 'src/stub_libraries'))
-
 from src.stub_libraries import stub_pandas as pd
 from functools import partial, reduce
 from src.parser.policy_tree import Policy, DNF, Satisfied
+import os
+import sys
+sys.path.append(os.path.join(os.environ['PRIVGUARD'], 'src/stub_libraries'))
 
 
 class Tabular:
 
     def __init__(self, schema=[], policy=Policy([[Satisfied()]]), *args, **kwargs):
-        self.schema = self.schema
+        self.schema = schema
         self.policy = policy
 
     def __str__(self):

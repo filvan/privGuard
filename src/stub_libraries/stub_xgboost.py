@@ -25,6 +25,7 @@
 from src.stub_libraries.blackbox import Blackbox
 from src.stub_libraries.stub_numpy import ndarray
 
+
 class XGBClassifier(Blackbox):
 
     def __init__(self, *args, **kwargs):

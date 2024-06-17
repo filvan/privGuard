@@ -22,11 +22,6 @@
 
 """ Function summaries for the pandas library. """
 
-import os
-import sys
-
-sys.path.append(os.path.join(os.environ['PRIVGUARD'], 'src/stub_libraries'))
-
 from src.stub_libraries.tabular import Tabular
 from src.stub_libraries.blackbox import Blackbox
 from src.stub_libraries.utils import UniversalIndex
@@ -35,6 +30,10 @@ from src.parser.policy_tree import DNF, Policy
 from src.parser.attribute import Satisfied, Unsatisfiable
 from src.parser.abstract_domain import ClosedIntervalL
 from src.parser.typed_value import IntegerV, StringV, ExtendV
+import os
+import sys
+
+sys.path.append(os.path.join(os.environ['PRIVGUARD'], 'src/stub_libraries'))
 
 
 def read_csv(filename, schema=[], usecols=None, **kwargs):

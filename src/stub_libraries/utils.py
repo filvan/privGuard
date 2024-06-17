@@ -24,6 +24,7 @@
 
 from src.stub_libraries.tabular import Tabular
 
+
 def len_(arr):
     if isinstance(arr, Tabular):
         if isinstance(arr.shape[0], int):
@@ -32,6 +33,7 @@ def len_(arr):
             raise NotImplementedError
     else:
         return len(arr)
+
 
 class UniversalIndex():
     def __getitem__(self, key, *args, **kwargs):

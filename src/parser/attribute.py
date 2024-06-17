@@ -262,7 +262,7 @@ class PrivacyAttribute(Attribute):
                     return True
             elif self.priv_tech == 'l-diversity':
                 raise NotImplemented
-            elif self.priv_tech == 't-closenss':
+            elif self.priv_tech == 't-closeness':
                 raise NotImplemented
             elif self.priv_tech == 'DP':
                 if self.eps < other.eps and self.delta < other.delta:
