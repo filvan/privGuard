@@ -121,6 +121,8 @@ program_map = {
 
     77: "./examples/program/77_soundness_example.py",
 
+    78: "./examples/program/78_alert_example.py",
+
 }
 
 data_map = {
@@ -193,6 +195,7 @@ data_map = {
     76: "./examples/data/traccar/",
 
     77: "./examples/data/soundness_example/",
+    78: "./examples/data/alert_example/",
 
 }
 
@@ -252,6 +255,7 @@ lib_map = {
     76: {'pandas': stub_pandas},
 
     77: {'pandas': stub_pandas},
+    78: {'pandas': stub_pandas},
 
 }
 
