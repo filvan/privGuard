@@ -120,7 +120,7 @@ SCHEMA_ATTRIBUTE = ('SCHEMA' + LIST).addParseAction(schema_action)
 PRIVACY_ATTRIBUTE = ('PRIVACY' + (Literal('Anonymization') | Literal('Aggregation') | ('k-anonymity' + SCALAR_INT) | (
         'l-diversity' + SCALAR_INT) | ('t-closeness' + SCALAR_INT) | (
                                           'DP' + Suppress('(') + SCALAR_FLOAT + Suppress(
-                                      ',') + SCALAR_FLOAT + Suppress(')')))).addParseAction(privacy_action)
+                                            ',') + SCALAR_FLOAT + Suppress(')')))).addParseAction(privacy_action)
 ROLE_ATTRIBUTE = ('ROLE' + VARIABLE).addParseAction(role_action)
 PURPOSE_ATTRIBUTE = ('PURPOSE' + VARIABLE).addParseAction(purpose_action)
 ALERT_ATTRIBUTE = ('ALERT' + VARIABLE).addParseAction(alert_action)

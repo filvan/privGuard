@@ -22,7 +22,7 @@
 
 """ Attributes in PrivGuard. """
 
-from typing import Tuple
+from typing import Tuple, Optional
 
 
 class Column:
@@ -147,7 +147,7 @@ class RedactAttribute(Attribute):
     The Redact attribute. Tracks concrete column being redacted.
     """
 
-    def __init__(self, col, slice_: Tuple[int] = (None, None)):
+    def __init__(self, col, slice_: Tuple[Optional[int], Optional[int]] = (None, None)):
         self.col = col
         self.slice = slice_
 
