@@ -24,6 +24,7 @@
 
 import os
 import sys
+
 sys.path.append(os.path.join(os.environ['PRIVGUARD'], 'src/stub_libraries'))
 
 from src.stub_libraries.tabular import Tabular
@@ -35,11 +36,11 @@ from src.parser.attribute import Satisfied, Unsatisfiable
 from src.parser.abstract_domain import ClosedIntervalL
 from src.parser.typed_value import IntegerV, StringV, ExtendV
 
-def read_csv(filename, schema=[], usecols=None, **kwargs):
 
+def read_csv(filename, schema=[], usecols=None, **kwargs):
     """ read DataFrame from a csv file. Policy is specified at the end of this file. """
-    
-    data_folder = filename[:filename.rfind("/")+1]
+
+    data_folder = filename[:filename.rfind("/") + 1]
     with open(data_folder + 'policy.txt', 'r') as f:
         policy = Policy(f.read().rstrip())
         print(f'Policy of input data {filename}:\n' + str(policy))
@@ -55,8 +56,8 @@ def read_csv(filename, schema=[], usecols=None, **kwargs):
     elif usecols is not None:
         return DataFrame(usecols, policy, shape=[len(usecols), rows])
 
-class Series(Tabular):
 
+class Series(Tabular):
     """
     Stub class for Pandas Series. Series class is only expected to serve as indicators for 
     filtering. Only Series originating from a DataFrame can be used to filter that DataFrame. 
@@ -89,26 +90,28 @@ class Series(Tabular):
 
     def __ge__(self, other):
 
-       if self.interval is None:
-           return Series(Policy([[Unsatisfiable()]]), self.column, self.parent, shape=self.shape, interval=ClosedIntervalL(_to_abstract_value(other), ExtendV('inf')))
-       else:
-           raise ValueError(f'Trying to re-compare a indicator Series whose interval is {self.interval}.')
+        if self.interval is None:
+            return Series(Policy([[Unsatisfiable()]]), self.column, self.parent, shape=self.shape,
+                          interval=ClosedIntervalL(_to_abstract_value(other), ExtendV('inf')))
+        else:
+            raise ValueError(f'Trying to re-compare a indicator Series whose interval is {self.interval}.')
 
     def __le__(self, other):
 
-
-       if self.interval is None:
-           return Series(Policy([[Unsatisfiable()]]), self.column, self.parent, shape=self.shape, interval=ClosedIntervalL(ExtendV('ninf'), _to_abstract_value(other)))
-       else:
-           raise ValueError(f'Trying to re-compare a indicator Series whose interval is {self.interval}.')
+        if self.interval is None:
+            return Series(Policy([[Unsatisfiable()]]), self.column, self.parent, shape=self.shape,
+                          interval=ClosedIntervalL(ExtendV('ninf'), _to_abstract_value(other)))
+        else:
+            raise ValueError(f'Trying to re-compare a indicator Series whose interval is {self.interval}.')
 
     def __eq__(self, other):
 
-       if self.interval is None:
-           v = _to_abstract_value(other)
-           return Series(Policy([[Unsatisfiable()]]), self.column, self.parent, shape=self.shape, interval=ClosedIntervalL(v, v))
-       else:
-           raise ValueError(f'Trying to re-compare a indicator Series whose interval is {self.interval}.')
+        if self.interval is None:
+            v = _to_abstract_value(other)
+            return Series(Policy([[Unsatisfiable()]]), self.column, self.parent, shape=self.shape,
+                          interval=ClosedIntervalL(v, v))
+        else:
+            raise ValueError(f'Trying to re-compare a indicator Series whose interval is {self.interval}.')
 
     def __mul__(self, other):
         if isinstance(other, int):
@@ -119,17 +122,17 @@ class Series(Tabular):
     def map(self, *args, **kwargs):
         return Blackbox(self.policy)
 
-def _to_abstract_value(v):
 
-       if isinstance(v, int):
-           return ExtendV(IntegerV(v))
-       elif isinstance(v, str):
-           return ExtendV(StringV(v))
-       else:
-           raise ValueError(f'Unsupported value for comparison with Series: {v}.')
+def _to_abstract_value(v):
+    if isinstance(v, int):
+        return ExtendV(IntegerV(v))
+    elif isinstance(v, str):
+        return ExtendV(StringV(v))
+    else:
+        raise ValueError(f'Unsupported value for comparison with Series: {v}.')
+
 
 class DataFrame(Tabular):
-
     """ Stub class for Pandas DataFrame. """
 
     def __init__(self, schema=[], policy=Policy([[Satisfied()]]), data=None, **kwargs):
@@ -177,9 +180,9 @@ class DataFrame(Tabular):
             if all([isinstance(x, UniversalIndex) for x in key]):
                 return self
             else:
-                raise ValueError(f'Label {key} not found in the dataframe.') 
+                raise ValueError(f'Label {key} not found in the dataframe.')
 
-        elif isinstance(key, Series):           
+        elif isinstance(key, Series):
             assert key.parent == self, 'Find series from another dataframe whose privacy effects are not supported.'
             newPolicy = self.policy
             if key.interval.lower != ExtendV('ninf'):
@@ -217,7 +220,7 @@ class DataFrame(Tabular):
                 if isinstance(newvalue, Blackbox):
 
                     if newvalue.policy == Policy([[Satisfied()]]):
-                        self.policy = self.policy.runProject([col for col in schema if col != key])
+                        self.policy = self.policy.runProject([col for col in self.schema if col != key])
                     else:
                         self.policy = Policy([[Unsatisfiable()]])
 
@@ -255,7 +258,7 @@ class DataFrame(Tabular):
 
     def groupby(self, **kwargs):
         """ This function disables further operations to satisfy several privacy techniques such as aggregation. """
-        return Blackbox(self.policy.unSat('privacy', priv_tech = 'Aggregation'))
+        return Blackbox(self.policy.unSat('privacy', priv_tech='Aggregation'))
 
     def merge(self, rhs, **kwargs):
         return merge(self, rhs, **kwargs)
@@ -279,8 +282,8 @@ class DataFrame(Tabular):
         if isinstance(other, (int, float)):
             return self
 
-def merge(lhs, rhs, **kwargs):
 
+def merge(lhs, rhs, **kwargs):
     assert isinstance(lhs, DataFrame) and isinstance(rhs, DataFrame), 'Only support merging two dataframes.'
     # assert len(set(lhs.schema) & set(rhs.schema)) != 0, 'Duplicate column names in two dataframes to merge'
     return DataFrame(list(set(lhs.schema + rhs.schema)), lhs.policy.join(rhs.policy))
