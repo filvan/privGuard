@@ -25,7 +25,7 @@
 from typing import Tuple
 
 
-class Column():
+class Column:
     """
     A representation of a column in a relation.
     """
@@ -252,7 +252,7 @@ class PrivacyAttribute(Attribute):
         elif priv_tech == 'DP':
             self.eps = kwargs.get('eps')
             self.delta = kwargs.get('delta')
-        elif not priv_tech in ['Anonymization', 'Aggregation']:
+        elif priv_tech not in ['Anonymization', 'Aggregation']:
             raise ValueError('Invalid/Unsupported privacy technique.')
 
     def is_stricter_than(self, other: Attribute):
