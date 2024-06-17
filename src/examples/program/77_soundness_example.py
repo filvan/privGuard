@@ -3,14 +3,14 @@ def run(data_folder, **kwargs):
     pd = kwargs.get('pandas')
 
     # Load the data / policies
-    patients = pd.read_csv(data_folder + "patients/data.csv", ['ID', 'NAME', 'AGE', 'GENDER'])
+    patients = pd.read_csv(data_folder + "patients/data.csv")
 
-    print(patients)
+    # print(patients)
     print('Policy: ' + str(patients.policy))
 
     # patients = patients[patients.NAME == 'John']
-    patients = patients[patients.AGE >= 18]
-    # patients = patients[patients.GENDER == 'FEMALE']
+    patients = patients[patients.AGE <= 17]
+    patients = patients[patients.GENDER == 'FEMALE']
 
-    # print(patients)
+    print(patients)
     return patients
