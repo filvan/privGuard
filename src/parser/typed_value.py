@@ -24,11 +24,13 @@
 
 import datetime
 
+
 def min_exval(v1, v2):
     """ Return the smaller one between two extended values."""
     if v1 <= v2:
         return v1
     return v2
+
 
 def max_exval(v1, v2):
     """ Return the larger one between two extended values. """
@@ -36,8 +38,8 @@ def max_exval(v1, v2):
         return v2
     return v1
 
-class Val(object):
 
+class Val(object):
     """ Parent class for values in PrivGuard policies. """
 
     def __init__(self, val):
@@ -46,40 +48,39 @@ class Val(object):
 
     def __lt__(self, other):
         if isinstance(other, Val):
-            return (self.val < other.val)
+            return self.val < other.val
         else:
-            return (self.val < other)
+            return self.val < other
 
     def __le__(self, other):
         if isinstance(other, Val):
-            return (self.val <= other.val)
+            return self.val <= other.val
         else:
-            return (self.val <= other)
+            return self.val <= other
 
     def __eq__(self, other):
         if isinstance(other, Val):
-            return (self.val == other.val)
+            return self.val == other.val
         else:
-            return (self.val == other)
+            return self.val == other
 
     def __ne__(self, other):
         if isinstance(other, Val):
-            return (self.val != other.val)
+            return self.val != other.val
         else:
-            return (self.val != other)
+            return self.val != other
 
     def __ge__(self, other):
         if isinstance(other, Val):
-            return (self.val >= other.val)
+            return self.val >= other.val
         else:
-            return (self.val >= other)
-
+            return self.val >= other
 
     def __gt__(self, other):
         if isinstance(other, Val):
-            return (self.val > other.val)
+            return self.val > other.val
         else:
-            return (self.val > other)
+            return self.val > other
 
     def __str__(self):
         return str(self.val)
@@ -87,8 +88,8 @@ class Val(object):
     def __repr__(self):
         return self.__str__()
 
-class IntegerV(Val):
 
+class IntegerV(Val):
     """ Integer values in PrivGuard policies. """
 
     def __init__(self, val):
@@ -100,22 +101,22 @@ class IntegerV(Val):
     def __sub__(self, other):
         return IntegerV(self.val - other)
 
-class StringV(Val):
 
+class StringV(Val):
     """ String values in PrivGuard policies. """
 
     def __init__(self, val):
         Val.__init__(self, val)
 
-class DateV(Val):
 
+class DateV(Val):
     """ Date values in PrivGuard policies. """
 
     def __init__(self, val: datetime.datetime):
         Val.__init__(self, val)
 
-class ExtendV(object):
 
+class ExtendV(object):
     """
     Extend any value with upper bound: inf and lower bound: ninf
     """
@@ -133,13 +134,13 @@ class ExtendV(object):
             return False
         elif (other.val is 'inf') and (self.val is not 'inf'):
             return True
-        elif (other.val is 'ninf'):
+        elif other.val is 'ninf':
             return False
-        elif (self.val is 'ninf'):
+        elif self.val is 'ninf':
             return True
-        elif (self.val is 'inf'):
+        elif self.val is 'inf':
             return False
-        return (self.val < other.val)
+        return self.val < other.val
 
     def __le__(self, other):
         return self.__lt__(other) or self.__eq__(other)
@@ -153,7 +154,7 @@ class ExtendV(object):
             return True
         elif (other.val is 'ninf') and (self.val is not 'ninf'):
             return False
-        return (self.val == other.val)
+        return self.val == other.val
 
     def __ne__(self, other):
         return not (self.__eq__(other))
@@ -162,14 +163,14 @@ class ExtendV(object):
         return self.__gt__(other) or self.__eq__(other)
 
     def __gt__(self, other):
-        if (other.val is 'inf'):
+        if other.val is 'inf':
             return False
-        elif (self.val is 'inf'):
+        elif self.val is 'inf':
             return True
-        elif (self.val is 'ninf'):
+        elif self.val is 'ninf':
             return False
         elif (other.val is 'ninf') and (self.val is not 'ninf'):
             return True
         elif (other.val is 'ninf') and (self.val is 'ninf'):
             return False
-        return (self.val > other.val)
+        return self.val > other.val
