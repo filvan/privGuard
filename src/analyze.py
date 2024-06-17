@@ -38,11 +38,11 @@ import argparse
 # import stub_numpy
 import os
 import sys
+
 # print(os.getcwd())
 # print(os.environ)
 sys.path.append(os.path.join(os.environ.get('PRIVGUARD'), 'src/parser'))
 sys.path.append(os.path.join(os.environ.get('PRIVGUARD'), "src/stub_libraries"))
-
 
 program_map = {
     0: "./examples/program/ehr_example.py",
@@ -264,10 +264,6 @@ locales = {
 }
 
 
-def analyze(module, data_folder, lib_list):
-    return module.run(data_folder, lightgbm=stub_lightgbm, **lib_list)
-
-
 def parse():
     parser = argparse.ArgumentParser()
     parser.add_argument('--example_id', help='The example program ID', type=int, default=6)
@@ -361,15 +357,19 @@ def parse():
     return program_map[args.example_id], data_map[args.example_id], lib_map[args.example_id], extra_args
 
 
-if __name__ == '__main__':
+def analyze():
     script, data_folder, lib_list, extra_args = parse()
 
     spec = spec_from_file_location("default_module", script)
     module = module_from_spec(spec)
     spec.loader.exec_module(module)
     lib_list.__setitem__('extra_args', extra_args)
-    result = analyze(module, data_folder, lib_list)
+    result = module.run(data_folder, lightgbm=stub_lightgbm, **lib_list)
 
     # file2 = open(r"C:\Users\sofy9\Desktop\TOP-UIC\Tesi\Results\Traccar\CPRA\get_all_columns_cpra_DEVICE.txt", "w+")
     # file2.writelines(str(result))
     print("\nResidual policy of the output:" + str(result))
+
+
+if __name__ == '__main__':
+    analyze()
