@@ -35,6 +35,6 @@ def len_(arr):
         return len(arr)
 
 
-class UniversalIndex():
+class UniversalIndex:
     def __getitem__(self, key, *args, **kwargs):
         return UniversalIndex()
