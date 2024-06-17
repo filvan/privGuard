@@ -69,7 +69,10 @@ program_map = {
     # 21: "./examples/program/21_home_value_prediction.py",
     # 22: "./examples/program/22_malware_prediction.py",
     23: "./examples/program/23_web_traffic_forecasting.py",
+
     24: "./examples/program/cpra_example.py",
+
+    # libretaxi
 
     25: "./examples/program/Libretaxi/libretaxi_example.py",
     26: "./examples/program/Libretaxi/repository/libretaxi_saveUser.py",
@@ -87,18 +90,18 @@ program_map = {
     38: "./examples/program/Libretaxi/repository/libretaxi_findPost.py",
     39: "./examples/program/Libretaxi/repository/libretaxi_findUser.py",
     40: "./examples/program/Libretaxi/libretaxi_locale.py",
+
     # selfmailbot
+
     50: "./examples/program/selfmailbot/app/confirm_email.py",
     51: "./examples/program/selfmailbot/app/resend.py",
     52: "./examples/program/selfmailbot/app/reset_email.py",
     53: "./examples/program/selfmailbot/app/send_confirmation.py",
     54: "./examples/program/selfmailbot/app/send_photo.py",
     55: "./examples/program/selfmailbot/app/send_text_message.py",
-
     57: "./examples/program/selfmailbot/celery/send_confirmation_mail.py",
     58: "./examples/program/selfmailbot/celery/send_file.py",
     59: "./examples/program/selfmailbot/celery/send_text.py",
-
     60: "./examples/program/selfmailbot/mail/send_confirmation_mail.py",
     61: "./examples/program/selfmailbot/mail/send_mail.py",
     62: "./examples/program/selfmailbot/models/get_user_by_confirmation_link.py",
@@ -113,6 +116,8 @@ program_map = {
     74: "./examples/program/traccar/analyze/manage_user_getter.py",
     75: "./examples/program/traccar/analyze/manage_user_setter.py",
     76: "./examples/program/traccar/analyze/send_mail_analizer.py",
+
+    # soundness example
 
     77: "./examples/program/77_soundness_example.py",
 
