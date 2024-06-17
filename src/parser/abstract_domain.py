@@ -22,7 +22,8 @@
 
 """ Abstract domains for PrivGuard. """
 
-from src.parser.typed_value import ExtendV
+from src.parser.typed_value import ExtendV, min_exval, max_exval
+
 
 class Lattice(object):
     """ Parent class for abstract lattices in PrivGuard policies. """
@@ -35,6 +36,7 @@ class Lattice(object):
 
     def conjunct(self, other):
         pass
+
 
 class ClosedIntervalL(Lattice):
     """ ClosedInterval lattice for extended values. """
@@ -52,20 +54,23 @@ class ClosedIntervalL(Lattice):
         assert isinstance(other, ClosedIntervalL)
 
         if self.lower >= other.lower and self.upper <= other.upper:
-             return True
-        return False 
+            return True
+        return False
 
     def disjunct(self, other: Lattice):
-        return ClosedInterval(lower=min_exval(self.lower, other.lower), upper=max_exval(self.upper, other.upper), lower_bound=self.lower_bound, upper_bound=self.upper_bound)
+        return ClosedIntervalL(lower=min_exval(self.lower, other.lower), upper=max_exval(self.upper, other.upper),
+                               lower_bound=self.lower_bound, upper_bound=self.upper_bound)
 
     def conjunct(self, other: Lattice):
-        return ClosedInterval(lower=max_exval(self.lower, other.lower), upper=min_exval(self.upper, other.upper), lower_bound=self.lower_bound, upper_bound=self.upper_bound)
+        return ClosedIntervalL(lower=max_exval(self.lower, other.lower), upper=min_exval(self.upper, other.upper),
+                               lower_bound=self.lower_bound, upper_bound=self.upper_bound)
 
     def __str__(self):
         return '[' + str(self.lower) + ', ' + str(self.upper) + ']'
 
     def __repr__(self):
         return self.__str__()
+
 
 class SchemaL(Lattice):
     """ Schema lattice. """
@@ -81,10 +86,10 @@ class SchemaL(Lattice):
         return [x for x in self.schema if x in other.schema]
 
     def conjunct(self, other: Lattice):
-        return list(set(self.schema)|set(other.schema))
+        return list(set(self.schema) | set(other.schema))
 
     def __str__(self):
-        string = '[' + self.schema[0] 
+        string = '[' + self.schema[0]
         for i in range(1, len(self.schema)):
             string += ", " + self.schema[i]
         return string
