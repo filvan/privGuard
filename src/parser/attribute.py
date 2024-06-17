@@ -24,6 +24,7 @@
 
 from typing import Tuple
 
+
 class Column():
     """
     A representation of a column in a relation.
@@ -37,6 +38,7 @@ class Column():
 
     def __eq__(self, other):
         return self.col_name == other.col_name
+
 
 class Attribute(object):
     """
@@ -75,6 +77,7 @@ class Attribute(object):
 
         return []
 
+
 class Satisfied(Attribute):
     """
     An attribute which is already satisfied (i.e. nothing more needs to be 
@@ -91,6 +94,7 @@ class Satisfied(Attribute):
             return True
         else:
             return False
+
 
 class Unsatisfiable(Attribute):
     """
@@ -137,6 +141,7 @@ class FilterAttribute(Attribute):
     def __repr__(self):
         return self.__str__()
 
+
 class RedactAttribute(Attribute):
     """
     The Redact attribute. Tracks concrete column being redacted.
@@ -149,7 +154,8 @@ class RedactAttribute(Attribute):
     def is_stricter_than(self, other: Attribute):
         if isinstance(other, RedactAttribute):
             if self.col == other.col:
-                if (self.slice[0] is None or self.slice[0] <= other.slice[0]) and (self.slice[1] is None or self.slice[1] >= other.slice[1]):
+                if (self.slice[0] is None or self.slice[0] <= other.slice[0]) and (
+                        self.slice[1] is None or self.slice[1] >= other.slice[1]):
                     return True
         return False
 
@@ -161,6 +167,7 @@ class RedactAttribute(Attribute):
 
     def __repr__(self):
         return self.__str__()
+
 
 # Schema deals with columns
 class SchemaAttribute(Attribute):
@@ -197,6 +204,7 @@ class SchemaAttribute(Attribute):
     def __repr__(self):
         return self.__str__()
 
+
 # The following attribute does not deal with data
 
 class RoleAttribute(Attribute):
@@ -225,6 +233,7 @@ class RoleAttribute(Attribute):
 
     def __repr__(self):
         return self.__str__()
+
 
 class PrivacyAttribute(Attribute):
     """
@@ -277,6 +286,7 @@ class PrivacyAttribute(Attribute):
     def __repr__(self):
         return self.__str__()
 
+
 class PurposeAttribute(Attribute):
     """
     The Purpose attribute (under construction).
@@ -294,6 +304,28 @@ class PurposeAttribute(Attribute):
 
     def __str__(self):
         return 'purpose: ' + self.purpose
+
+    def __repr__(self):
+        return self.__str__()
+
+
+# Author: Filippo Vannutelli
+class AlertAttribute(Attribute):
+    """
+    The Alert attribute (under construction).
+    """
+
+    def __init__(self, alert_type):
+        self.alert_type = alert_type
+
+    def is_stricter_than(self, other: Attribute):
+        if isinstance(other, AlertAttribute):
+            if self.alert_type == other.alert_type:
+                return True
+        return False
+
+    def __str__(self):
+        return 'alert: ' + self.alert_type
 
     def __repr__(self):
         return self.__str__()
