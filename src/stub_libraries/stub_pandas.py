@@ -62,7 +62,7 @@ class Series(Tabular):
     filtering. Only Series originating from a DataFrame can be used to filter that DataFrame. 
     """
 
-    def __init__(self, policy, column, parent, shape=None, interval=None):
+    def __init__(self, policy, column, parent, shape=None, interval=None, op=None):
 
         """
         Initialize an abstract Pandas Series. This class is only expected to serve as indicators
@@ -74,6 +74,7 @@ class Series(Tabular):
         self.parent = parent
         self.shape = shape
         self.interval = interval
+        self.op = op
 
         self.values = ndarray(self.policy)
 
@@ -91,14 +92,14 @@ class Series(Tabular):
 
         if self.interval is None:
             return Series(Policy([[Unsatisfiable()]]), self.column, self.parent, shape=self.shape,
-                          interval=ClosedIntervalL(_to_abstract_value(other), ExtendV('inf')))
+                          interval=ClosedIntervalL(_to_abstract_value(other), ExtendV('inf')), op='>=')
         else:
             raise ValueError(f'Trying to re-compare a indicator Series whose interval is {self.interval}.')
 
     def __gt__(self, other):
         if self.interval is None:
             return Series(Policy([[Unsatisfiable()]]), self.column, self.parent, shape=self.shape,
-                          interval=ClosedIntervalL(_to_abstract_value(other + 1), ExtendV('inf')))
+                          interval=ClosedIntervalL(_to_abstract_value(other + 1), ExtendV('inf')), op='>')
         else:
             raise ValueError(f'Trying to re-compare a indicator Series whose interval is {self.interval}.')
 
@@ -106,7 +107,7 @@ class Series(Tabular):
 
         if self.interval is None:
             return Series(Policy([[Unsatisfiable()]]), self.column, self.parent, shape=self.shape,
-                          interval=ClosedIntervalL(ExtendV('ninf'), _to_abstract_value(other)))
+                          interval=ClosedIntervalL(ExtendV('ninf'), _to_abstract_value(other)), op='<=')
         else:
             raise ValueError(f'Trying to re-compare a indicator Series whose interval is {self.interval}.')
 
@@ -114,7 +115,7 @@ class Series(Tabular):
 
         if self.interval is None:
             return Series(Policy([[Unsatisfiable()]]), self.column, self.parent, shape=self.shape,
-                          interval=ClosedIntervalL(ExtendV('ninf'), _to_abstract_value(other - 1)))
+                          interval=ClosedIntervalL(ExtendV('ninf'), _to_abstract_value(other - 1)), op='<')
         else:
             raise ValueError(f'Trying to re-compare a indicator Series whose interval is {self.interval}.')
 
@@ -123,7 +124,7 @@ class Series(Tabular):
         if self.interval is None:
             v = _to_abstract_value(other)
             return Series(Policy([[Unsatisfiable()]]), self.column, self.parent, shape=self.shape,
-                          interval=ClosedIntervalL(v, v))
+                          interval=ClosedIntervalL(v, v), op='==')
         else:
             raise ValueError(f'Trying to re-compare a indicator Series whose interval is {self.interval}.')
 
@@ -201,8 +202,10 @@ class DataFrame(Tabular):
             newPolicy = self.policy
             if key.interval.lower != ExtendV('ninf'):
                 newPolicy = newPolicy.runFilter(key.column, key.interval.lower.val.val, 'ge')
+                # newPolicy = newPolicy.runFilter(key.column, key.interval.lower.val.val, key.op)
             if key.interval.upper != ExtendV('inf'):
                 newPolicy = newPolicy.runFilter(key.column, key.interval.upper.val.val, 'le')
+                # newPolicy = newPolicy.runFilter(key.column, key.interval.lower.val.val, key.op)
             return DataFrame(self.schema, newPolicy, shape=self.shape)
 
         elif isinstance(key, slice):

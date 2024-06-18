@@ -121,9 +121,10 @@ class FilterAttribute(Attribute):
     in the program.
     """
 
-    def __init__(self, col, interval):
+    def __init__(self, col, interval, op):
         self.col = col
         self.interval = interval
+        self.op = op
 
     def is_stricter_than(self, other: Attribute):
         if isinstance(other, FilterAttribute):

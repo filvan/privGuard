@@ -43,26 +43,27 @@ VARIABLE = Word(alphanums).setName('VARIABLE')
 def filter_action(toks):
     """ How to parse a filter attribute. """
     col = toks[1]
+    op = toks[2]
     interval = None
-    if toks[2] == '==':
+    if op == '==':
         interval = ClosedIntervalL(ExtendV(toks[3]), ExtendV(toks[3]))
-    if toks[2] == '!=':
+    if op == '!=':
         raise NotImplemented("'!=' is currently not implemented. Please use '>=', '<=', '>', '<' to express '!='.")
-    if toks[2] == '<=':
+    if op == '<=':
         interval = ClosedIntervalL(ExtendV('ninf'), ExtendV(toks[3]))
-    if toks[2] == '>=':
+    if op == '>=':
         interval = ClosedIntervalL(ExtendV(toks[3]), ExtendV('inf'))
-    if toks[2] == '<':
+    if op == '<':
         if isinstance(toks[3], IntegerV):
             interval = ClosedIntervalL(ExtendV('ninf'), ExtendV(toks[3] - 1))
         else:
             raise NotImplemented("'<' is only implemented for integer types. Please try '<='.")
-    if toks[2] == '>':
+    if op == '>':
         if isinstance(toks[3], IntegerV):
             interval = ClosedIntervalL(ExtendV(toks[3] + 1), ExtendV('inf'))
         else:
             raise NotImplemented("'>' is only implemented for integer types. Please try '>='.")
-    return FilterAttribute(col, interval)
+    return FilterAttribute(col, interval, op)
 
 
 def redact_action(toks):
