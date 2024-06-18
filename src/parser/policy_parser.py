@@ -123,7 +123,7 @@ PRIVACY_ATTRIBUTE = ('PRIVACY' + (Literal('Anonymization') | Literal('Aggregatio
                                             ',') + SCALAR_FLOAT + Suppress(')')))).addParseAction(privacy_action)
 ROLE_ATTRIBUTE = ('ROLE' + VARIABLE).addParseAction(role_action)
 PURPOSE_ATTRIBUTE = ('PURPOSE' + VARIABLE).addParseAction(purpose_action)
-ALERT_ATTRIBUTE = ('ALERT' + VARIABLE).addParseAction(alert_action)
+ALERT_ATTRIBUTE = ('ALERT' + STRING).addParseAction(alert_action)
 ATTRIBUTE = FILTER_ATTRIBUTE | REDACT_ATTRIBUTE | SCHEMA_ATTRIBUTE | PRIVACY_ATTRIBUTE | ROLE_ATTRIBUTE | PURPOSE_ATTRIBUTE | ALERT_ATTRIBUTE
 
 # the parser for clauses

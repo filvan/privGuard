@@ -1,3 +1,3 @@
 ALLOW FILTER AGE >= 18
     AND PURPOSE Testing
-    AND ALERT HelloWorld!
+    AND ALERT 'Hello World!'

@@ -325,7 +325,7 @@ class AlertAttribute(Attribute):
         return False
 
     def __str__(self):
-        return 'alert: ' + self.alert_type
+        return 'alert: ' + str(self.alert_type)
 
     def __repr__(self):
         return self.__str__()
