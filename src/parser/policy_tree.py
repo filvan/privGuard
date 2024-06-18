@@ -25,7 +25,7 @@
 from typing import List
 from copy import deepcopy
 from src.parser.attribute import Attribute, Satisfied, Unsatisfiable, FilterAttribute, SchemaAttribute, \
-    PrivacyAttribute, RedactAttribute, PurposeAttribute
+    PrivacyAttribute, RedactAttribute, PurposeAttribute, AlertAttribute
 from src.parser.typed_value import ExtendV
 from src.parser.abstract_domain import ClosedIntervalL
 from src.parser.policy_parser import policy_parser
@@ -214,14 +214,14 @@ class Policy(object):
         """
 
         p = None
-        if isinstance(policy_parameter, str):
+        if isinstance(policy_parameter, str) and len(policy_parameter) > 0:
             p = policy2DNF(policy_parser.parseString(policy_parameter))
         elif isinstance(policy_parameter, list):
             p = policy_parameter
         elif isinstance(policy_parameter, DNF):
             self.policy = policy_parameter
             return
-        elif policy_parameter is None:
+        elif not policy_parameter:
             self.policy = Policy([[Satisfied()]])
             return
         else:
@@ -451,7 +451,7 @@ class Policy(object):
                     return Satisfied()
             elif priv_tech == 'l-diversity':
                 raise NotImplemented
-            elif priv_tech == 't-closenss':
+            elif priv_tech == 't-closeness':
                 raise NotImplemented
             elif priv_tech == 'DP':
                 if kwargs['eps'] < attr.eps and kwargs['delta'] < attr.delta:
