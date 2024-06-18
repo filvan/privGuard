@@ -307,7 +307,7 @@ class Policy(object):
     def _runFilter(self, attr: Attribute, col, value, op):
 
         if isinstance(attr, FilterAttribute) and attr.col == col:
-            assert isinstance(value, (int, float, str))
+            assert isinstance(value, (int, str))
 
             l = attr.interval.lower
             u = attr.interval.upper

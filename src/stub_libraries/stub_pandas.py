@@ -95,11 +95,26 @@ class Series(Tabular):
         else:
             raise ValueError(f'Trying to re-compare a indicator Series whose interval is {self.interval}.')
 
+    def __gt__(self, other):
+        if self.interval is None:
+            return Series(Policy([[Unsatisfiable()]]), self.column, self.parent, shape=self.shape,
+                          interval=ClosedIntervalL(_to_abstract_value(other + 1), ExtendV('inf')))
+        else:
+            raise ValueError(f'Trying to re-compare a indicator Series whose interval is {self.interval}.')
+
     def __le__(self, other):
 
         if self.interval is None:
             return Series(Policy([[Unsatisfiable()]]), self.column, self.parent, shape=self.shape,
                           interval=ClosedIntervalL(ExtendV('ninf'), _to_abstract_value(other)))
+        else:
+            raise ValueError(f'Trying to re-compare a indicator Series whose interval is {self.interval}.')
+
+    def __lt__(self, other):
+
+        if self.interval is None:
+            return Series(Policy([[Unsatisfiable()]]), self.column, self.parent, shape=self.shape,
+                          interval=ClosedIntervalL(ExtendV('ninf'), _to_abstract_value(other - 1)))
         else:
             raise ValueError(f'Trying to re-compare a indicator Series whose interval is {self.interval}.')
 

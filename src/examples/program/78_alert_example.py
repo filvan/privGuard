@@ -8,7 +8,8 @@ def run(data_folder, **kwargs):
     # print(patients)
     # print('Policy: ' + str(patients.policy))
 
-    patients = patients[patients.AGE >= 18]
+    patients = patients[patients.AGE < 50]
+    patients = patients['ID']
 
     # print(patients)
     return patients
