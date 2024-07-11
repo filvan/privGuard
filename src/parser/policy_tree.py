@@ -327,7 +327,7 @@ class Policy(object):
                         return Unsatisfiable()
                     else:
                         newInterval = ClosedIntervalL(l, ExtendV('inf'))
-                        return FilterAttribute(attr.col, newInterval)
+                        return FilterAttribute(attr.col, newInterval, op)
                 else:
                     return attr
 
@@ -339,7 +339,7 @@ class Policy(object):
                         return Unsatisfiable()
                     else:
                         newInterval = ClosedIntervalL(ExtendV('ninf'), u)
-                        return FilterAttribute(attr.col, newInterval)
+                        return FilterAttribute(attr.col, newInterval, op)
                 else:
                     return attr
 

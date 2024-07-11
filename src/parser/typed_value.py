@@ -35,8 +35,8 @@ def min_exval(v1, v2):
 def max_exval(v1, v2):
     """ Return the larger one between two extended values. """
     if v1 >= v2:
-        return v2
-    return v1
+        return v1
+    return v2
 
 
 class Val(object):

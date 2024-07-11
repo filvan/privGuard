@@ -10,4 +10,4 @@ def run(data_folder, **kwargs):
     gdpr = gdpr[gdpr.Age >= 16]
     # gdpr = gdpr.PersonalData
 
-    return gdpr.PersonalData
+    return gdpr
