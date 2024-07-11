@@ -1,5 +1,3 @@
-# Art. 5 GDPR - Principles relating to processing of personal data
-# 1.b
 ALLOW SCHEMA PersonalData
   	AND ROLE Controller
 	AND PURPOSE X
@@ -9,41 +7,33 @@ ALLOW SCHEMA PersonalData
 	    OR PURPOSE HistoricalResearch
 	    OR PURPOSE Statistical)
 
-# 1.d
 ALLOW SCHEMA PersonalData
 	AND ROLE Controller
 	AND (PURPOSE Erasure OR PURPOSE Rectification)
 
-# 1.f
 ALLOW SCHEMA PersonalData
 	AND ROLE AuthorisedPeople
 
 
-# Art. 6 GDPR - Lawfulness of processing
-# 1.a
 ALLOW SCHEMA PersonalData
 	AND ROLE Controller
-	AND FILTER ConsentProcessing == ’Y’
+	AND FILTER ConsentProcessing == 'Y'
 
-# 1.b
 ALLOW SCHEMA PersonalData
 	AND ROLE Controller
 	AND PURPOSE X
 
-# 1.c-1.d
 ALLOW SCHEMA PersonalData
 	AND ROLE Controller
 	AND PURPOSE LegalObligation
 ALLOW SCHEMA PersonalData
 	AND PURPOSE VitalInterests
 
-# 1.e
 ALLOW SCHEMA PersonalData
 	AND ROLE Controller
 	AND (PURPOSE PublicInterestTask OR
 		PURPOSE OfficialAuthorityExercise)
 
-# 1.f
 ALLOW SCHEMA PersonalData
 	AND (ROLE Controller OR ROLE ThirdParty)
 	AND PURPOSE LegitimateInterests
@@ -52,71 +42,56 @@ ALLOW SCHEMA PersonalData
 	AND PURPOSE PublicAuthorityTasks
 
 
-# Art. 7 GDPR - Conditions for consent
-# 3
 ALLOW SCHEMA ConsentData
 	AND ROLE DataSubject
 	AND PURPOSE ConsentWithdrawal
 
 
-# Art. 8 GDPR - Conditions applicable to child’s consent in relation to information society services
-# 1-2
 ALLOW SCHEMA PersonalData
 	AND ROLE Controller
-	AND FILTER GuardianConsentProcessing == ’Y’
+	AND FILTER GuardianConsentProcessing == 'Y'
 	AND FILTER Age < 13
 ALLOW SCHEMA PersonalData
 	AND ROLE Controller
-	AND FILTER (ConsentProcessing == ‘Y’ OR GuardianConsentProcessing == ’Y’)
+	AND FILTER (ConsentProcessing == 'Y' OR GuardianConsentProcessing == 'Y')
 	AND FILTER Age < 16 AND FILTER Age >= 13
 
 
-# Art. 9 GDPR - Processing of special categories of personal data
-# 1-2.a
 ALLOW SCHEMA SpecialPersonalData
-	AND FILTER DataSubjectCanLiftProhibition == ‘Y’
-	AND FILTER ConsentProcessingIdentifiable == ’Y’
+	AND FILTER DataSubjectCanLiftProhibition == 'Y'
+	AND FILTER ConsentProcessingIdentifiable == 'Y'
 
-# 1-2.b
 ALLOW SCHEMA SpecialPersonalData
 	AND (PURPOSE EmploymentRights&ObligationsOfControllerOrDataSubject
 	OR PURPOSE SocialSecurityRights&ObligationsOfControllerOrDataSubject
 	OR PURPOSE SocialProtectionRights&ObligationsOfControllerOrDataSubject)
 
-# 1-2.c
 ALLOW SCHEMA SpecialPersonalData
 	AND PURPOSE VitalInterests
 
-# 1-2.d
 ALLOW SCHEMA SpecialPersonalData
 	AND PURPOSE LegitimateNoProfitActivitiesWithAppropriateSafeguards
 	AND (PURPOSE PoliticalPurpose OR PURPOSE PhilosophicalPurpose
 		OR PURPOSE ReligiousPurpose OR PURPOSE TradeUnionPurpose)
 	AND ROLE NoProfitBody
 
-# 1-2.e
 ALLOW SCHEMA SpecialPersonalData
-	AND FILTER ManifestlyMadePublicByDataSubject == ‘Y’
+	AND FILTER ManifestlyMadePublicByDataSubject == 'Y'
 
-# 1-2.f
 ALLOW SCHEMA SpecialPersonalData
 	AND (ROLE CourtActingInJudicialCapacity OR PURPOSE LegalClaim)
 
-# 1-2.g
 ALLOW SCHEMA SpecialPersonalData
 	AND PURPOSE PublicInterestProportionateToTheAimPursued
 
-# 1-2.h
 ALLOW SCHEMA SpecialPersonalData
 	AND ROLE PersonSubjectToObligationOfSecrecy
 	AND PURPOSE MedicalPurpose
 
-# 1-2.i
 ALLOW SCHEMA SpecialPersonalData
 	AND ROLE PersonSubjectToObligationOfSecrecy
 	AND PURPOSE PublicHealthInterest
 
-# 1-2.j
 ALLOW SCHEMA SpecialPersonalData
 	AND (PURPOSE PublicInterest OR PURPOSE ScientificResearch
 		OR PURPOSE HistoricalResearch OR PURPOSE Statistical)
@@ -125,199 +100,164 @@ ALLOW SCHEMA SpecialPersonalData
 		OR PRIVACY T-Closeness OR PRIVACY DP(1.0, 1e-5))
 
 
-# Art. 10 GDPR - Processing of personal data relating to criminal convictions and offences
 ALLOW SCHEMA CriminalData
 	AND ROLE OfficialAuthority
 
 
-# Art. 13 GDPR - Information to be provided where personal data are collected from the data subject
-# 1-2
 ALLOW SCHEMA InfoAboutController&DPO&Processing&Recipients
 	AND SCHEMA StoragePeriod&DataSubjectRightsAndObligations
 	AND ROLE DataSubject
-	AND FILTER DataSubjectID == ‘n_data_subject’
+	AND FILTER DataSubjectID == 'n_data_subject'
 
 
-# Art. 14 GDPR - Information to be provided where personal data have not been obtained from the data subject
-# 1-2
 ALLOW SCHEMA InfoAboutController&DPO&Processing&Recipients
 	AND SCHEMA StoragePeriod&DataSubjectRights&Source
 	AND ROLE DataSubject
-	AND FILTER DataSubjectID == ‘n_data_subject’
+	AND FILTER DataSubjectID == 'n_data_subject'
 
 
-# Art. 15 GDPR - Right of access by the data subject
-# 1
-ALLOW SCHEMA InfoAboutProcessing&Recipients&StoragePeriod& DataSubjectRights&Source
+ALLOW SCHEMA InfoAboutProcessing&Recipients&StoragePeriod&DataSubjectRights&Source
 	AND SCHEMA PersonalData
 	AND ROLE DataSubject
-	AND FILTER DataSubjectID == ‘n_data_subject’
+	AND FILTER DataSubjectID == 'n_data_subject'
 
 
-# Art. 16 GDPR - Right to rectification
 ALLOW ROLE Controller
 	AND SCHEMA PersonalData
-	AND FILTER RequireRectification == ’Y’
-	AND FILTER DataSubjectID == ’n_data_subject’
+	AND FILTER RequireRectification == 'Y'
+	AND FILTER DataSubjectID == 'n_data_subject'
 	AND PURPOSE Rectification
 
 
-# Art. 17 GDPR - Right to erasure (‘right to be forgotten’)
-# 1.a
 ALLOW ROLE Controller
 	AND SCHEMA PersonalData
-	AND (FILTER NoLongerNecessary == ’Y’
-		AND FILTER NecessaryForRightOfFreedomOfExpression == ‘N’
-		AND FILTER NecessaryForPublicInterestOrLegalObligation == ‘N’
-		AND FILTER NecessaryForLegalClaim == ‘N’)
-	AND FILTER DataSubjectID == ’n_data_subject’
+	AND (FILTER NoLongerNecessary == 'Y'
+		AND FILTER NecessaryForRightOfFreedomOfExpression == 'N'
+		AND FILTER NecessaryForPublicInterestOrLegalObligation == 'N'
+		AND FILTER NecessaryForLegalClaim == 'N')
+	AND FILTER DataSubjectID == 'n_data_subject'
 	AND PURPOSE Erasure
 
-# 1.b
 ALLOW ROLE Controller
 	AND SCHEMA PersonalData
-	AND (FILTER ConsentProcessing == ’N’
-		AND FILTER NecessaryForRightOfFreedomOfExpression == ‘N’
-		AND FILTER NecessaryForPublicInterestOrLegalObligation == ‘N’
-		AND FILTER NecessaryForLegalClaim == ‘N’)
-	AND FILTER DataSubjectID == ’n_data_subject’
+	AND (FILTER ConsentProcessing == 'N'
+		AND FILTER NecessaryForRightOfFreedomOfExpression == 'N'
+		AND FILTER NecessaryForPublicInterestOrLegalObligation == 'N'
+		AND FILTER NecessaryForLegalClaim == 'N')
+	AND FILTER DataSubjectID == 'n_data_subject'
 	AND PURPOSE Erasure
 
-# 1.c
 ALLOW ROLE Controller
 	AND SCHEMA PersonalData
-	AND ((FILTER Objection&NoOverridingLegitimateGrounds == ’Y’
-		OR FILTER ObjectionToProcessingForDirectMarketing == ‘Y’)
-		AND FILTER NecessaryForRightOfFreedomOfExpression == ‘N’
-		AND FILTER NecessaryForPublicInterestOrLegalObligation == ‘N’
-		AND FILTER NecessaryForLegalClaim == ‘N’)
-	AND FILTER DataSubjectID == ’n_data_subject’
+	AND ((FILTER Objection&NoOverridingLegitimateGrounds == 'Y'
+		OR FILTER ObjectionToProcessingForDirectMarketing == 'Y')
+		AND FILTER NecessaryForRightOfFreedomOfExpression == 'N'
+		AND FILTER NecessaryForPublicInterestOrLegalObligation == 'N'
+		AND FILTER NecessaryForLegalClaim == 'N')
+	AND FILTER DataSubjectID == 'n_data_subject'
 	AND PURPOSE Erasure
 
-# 1.d
 ALLOW ROLE Controller
 	AND SCHEMA PersonalData
-	AND (FILTER UnlawfullyProcessed == ’Y’
-		AND FILTER NecessaryForRightOfFreedomOfExpression == ‘N’
-		AND FILTER NecessaryForPublicInterestOrLegalObligation == ‘N’
-		AND FILTER NecessaryForLegalClaim == ‘N’)
-	AND FILTER DataSubjectID == ’n_data_subject’
+	AND (FILTER UnlawfullyProcessed == 'Y'
+		AND FILTER NecessaryForRightOfFreedomOfExpression == 'N'
+		AND FILTER NecessaryForPublicInterestOrLegalObligation == 'N'
+		AND FILTER NecessaryForLegalClaim == 'N')
+	AND FILTER DataSubjectID == 'n_data_subject'
 	AND PURPOSE Erasure
 
-# 1.e
 ALLOW ROLE Controller
 	AND SCHEMA PersonalData
-	AND (FILTER ToBeErasedForComplianceWithLegalObligation == ’Y’
-		AND FILTER NecessaryForRightOfFreedomOfExpression == ‘N’
-		AND FILTER NecessaryForPublicInterestOrLegalObligation == ‘N’
-		AND FILTER NecessaryForLegalClaim == ‘N’)
-	AND FILTER DataSubjectID == ’n_data_subject’
+	AND (FILTER ToBeErasedForComplianceWithLegalObligation == 'Y'
+		AND FILTER NecessaryForRightOfFreedomOfExpression == 'N'
+		AND FILTER NecessaryForPublicInterestOrLegalObligation == 'N'
+		AND FILTER NecessaryForLegalClaim == 'N')
+	AND FILTER DataSubjectID == 'n_data_subject'
 	AND PURPOSE Erasure
 
-# 1.f
 ALLOW ROLE Controller
 	AND SCHEMA PersonalData
-	AND (FILTER InRelationToOfferOfInformationSocietyServices == ’Y’
-		AND FILTER NecessaryForRightOfFreedomOfExpression == ‘N’
-		AND FILTER NecessaryForPublicInterestOrLegalObligation == ‘N’
-		AND FILTER NecessaryForLegalClaim == ‘N’)
-	AND FILTER DataSubjectID == ’n_data_subject’
+	AND (FILTER InRelationToOfferOfInformationSocietyServices == 'Y'
+		AND FILTER NecessaryForRightOfFreedomOfExpression == 'N'
+		AND FILTER NecessaryForPublicInterestOrLegalObligation == 'N'
+		AND FILTER NecessaryForLegalClaim == 'N')
+	AND FILTER DataSubjectID == 'n_data_subject'
 	AND PURPOSE Erasure
 
 
-# Art. 20 GDPR - Right to data portability
-# 1.a
 ALLOW ROLE DataSubject
 	AND SCHEMA PersonalData
-	AND FILTER ConsentProcessing == ’Y’
-	AND FILTER DataSubjectID == ’n_data_subject’
+	AND FILTER ConsentProcessing == 'Y'
+	AND FILTER DataSubjectID == 'n_data_subject'
 	AND PURPOSE DataPortability
 
-# 2
 ALLOW ROLE Controller
 	AND SCHEMA PersonalData
-	AND FILTER RequestPortability == ‘Y’
-	AND FILTER ConsentProcessing == ’Y’
-	AND FILTER DataSubjectID == ’n_data_subject’
+	AND FILTER RequestPortability == 'Y'
+	AND FILTER ConsentProcessing == 'Y'
+	AND FILTER DataSubjectID == 'n_data_subject'
 	AND PURPOSE DataPortability
 
 
-# Art. 21 GDPR - Right to object
-# 1
 ALLOW ROLE Controller
 	AND SCHEMA PersonalData
-	AND FILTER ObjectionToSpecificKindOfProcessing == ‘Y’
-	AND (FILTER CompellingLegitimateGrounds == ‘Y’ OR PURPOSE LegalClaims)
+	AND FILTER ObjectionToSpecificKindOfProcessing == 'Y'
+	AND (FILTER CompellingLegitimateGrounds == 'Y' OR PURPOSE LegalClaims)
 
-# 2-3
 ALLOW ROLE Controller
 	AND SCHEMA PersonalData
-	AND FILTER ConsentDirectMarketing == ’Y’
+	AND FILTER ConsentDirectMarketing == 'Y'
 	AND PURPOSE DirectMarketing
 ALLOW ROLE DataSubject
-	AND SCHEMA ConsentDirectMarketing
+	AND SCHEMA ConsentDirectMarketingData
 	AND PURPOSE ConsentWithdrawal
 
 
-# Art. 25 GDPR - Data protection by design and by default
-# 1
 ALLOW ROLE Controller
 	AND SCHEMA PersonalData
 	AND (PRIVACY Anonymization OR PRIVACY Aggregation
 		OR PRIVACY K-Anonimity OR PRIVACY L-Diversity
 		OR PRIVACY T-Closeness OR PRIVACY DP(1.0, 1e-5))
 
-# 2
 ALLOW ROLE Controller
 	AND SCHEMA PersonalData
 	AND PURPOSE DataMinimisation
 
 
-# Art. 32 GDPR - Security of processing
-# 4
 ALLOW ROLE PersonUnderAuthorityOfControllerOrProcessor
 	AND SCHEMA PersonalData
 	AND (PURPOSE ProcessingOnInstructionsFromController OR PURPOSE LawFulfillment)
 
 
-# Art. 39 GDPR - Tasks of the data protection officer
-# 1.b
 ALLOW ROLE DataProtectionOfficer
 	AND SCHEMA PersonalData
 	AND PURPOSE MonitorProtection
 
 
-# Art. 44 GDPR - General principle for transfers - Art. 46 Transfers subject to appropriate safeguards
-# Art. 46(1)
 ALLOW (ROLE Controller OR ROLE Processor)
 	AND SCHEMA PersonalDataUnderAppropriateSafeguards&Conditions
 	AND PURPOSE TransferToThirdCountryOrIntnlOrg
 
 
-# Art. 49 GDPR - Derogations for specific situations
-# 1.a-1.b-1.c-1.d-1.e-1.f-1.g
 ALLOW (ROLE Controller OR ROLE Processor)
 	AND SCHEMA PersonalData
 	AND PURPOSE TransferToThirdCountryOrInternationalOrganisation
-	AND (FILTER ConsentTransfer == ’Y’ OR PURPOSE BusinessPurpose
-	OR PURPOSE PublicInterest OR PURPOSE LegalClaim
-	OR PURPOSE VitalInterests
-	OR (FILTER InfoFromRegister == ‘Y’ AND FILTER DataSubjectID == ‘n_data_subject’))
+	AND (FILTER ConsentTransfer == 'Y' OR PURPOSE BusinessPurpose
+	    OR PURPOSE PublicInterest OR PURPOSE LegalClaim
+	    OR PURPOSE VitalInterests
+	    OR (FILTER InfoFromRegister == 'Y' AND FILTER DataSubjectID == 'n_data_subject'))
 
 ALLOW (ROLE Controller OR ROLE Processor)
 	AND SCHEMA PersonalData
 	AND PURPOSE TransferToThirdCountryOrInternationalOrganisation
 	AND PURPOSE CompellingLegitimateInterests
 
-# 3
 ALLOW ROLE PublicAuthority
 	AND SCHEMA PersonalData
 	AND PURPOSE TransferToThirdCountryOrInternationalOrganisation
 	AND PURPOSE PublicAuthorityTasks
 
 
-# Art. 58 GDPR - Powers
-# 1.e
 ALLOW ROLE SupervisoryAuthority
 	SCHEMA PersonalData
 	PURPOSE SupervisionTasks

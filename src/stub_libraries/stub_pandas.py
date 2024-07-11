@@ -40,7 +40,7 @@ def read_csv(filename, schema=[], usecols=None, **kwargs):
     """ read DataFrame from a csv file. Policy is specified at the end of this file. """
 
     data_folder = filename[:filename.rfind("/") + 1]
-    with open(data_folder + 'policy.txt', 'r') as f:
+    with open(data_folder + 'privpolicy_filippo.txt', 'r') as f:
         policy = Policy(f.read().rstrip())
         print(f'Policy of input data {filename}:\n' + str(policy))
     with open(data_folder + 'meta.txt', 'r') as f:

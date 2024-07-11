@@ -118,11 +118,13 @@ program_map = {
     76: "./examples/program/traccar/analyze/send_mail_analizer.py",
 
     # soundness example
-
     77: "./examples/program/77_soundness_example.py",
 
+    # alert example
     78: "./examples/program/78_alert_example.py",
 
+    # full gdpr toy example
+    79: "./examples/program/79_full_gdpr_toy_example.py",
 }
 
 data_map = {
@@ -194,9 +196,14 @@ data_map = {
     75: "./examples/data/traccar/",
     76: "./examples/data/traccar/",
 
+    # soundness example
     77: "./examples/data/soundness_example/",
+
+    # alert example
     78: "./examples/data/alert_example/",
 
+    # full gdpr toy example
+    79: "./examples/data/gdpr/",
 }
 
 lib_map = {
@@ -255,7 +262,10 @@ lib_map = {
     76: {'pandas': stub_pandas},
 
     77: {'pandas': stub_pandas},
+
     78: {'pandas': stub_pandas},
+
+    79: {'pandas': stub_pandas},
 
 }
 
