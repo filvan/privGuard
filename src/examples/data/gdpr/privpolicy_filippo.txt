@@ -63,8 +63,8 @@ ALLOW SCHEMA SpecialPersonalData
 
 ALLOW SCHEMA SpecialPersonalData
 	AND (PURPOSE EmploymentRights&ObligationsOfControllerOrDataSubject
-	OR PURPOSE SocialSecurityRights&ObligationsOfControllerOrDataSubject
-	OR PURPOSE SocialProtectionRights&ObligationsOfControllerOrDataSubject)
+	    OR PURPOSE SocialSecurityRights&ObligationsOfControllerOrDataSubject
+	    OR PURPOSE SocialProtectionRights&ObligationsOfControllerOrDataSubject)
 
 ALLOW SCHEMA SpecialPersonalData
 	AND PURPOSE VitalInterests
