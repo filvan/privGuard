@@ -53,8 +53,8 @@ ALLOW SCHEMA PersonalData
 	AND FILTER Age < 13
 ALLOW SCHEMA PersonalData
 	AND ROLE Controller
-	AND FILTER (ConsentProcessing == 'Y' OR GuardianConsentProcessing == 'Y')
-	AND FILTER Age < 16 AND FILTER Age >= 13
+	AND (FILTER ConsentProcessing == 'Y' OR FILTER GuardianConsentProcessing == 'Y')
+	AND (FILTER Age < 16 AND FILTER Age >= 13)
 
 
 ALLOW SCHEMA SpecialPersonalData
@@ -62,9 +62,9 @@ ALLOW SCHEMA SpecialPersonalData
 	AND FILTER ConsentProcessingIdentifiable == 'Y'
 
 ALLOW SCHEMA SpecialPersonalData
-	AND (PURPOSE EmploymentRights&ObligationsOfControllerOrDataSubject
-	    OR PURPOSE SocialSecurityRights&ObligationsOfControllerOrDataSubject
-	    OR PURPOSE SocialProtectionRights&ObligationsOfControllerOrDataSubject)
+	AND (PURPOSE EmploymentRightsAndObligationsOfControllerOrDataSubject OR
+	    PURPOSE SocialSecurityRightsAndObligationsOfControllerOrDataSubject OR
+	    PURPOSE SocialProtectionRightsAndObligationsOfControllerOrDataSubject)
 
 ALLOW SCHEMA SpecialPersonalData
 	AND PURPOSE VitalInterests
@@ -95,28 +95,26 @@ ALLOW SCHEMA SpecialPersonalData
 ALLOW SCHEMA SpecialPersonalData
 	AND (PURPOSE PublicInterest OR PURPOSE ScientificResearch
 		OR PURPOSE HistoricalResearch OR PURPOSE Statistical)
-	AND (PRIVACY Anonymization OR PRIVACY Aggregation
-		OR PRIVACY K-Anonimity OR PRIVACY L-Diversity
-		OR PRIVACY T-Closeness OR PRIVACY DP(1.0, 1e-5))
+	AND (PRIVACY Anonymization OR PRIVACY Aggregation)
 
 
 ALLOW SCHEMA CriminalData
 	AND ROLE OfficialAuthority
 
 
-ALLOW SCHEMA InfoAboutController&DPO&Processing&Recipients
-	AND SCHEMA StoragePeriod&DataSubjectRightsAndObligations
+ALLOW SCHEMA InfoAboutControllerAndDPOAndProcessingAndRecipients
+	AND SCHEMA StoragePeriodAndDataSubjectRightsAndObligations
 	AND ROLE DataSubject
 	AND FILTER DataSubjectID == 'n_data_subject'
 
 
-ALLOW SCHEMA InfoAboutController&DPO&Processing&Recipients
-	AND SCHEMA StoragePeriod&DataSubjectRights&Source
+ALLOW SCHEMA InfoAboutControllerAndDPOAndProcessingAndRecipients
+	AND SCHEMA StoragePeriodAndDataSubjectRightsAndSource
 	AND ROLE DataSubject
 	AND FILTER DataSubjectID == 'n_data_subject'
 
 
-ALLOW SCHEMA InfoAboutProcessing&Recipients&StoragePeriod&DataSubjectRights&Source
+ALLOW SCHEMA InfoAboutProcessingAndRecipientsAndStoragePeriodAndDataSubjectRightsAndSource
 	AND SCHEMA PersonalData
 	AND ROLE DataSubject
 	AND FILTER DataSubjectID == 'n_data_subject'
@@ -149,11 +147,11 @@ ALLOW ROLE Controller
 
 ALLOW ROLE Controller
 	AND SCHEMA PersonalData
-	AND ((FILTER Objection&NoOverridingLegitimateGrounds == 'Y'
+	AND (FILTER ObjectionAndNoOverridingLegitimateGrounds == 'Y'
 		OR FILTER ObjectionToProcessingForDirectMarketing == 'Y')
 		AND FILTER NecessaryForRightOfFreedomOfExpression == 'N'
 		AND FILTER NecessaryForPublicInterestOrLegalObligation == 'N'
-		AND FILTER NecessaryForLegalClaim == 'N')
+		AND FILTER NecessaryForLegalClaim == 'N'
 	AND FILTER DataSubjectID == 'n_data_subject'
 	AND PURPOSE Erasure
 
@@ -215,9 +213,7 @@ ALLOW ROLE DataSubject
 
 ALLOW ROLE Controller
 	AND SCHEMA PersonalData
-	AND (PRIVACY Anonymization OR PRIVACY Aggregation
-		OR PRIVACY K-Anonimity OR PRIVACY L-Diversity
-		OR PRIVACY T-Closeness OR PRIVACY DP(1.0, 1e-5))
+	AND (PRIVACY Anonymization OR PRIVACY Aggregation)
 
 ALLOW ROLE Controller
 	AND SCHEMA PersonalData
@@ -235,7 +231,7 @@ ALLOW ROLE DataProtectionOfficer
 
 
 ALLOW (ROLE Controller OR ROLE Processor)
-	AND SCHEMA PersonalDataUnderAppropriateSafeguards&Conditions
+	AND SCHEMA PersonalDataUnderAppropriateSafeguardsAndConditions
 	AND PURPOSE TransferToThirdCountryOrIntnlOrg
 
 
@@ -259,5 +255,5 @@ ALLOW ROLE PublicAuthority
 
 
 ALLOW ROLE SupervisoryAuthority
-	SCHEMA PersonalData
-	PURPOSE SupervisionTasks
+	AND SCHEMA PersonalData
+	AND PURPOSE SupervisionTasks
