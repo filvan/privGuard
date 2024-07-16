@@ -86,11 +86,11 @@ def schema_action(toks):
 
 def privacy_action(toks):
     """ How to parse a privacy attribute. """
-    if toks[1] == 'k-anonymity':
+    if toks[1] == 'K-Anonymity':
         return PrivacyAttribute(toks[1], k=toks[2])
-    elif toks[1] == 'l-diversity':
+    elif toks[1] == 'L-Diversity':
         return PrivacyAttribute(toks[1], l=toks[2])
-    elif toks[1] == 't-closeness':
+    elif toks[1] == 'T-Closeness':
         return PrivacyAttribute(toks[1], t=toks[2])
     elif toks[1] == 'DP':
         return PrivacyAttribute(toks[1], eps=toks[2], delta=toks[3])
@@ -118,8 +118,8 @@ FILTER_ATTRIBUTE = ('FILTER' + COLUMN + COMPARATOR + (INTEGER | STRING)).addPars
 REDACT_ATTRIBUTE = ('REDACT' + COLUMN + Suppress('(') + Optional(SCALAR_INT) + ':' + Optional(SCALAR_INT) + Suppress(
     ')')).addParseAction(redact_action)
 SCHEMA_ATTRIBUTE = ('SCHEMA' + LIST).addParseAction(schema_action)
-PRIVACY_ATTRIBUTE = ('PRIVACY' + (Literal('Anonymization') | Literal('Aggregation') | ('k-anonymity' + SCALAR_INT) | (
-        'l-diversity' + SCALAR_INT) | ('t-closeness' + SCALAR_INT) | (
+PRIVACY_ATTRIBUTE = ('PRIVACY' + (Literal('Anonymization') | Literal('Aggregation') | ('K-Anonymity' + SCALAR_INT) | (
+        'L-Diversity' + SCALAR_INT) | ('T-Closeness' + SCALAR_INT) | (
                                           'DP' + Suppress('(') + SCALAR_FLOAT + Suppress(
                                             ',') + SCALAR_FLOAT + Suppress(')')))).addParseAction(privacy_action)
 ROLE_ATTRIBUTE = ('ROLE' + VARIABLE).addParseAction(role_action)
@@ -148,5 +148,5 @@ if __name__ == '__main__':
     # print(policy_parser.parseString("ALLOW REDACT HealthcareOrganization ( 1 : 2 )"))
 
     # print(policy_parser.parseString("ALLOW PRIVACY Anonymization"))
-    # print(policy_parser.parseString("ALLOW PRIVACY k-anonymity 100"))
+    # print(policy_parser.parseString("ALLOW PRIVACY K-Anonymity 100"))
     # print(policy_parser.parseString("ALLOW PRIVACY DP ( 1.0, 1e-5 )"))

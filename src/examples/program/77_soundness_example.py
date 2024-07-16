@@ -6,11 +6,12 @@ def run(data_folder, **kwargs):
     patients = pd.read_csv(data_folder + "patients/data.csv")
 
     # print(patients)
-    print('Policy: ' + str(patients.policy))
+    # print('Policy: ' + str(patients.policy))
 
-    # patients = patients[patients.NAME == 'John']
-    patients = patients[patients.AGE <= 17]
-    patients = patients[patients.GENDER == 'FEMALE']
+    patients = patients[patients.NAME == 'John']
+    patients = patients[patients.AGE < 22]
+    patients = patients[patients.AGE > 19]
+    patients = patients[patients.GENDER == 'MALE']
 
-    print(patients)
-    return patients
+    # print(patients)
+    return patients['NAME']

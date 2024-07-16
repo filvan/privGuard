@@ -313,13 +313,13 @@ class Policy(object):
             u = attr.interval.upper
             c = ExtendV(value)
 
-            if op == 'eq':
+            if op == '==':
                 if l <= c <= u:
                     return Satisfied()
                 else:
                     return Unsatisfiable()
 
-            elif op == 'le':
+            elif op == '<=':
                 if c <= u:
                     if l == ExtendV('ninf'):
                         return Satisfied()
@@ -331,7 +331,19 @@ class Policy(object):
                 else:
                     return attr
 
-            elif op == 'ge':
+            elif op == '<':
+                if c <= u:
+                    if l == ExtendV('ninf'):
+                        return Satisfied()
+                    elif c <= l:
+                        return Unsatisfiable()
+                    else:
+                        newInterval = ClosedIntervalL(l, ExtendV('inf'))
+                        return FilterAttribute(attr.col, newInterval, op)
+                else:
+                    return attr
+
+            elif op == '>=':
                 if c >= l:
                     if u == ExtendV('inf'):
                         return Satisfied()
@@ -343,7 +355,21 @@ class Policy(object):
                 else:
                     return attr
 
-            # TODO: add support for le, neq, ge
+            elif op == '>':
+                if c >= l:
+                    if u == ExtendV('inf'):
+                        return Satisfied()
+                    elif c >= u:
+                        return Unsatisfiable()
+                    else:
+                        newInterval = ClosedIntervalL(ExtendV('ninf'), u)
+                        return FilterAttribute(attr.col, newInterval, op)
+                else:
+                    return attr
+
+            # TODO: add support for neq
+            elif op == '!=':
+                raise NotImplemented
             else:
                 raise ValueError(f'Invalid operator: {op}')
 
@@ -446,12 +472,12 @@ class Policy(object):
 
     def _runPrivacy(self, attr: Attribute, priv_tech, **kwargs):
         if isinstance(attr, PrivacyAttribute) and attr.priv_tech == priv_tech:
-            if priv_tech == 'k-anonymity':
-                if kwargs['k'] >= attr.k:
+            if priv_tech == 'K-Anonymity':
+                if kwargs['K'] >= attr.k:
                     return Satisfied()
-            elif priv_tech == 'l-diversity':
+            elif priv_tech == 'L-Diversity':
                 raise NotImplemented
-            elif priv_tech == 't-closeness':
+            elif priv_tech == 'T-Closeness':
                 raise NotImplemented
             elif priv_tech == 'DP':
                 if kwargs['eps'] < attr.eps and kwargs['delta'] < attr.delta:

@@ -6,8 +6,9 @@ def run(data_folder, **kwargs):
     gdpr = pd.read_csv(data_folder + "data.csv")
 
     # Filter
+    gdpr = gdpr[gdpr.DataSubjectCanLiftProhibition == 'Y']
     gdpr = gdpr[gdpr.ConsentProcessing == 'Y']
     gdpr = gdpr[gdpr.Age >= 16]
-    # gdpr = gdpr.PersonalData
+    gdpr = gdpr.SpecialPersonalData
 
     return gdpr

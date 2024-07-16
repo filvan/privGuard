@@ -244,12 +244,12 @@ class PrivacyAttribute(Attribute):
     def __init__(self, priv_tech, **kwargs):
         self.priv_tech = priv_tech
         self.kwargs = kwargs
-        if priv_tech == 'k-anonymity':
-            self.k = kwargs.get('k')
-        elif priv_tech == 'l-diversity':
-            self.l = kwargs.get('l')
-        elif priv_tech == 't-closeness':
-            self.t = kwargs.get('t')
+        if priv_tech == 'K-Anonymity':
+            self.k = kwargs.get('K')
+        elif priv_tech == 'L-Diversity':
+            self.l = kwargs.get('L')
+        elif priv_tech == 'T-Closeness':
+            self.t = kwargs.get('T')
         elif priv_tech == 'DP':
             self.eps = kwargs.get('eps')
             self.delta = kwargs.get('delta')
@@ -258,12 +258,12 @@ class PrivacyAttribute(Attribute):
 
     def is_stricter_than(self, other: Attribute):
         if isinstance(other, PrivacyAttribute) and self.priv_tech == other.priv_tech:
-            if self.priv_tech == 'k-anonymity':
+            if self.priv_tech == 'K-Anonymity':
                 if self.k >= other.k:
                     return True
-            elif self.priv_tech == 'l-diversity':
+            elif self.priv_tech == 'L-Diversity':
                 raise NotImplemented
-            elif self.priv_tech == 't-closeness':
+            elif self.priv_tech == 'T-Closeness':
                 raise NotImplemented
             elif self.priv_tech == 'DP':
                 if self.eps < other.eps and self.delta < other.delta:
@@ -273,12 +273,12 @@ class PrivacyAttribute(Attribute):
         return False
 
     def __str__(self):
-        if self.priv_tech == 'k-anonymity':
-            return f'privacy: {self.k}-anonymity'
-        elif self.priv_tech == 'l-diversity':
-            return f'privacy: {self.l}-diversity'
-        elif self.priv_tech == 't-closeness':
-            return f'privacy: {self.t}-closeness'
+        if self.priv_tech == 'K-Anonymity':
+            return f'privacy: {self.k}-Anonymity'
+        elif self.priv_tech == 'L-Diversity':
+            return f'privacy: {self.l}-Diversity'
+        elif self.priv_tech == 'T-Closeness':
+            return f'privacy: {self.t}-Closeness'
         elif self.priv_tech == 'DP':
             return f'privacy: DP ({self.eps}, {self.delta})'
         else:

@@ -40,7 +40,7 @@ def read_csv(filename, schema=[], usecols=None, **kwargs):
     """ read DataFrame from a csv file. Policy is specified at the end of this file. """
 
     data_folder = filename[:filename.rfind("/") + 1]
-    with open(data_folder + 'privpolicy_filippo.txt', 'r') as f:
+    with open(data_folder + 'policy.txt', 'r') as f:
         policy = Policy(f.read().rstrip())
         print(f'Policy of input data {filename}:\n' + str(policy))
     with open(data_folder + 'meta.txt', 'r') as f:
@@ -201,11 +201,11 @@ class DataFrame(Tabular):
             assert key.parent == self, 'Find series from another dataframe whose privacy effects are not supported.'
             newPolicy = self.policy
             if key.interval.lower != ExtendV('ninf'):
-                newPolicy = newPolicy.runFilter(key.column, key.interval.lower.val.val, 'ge')
-                # newPolicy = newPolicy.runFilter(key.column, key.interval.lower.val.val, key.op)
+                # newPolicy = newPolicy.runFilter(key.column, key.interval.lower.val.val, 'ge')
+                newPolicy = newPolicy.runFilter(key.column, key.interval.lower.val.val, key.op)
             if key.interval.upper != ExtendV('inf'):
-                newPolicy = newPolicy.runFilter(key.column, key.interval.upper.val.val, 'le')
-                # newPolicy = newPolicy.runFilter(key.column, key.interval.lower.val.val, key.op)
+                # newPolicy = newPolicy.runFilter(key.column, key.interval.upper.val.val, 'le')
+                newPolicy = newPolicy.runFilter(key.column, key.interval.upper.val.val, key.op)
             return DataFrame(self.schema, newPolicy, shape=self.shape)
 
         elif isinstance(key, slice):
