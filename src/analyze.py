@@ -93,12 +93,12 @@ program_map = {
 
     # selfmailbot
 
-    50: "./examples/program/selfmailbot/app/confirm_email.py",
-    51: "./examples/program/selfmailbot/app/resend.py",
-    52: "./examples/program/selfmailbot/app/reset_email.py",
-    53: "./examples/program/selfmailbot/app/send_confirmation.py",
-    54: "./examples/program/selfmailbot/app/send_photo.py",
-    55: "./examples/program/selfmailbot/app/send_text_message.py",
+    50: "./examples/program/selfmailbot/bot/confirm_email.py",
+    51: "./examples/program/selfmailbot/bot/resend.py",
+    52: "./examples/program/selfmailbot/bot/reset_email.py",
+    53: "./examples/program/selfmailbot/bot/send_confirmation.py",
+    54: "./examples/program/selfmailbot/bot/send_photo.py",
+    55: "./examples/program/selfmailbot/bot/send_text_message.py",
     57: "./examples/program/selfmailbot/celery/send_confirmation_mail.py",
     58: "./examples/program/selfmailbot/celery/send_file.py",
     59: "./examples/program/selfmailbot/celery/send_text.py",
