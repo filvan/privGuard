@@ -1,7 +1,6 @@
 import re
 
 
-
 def capfirst(x):
     """Capitalize the first letter of a string. Kindly borrowed from Django"""
     return x and str(x)[0].upper() + str(x)[1:]
@@ -22,5 +21,3 @@ def get_subject(text):
         return words[0][:32]
 
     return words[0][:32] + '...'  # first 32 characters
-
-

@@ -1,7 +1,10 @@
 from src.examples.program.selfmailbot.celery import send_text
 from src.examples.program.selfmailbot.helpers import get_subject
 import os
+
 file_dir = os.path.dirname(os.path.realpath('__file__'))
+
+
 def run(data_folder, **kwargs):
     text = kwargs.get('extra_args').get('text')
     subject = get_subject(text)

@@ -7,11 +7,11 @@ def run(data_folder, **kwargs):
     attachment_name = kwargs.get('extra_args').get('attachment_name')
 
     pd = kwargs.get('pandas')
-    selfmail_users = pd.read_csv(data_folder + "data.csv")
-    selfmail_users = selfmail_users[selfmail_users.Email == to]
+    selfmailbot_users = pd.read_csv(data_folder + "data.csv")
+    specific_user = selfmailbot_users[selfmailbot_users.Email == to]
 
     message = to + subject + text
     if attachment is not None:
         message += (attachment + attachment_name)
     print(message)
-    return selfmail_users
+    return specific_user
