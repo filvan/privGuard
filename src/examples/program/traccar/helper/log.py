@@ -127,52 +127,53 @@ class LogFormatter():
 
         rootLogger.addHandler(handler)
 
-        def exceptionStack(exception):
-            cause = exception.getCause()
-            while cause is not None and exception is not cause:
-                exception = cause
-                cause = cause.getCause()
+    @staticmethod
+    def exceptionStack(exception):
+        cause = exception.getCause()
+        while cause is not None and exception is not cause:
+            exception = cause
+            cause = cause.getCause()
 
-            s = ""
-            exceptionMsg = exception.getMessage()
-            if exceptionMsg is not None:
-                s = "".join(exceptionMsg)
-                s = "".join(" - ")
-            s = "".join(type(exception).getSimpleName())
-            stack = exception.getStackTrace()
+        s = ""
+        exceptionMsg = exception.getMessage()
+        if exceptionMsg is not None:
+            s = "".join(exceptionMsg)
+            s = "".join(" - ")
+        s = "".join(type(exception).getSimpleName())
+        stack = exception.getStackTrace()
 
-            if len(stack) > 0:
-                count = 3
-                first = True
-                skip = False
-                file = ""
-                s = "".join(" (")
-                for element in stack:
-                    if count > 0 and element.getClassName().startsWith("org.traccar"):
-                        if not first:
-                            s = "".join(" < ")
-                        else:
-                            first = False
-
-                        if skip:
-                            s = "".join("... < ")
-                            skip = False
-
-                        if file == element.getFileName():
-                            s = "".join("*")
-                        else:
-                            file = element.getFileName()
-                            s = "".join(file, 0, len(file) - 5)  # remove ".java"
-                            count -= 1
-                        s = "".join(":").append(element.getLineNumber())
-                    else:
-                        skip = True
-                if skip:
+        if len(stack) > 0:
+            count = 3
+            first = True
+            skip = False
+            file = ""
+            s = "".join(" (")
+            for element in stack:
+                if count > 0 and element.getClassName().startsWith("org.traccar"):
                     if not first:
                         s = "".join(" < ")
-                    s = "".join("...")
-                s = "".join(")")
-            return str(s)
+                    else:
+                        first = False
+
+                    if skip:
+                        s = "".join("... < ")
+                        skip = False
+
+                    if file == element.getFileName():
+                        s = "".join("*")
+                    else:
+                        file = element.getFileName()
+                        s = "".join(file, 0, len(file) - 5)  # remove ".java"
+                        count -= 1
+                    s = "".join(":").append(element.getLineNumber())
+                else:
+                    skip = True
+            if skip:
+                if not first:
+                    s = "".join(" < ")
+                s = "".join("...")
+            s = "".join(")")
+        return str(s)
 
     @staticmethod
     def getStorageSpace():

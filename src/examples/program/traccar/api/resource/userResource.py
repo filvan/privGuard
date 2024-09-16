@@ -23,25 +23,25 @@ class UserResource(BaseObjectResource):
 
     def get(self, userId):
         if userId > 0:
-            self.permissionsService.checkUser(self.getUserId(), userId)
-            return self.storage.getObjects(self.baseClass, Request(Columns.All(), (Condition.Permission(User.__class__, userId, ManagedUser.__class__)).excludeGroups()))
-        elif self.permissionsService.notAdmin(self.getUserId()):
-            return self.storage.getObjects(self.baseClass, Request(Columns.All(), (Condition.Permission(User.__class__, self.getUserId(), ManagedUser.__class__)).excludeGroups()))
+            self.permissions_service.checkUser(self.get_user_id(), userId)
+            return self.storage.getObjects(self.base_class, Request(Columns.All(), (Condition.Permission(User.__class__, userId, ManagedUser.__class__)).excludeGroups()))
+        elif self.permissions_service.notAdmin(self.get_user_id()):
+            return self.storage.getObjects(self.base_class, Request(Columns.All(), (Condition.Permission(User.__class__, self.get_user_id(), ManagedUser.__class__)).excludeGroups()))
         else:
-            return self.storage.getObjects(self.baseClass, Request(Columns.All()))
+            return self.storage.getObjects(self.base_class, Request(Columns.All()))
 
     def add(self, entity):
-        currentUser = self.permissionsService.getUser(self.getUserId()) if self.getUserId() > 0 else None
+        currentUser = self.permissions_service.getUser(self.get_user_id()) if self.get_user_id() > 0 else None
         if currentUser is None or not currentUser.getAdministrator():
-            self.permissionsService.checkUserUpdate(self.getUserId(), User(), entity)
+            self.permissions_service.checkUserUpdate(self.get_user_id(), User(), entity)
             if currentUser is not None and currentUser.getUserLimit() != 0:
                 userLimit = currentUser.getUserLimit()
                 if userLimit > 0:
-                    userCount = self.storage.getObjects(self.baseClass, Request(Columns.All(), (Condition.Permission(User.__class__, self.getUserId(), ManagedUser.__class__)).excludeGroups())).size()
+                    userCount = self.storage.getObjects(self.base_class, Request(Columns.All(), (Condition.Permission(User.__class__, self.get_user_id(), ManagedUser.__class__)).excludeGroups())).size()
                     if userCount >= userLimit:
                         raise Exception("Manager user limit reached")
             else:
-                if not self.permissionsService.getServer().getRegistration():
+                if not self.permissions_service.getServer().getRegistration():
                     raise Exception("Registration disabled")
                 UserUtil.setUserDefaults(entity, self._config)
 
@@ -51,9 +51,9 @@ class UserResource(BaseObjectResource):
         entity.setId(self.storage.addObject(entity, Request(Columns.Exclude("id"))))
         self.storage.updateObject(entity, Request(Columns.Include("hashedPassword", "salt"), Condition.Equals("id", entity.getId())))
 
-        LogAction.create(self.getUserId(), entity)
+        LogAction.create(self.get_user_id(), entity)
 
         if currentUser is not None and currentUser.getUserLimit() != 0:
-            self.storage.addPermission(Permission(User.__class__, self.getUserId(), ManagedUser.__class__, entity.getId()))
-            LogAction.link(self.getUserId(), User.__class__, self.getUserId(), ManagedUser.__class__, entity.getId())
+            self.storage.addPermission(Permission(User.__class__, self.get_user_id(), ManagedUser.__class__, entity.getId()))
+            LogAction.link(self.get_user_id(), User.__class__, self.get_user_id(), ManagedUser.__class__, entity.getId())
         return Response.ok(entity).build()

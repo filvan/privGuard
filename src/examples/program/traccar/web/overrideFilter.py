@@ -19,7 +19,7 @@ class OverrideFilter(Filter):
 
         wrappedResponse = ResponseWrapper(response)
 
-        chain.doFilter(request, wrappedResponse)
+        chain.do_filter(request, wrappedResponse)
 
         bytes = wrappedResponse.getCapture()
         if bytes is not None:

@@ -56,7 +56,7 @@ class ComputedAttributesHandler(BaseDataHandler):
 
 
 
-    def computeAttribute(self, attribute, position):
+    def compute_attribute(self, attribute, position):
         return self._engine.createScript(self._features, self._engine.createInfo(), attribute.getExpression()).execute(self._prepareContext(position))
 
     def handlePosition(self, position):
@@ -65,7 +65,7 @@ class ComputedAttributesHandler(BaseDataHandler):
             if attribute.getAttribute() is not None:
                 result = None
                 try:
-                    result = self.computeAttribute(attribute, position)
+                    result = self.compute_attribute(attribute, position)
                 except Exception as error:
                     ComputedAttributesHandler._LOGGER.warn("Attribute computation error", error)
                 if result is not None:

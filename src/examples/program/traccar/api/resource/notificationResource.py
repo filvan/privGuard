@@ -35,12 +35,12 @@ class NotificationResource(ExtendedObjectResource):
         return self._notificatorManager.getAllNotificatorTypes()
 
     def testMessage(self):
-        user = self.permissionsService.getUser(self.getUserId())
+        user = self.permissions_service.getUser(self.get_user_id())
         for method in self._notificatorManager.getAllNotificatorTypes():
             self._notificatorManager.getNotificator(method.getType()).send(None, user, Event("test", 0), None)
         return Response.noContent().build()
 
     def testMessage(self, notificator):
-        user = self.permissionsService.getUser(self.getUserId())
+        user = self.permissions_service.getUser(self.get_user_id())
         self._notificatorManager.getNotificator(notificator).send(None, user, Event("test", 0), None)
         return Response.noContent().build()

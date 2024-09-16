@@ -80,3 +80,7 @@ class LogAction:
     def logReport(userId, report, from_, to, deviceIds, groupIds):
         dateFormat = format("yyyy-MM-dd HH:mm")
         LogAction._LOGGER.info(str.format(LogAction._PATTERN_REPORT, userId, report, dateFormat.format(from_), dateFormat.format(to), str(deviceIds), str(groupIds)))
+
+    @classmethod
+    def command(cls, param, groupId, param1, param2):
+        pass

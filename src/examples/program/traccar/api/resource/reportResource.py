@@ -62,17 +62,17 @@ class ReportResource(SimpleObjectResource):
             return Response.ok(self.stream).header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=report.xlsx").build()
 
     def getCombined(self, deviceIds, groupIds, from_, to):
-        self.permissionsService.checkRestriction(self.getUserId(), UserRestrictions.getDisableReports())
-        LogAction.logReport(self.getUserId(), "combined", from_, to, deviceIds, groupIds)
-        return self._combinedReportProvider.getObjects(self.getUserId(), deviceIds, groupIds, from_, to)
+        self.permissions_service.checkRestriction(self.get_user_id(), UserRestrictions.getDisableReports())
+        LogAction.logReport(self.get_user_id(), "combined", from_, to, deviceIds, groupIds)
+        return self._combinedReportProvider.getObjects(self.get_user_id(), deviceIds, groupIds, from_, to)
 
     def getRoute(self, deviceIds, groupIds, from_, to):
-        self.permissionsService.checkRestriction(self.getUserId(), UserRestrictions.getDisableReports())
-        LogAction.logReport(self.getUserId(), "route", from_, to, deviceIds, groupIds)
-        return self._routeReportProvider.getObjects(self.getUserId(), deviceIds, groupIds, from_, to)
+        self.permissions_service.checkRestriction(self.get_user_id(), UserRestrictions.getDisableReports())
+        LogAction.logReport(self.get_user_id(), "route", from_, to, deviceIds, groupIds)
+        return self._routeReportProvider.getObjects(self.get_user_id(), deviceIds, groupIds, from_, to)
 
     def getRouteExcel(self, deviceIds, groupIds, from_, to, mail):
-        self.permissionsService.checkRestriction(self.getUserId(), UserRestrictions.getDisableReports())
+        self.permissions_service.checkRestriction(self.get_user_id(), UserRestrictions.getDisableReports())
         #        return executeReport(getUserId(), mail, stream ->
         #        {
         #            LogAction.logReport(getUserId(), "route", @from, to, deviceIds, groupIds)
@@ -84,12 +84,12 @@ class ReportResource(SimpleObjectResource):
         return self.getRouteExcel(deviceIds, groupIds, from_, to, type == "mail")
 
     def getEvents(self, deviceIds, groupIds, types, from_, to):
-        self.permissionsService.checkRestriction(self.getUserId(), UserRestrictions.getDisableReports())
-        LogAction.logReport(self.getUserId(), "events", from_, to, deviceIds, groupIds)
-        return self._eventsReportProvider.getObjects(self.getUserId(), deviceIds, groupIds, types, from_, to)
+        self.permissions_service.checkRestriction(self.get_user_id(), UserRestrictions.getDisableReports())
+        LogAction.logReport(self.get_user_id(), "events", from_, to, deviceIds, groupIds)
+        return self._eventsReportProvider.getObjects(self.get_user_id(), deviceIds, groupIds, types, from_, to)
 
     def getEventsExcel(self, deviceIds, groupIds, types, from_, to, mail):
-        self.permissionsService.checkRestriction(self.getUserId(), UserRestrictions.getDisableReports())
+        self.permissions_service.checkRestriction(self.get_user_id(), UserRestrictions.getDisableReports())
         #        return executeReport(getUserId(), mail, stream ->
         #        {
         #            LogAction.logReport(getUserId(), "events", @from, to, deviceIds, groupIds)
@@ -101,12 +101,12 @@ class ReportResource(SimpleObjectResource):
         return self.getEventsExcel(deviceIds, groupIds, types, from_, to, type == "mail")
 
     def getSummary(self, deviceIds, groupIds, from_, to, daily):
-        self.permissionsService.checkRestriction(self.getUserId(), UserRestrictions.getDisableReports())
-        LogAction.logReport(self.getUserId(), "summary", from_, to, deviceIds, groupIds)
-        return self._summaryReportProvider.getObjects(self.getUserId(), deviceIds, groupIds, from_, to, daily)
+        self.permissions_service.checkRestriction(self.get_user_id(), UserRestrictions.getDisableReports())
+        LogAction.logReport(self.get_user_id(), "summary", from_, to, deviceIds, groupIds)
+        return self._summaryReportProvider.getObjects(self.get_user_id(), deviceIds, groupIds, from_, to, daily)
 
     def getSummaryExcel(self, deviceIds, groupIds, from_, to, daily, mail):
-        self.permissionsService.checkRestriction(self.getUserId(), UserRestrictions.getDisableReports())
+        self.permissions_service.checkRestriction(self.get_user_id(), UserRestrictions.getDisableReports())
         #        return executeReport(getUserId(), mail, stream ->
         #        {
         #            LogAction.logReport(getUserId(), "summary", @from, to, deviceIds, groupIds)
@@ -122,12 +122,12 @@ class ReportResource(SimpleObjectResource):
         return self.getSummaryExcel(deviceIds, groupIds, from_, to, daily, type == "mail")
 
     def getTrips(self, deviceIds, groupIds, from_, to):
-        self.permissionsService.checkRestriction(self.getUserId(), UserRestrictions.getDisableReports())
-        LogAction.logReport(self.getUserId(), "trips", from_, to, deviceIds, groupIds)
-        return self._tripsReportProvider.getObjects(self.getUserId(), deviceIds, groupIds, from_, to)
+        self.permissions_service.checkRestriction(self.get_user_id(), UserRestrictions.getDisableReports())
+        LogAction.logReport(self.get_user_id(), "trips", from_, to, deviceIds, groupIds)
+        return self._tripsReportProvider.getObjects(self.get_user_id(), deviceIds, groupIds, from_, to)
 
     def getTripsExcel(self, deviceIds, groupIds, from_, to, mail):
-        self.permissionsService.checkRestriction(self.getUserId(), UserRestrictions.getDisableReports())
+        self.permissions_service.checkRestriction(self.get_user_id(), UserRestrictions.getDisableReports())
         #        return executeReport(getUserId(), mail, stream ->
         #        {
         #            LogAction.logReport(getUserId(), "trips", @from, to, deviceIds, groupIds)
@@ -139,12 +139,12 @@ class ReportResource(SimpleObjectResource):
         return self.getTripsExcel(deviceIds, groupIds, from_, to, type == "mail")
 
     def getStops(self, deviceIds, groupIds, from_, to):
-        self.permissionsService.checkRestriction(self.getUserId(), UserRestrictions.getDisableReports())
-        LogAction.logReport(self.getUserId(), "stops", from_, to, deviceIds, groupIds)
-        return self._stopsReportProvider.getObjects(self.getUserId(), deviceIds, groupIds, from_, to)
+        self.permissions_service.checkRestriction(self.get_user_id(), UserRestrictions.getDisableReports())
+        LogAction.logReport(self.get_user_id(), "stops", from_, to, deviceIds, groupIds)
+        return self._stopsReportProvider.getObjects(self.get_user_id(), deviceIds, groupIds, from_, to)
 
     def getStopsExcel(self, deviceIds, groupIds, from_, to, mail):
-        self.permissionsService.checkRestriction(self.getUserId(), UserRestrictions.getDisableReports())
+        self.permissions_service.checkRestriction(self.get_user_id(), UserRestrictions.getDisableReports())
         #        return executeReport(getUserId(), mail, stream ->
         #        {
         #            LogAction.logReport(getUserId(), "stops", @from, to, deviceIds, groupIds)

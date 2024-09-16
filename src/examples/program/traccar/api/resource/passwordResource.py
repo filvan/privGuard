@@ -26,7 +26,7 @@ class PasswordResource(BaseResource):
 
         user = self.storage.getObject(User.__class__, Request(Columns.All(), Condition.Equals("email", email)))
         if user is not None:
-            velocityContext = self._textTemplateFormatter.prepareContext(self.permissionsService.getServer(), user)
+            velocityContext = self._textTemplateFormatter.prepareContext(self.permissions_service.getServer(), user)
             fullMessage = self._textTemplateFormatter.formatMessage(velocityContext, "passwordReset", "full")
             self._mailManager.sendMessage(user, True, fullMessage.getSubject(), fullMessage.getBody())
         return Response.ok().build()

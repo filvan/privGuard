@@ -1,10 +1,11 @@
 from kafka.protocol.api import Response
 
-from src.examples.program.traccar.helper.log import Log
+from src.examples.program.traccar.helper.log import LogFormatter as Log
+
 
 class ResourceErrorHandler():
 
-    def toResponse(self, e):
+    def to_response(self, e):
         if isinstance(e, Exception):
             webException = e
             return Response.fromResponse(webException.getResponse()).entity(Log.exceptionStack(webException)).build()

@@ -2,19 +2,16 @@ from src.examples.program.traccar.api.security.permissionService import Permissi
 from src.examples.program.traccar.api.security.userPrincipal import UserPrincipal
 from src.examples.program.traccar.storage.storage import Storage
 
+
 class BaseResource:
 
     def __init__(self):
-        self._securityContext = None
+        self.security_context = None
         self.storage = None
-        self.permissionsService = None
+        self.permissions_service = None
 
-
-
-
-
-    def getUserId(self):
-        principal = self._securityContext.getUserPrincipal()
+    def get_user_id(self):
+        principal = self.security_context.getUserPrincipal()
         if principal is not None:
-            return principal.getUserId()
+            return principal.get_user_id()
         return 0

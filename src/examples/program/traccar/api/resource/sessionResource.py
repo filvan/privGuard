@@ -70,7 +70,7 @@ class SessionResource(BaseResource):
         raise Exception(Response.status(Response.Status.NOT_FOUND).build())
 
     def get(self, userId):
-        BaseResource.permissionsService.checkUser(BaseResource.getUserId(), userId)
+        BaseResource.permissionsService.checkUser(BaseResource.get_user_id(), userId)
         user = BaseResource.storage.getObject(User.__class__, Request(Columns.All(), Condition.Equals("id", userId)))
         self._request.getSession().setAttribute(SessionResource.USER_ID_KEY, user.getId())
         LogAction.login(user.getId(), WebHelper.retrieveRemoteAddress(self._request))
@@ -87,12 +87,12 @@ class SessionResource(BaseResource):
             raise Exception(Response.status(Response.Status.UNAUTHORIZED).build())
 
     def remove(self):
-        LogAction.logout(BaseResource.getUserId(), WebHelper.retrieveRemoteAddress(self._request))
+        LogAction.logout(BaseResource.get_user_id(), WebHelper.retrieveRemoteAddress(self._request))
         self._request.getSession().removeAttribute(SessionResource.USER_ID_KEY)
         return Response.noContent().build()
 
     def requestToken(self, expiration):
-        return self._tokenManager.generateToken(BaseResource.getUserId(), expiration)
+        return self._tokenManager.generateToken(BaseResource.get_user_id(), expiration)
 
     def openIdAuth(self):
         return Response.seeOther(self._openIdProvider.createAuthUri()).build()

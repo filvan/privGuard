@@ -10,71 +10,77 @@ from src.examples.program.traccar.session.connectionManager import ConnectionMan
 from src.examples.program.traccar.session.cache.cacheManager import CacheManager
 from src.examples.program.traccar.storage.storageException import StorageException
 from src.examples.program.traccar.storage.query.columns import Columns
-from src.examples.program.traccar.storage.query.condition import Condition
+from src.examples.program.traccar.storage.query.condition import Equals
 from src.examples.program.traccar.storage.query.request import Request
+
 
 class BaseObjectResource(BaseResource):
 
-
-
-
     def __init__(self, baseClass):
 
-        self._cacheManager = None
-        self._connectionManager = None
-        self.baseClass = None
+        super().__init__()
+        self.cache_manager = None
+        self.connection_manager = None
+        self.base_class = None
 
-        self.baseClass = baseClass
+        self.base_class = baseClass
 
-    def getSingle(self, id):
-        BaseResource.permissionsService.checkPermission(self.baseClass, BaseResource.getUserId(), id)
-        entity = BaseResource.storage.getObject(self.baseClass, Request(Columns.All(), Condition.Equals("id", id)))
+    def get_single(self, id):
+        BaseResource.permissionsService.checkPermission(self.base_class, BaseResource.get_user_id(), id)
+        entity = BaseResource.storage.getObject(self.base_class, Request(Columns.All(), Equals("id", id)))
         if entity is not None:
             return Response.ok(entity).build()
         else:
             return Response.status(Response.Status.NOT_FOUND).build()
 
     def add(self, entity):
-        BaseResource.permissionsService.checkEdit(BaseResource.getUserId(), entity, True)
+        BaseResource.permissionsService.checkEdit(BaseResource.get_user_id(), entity, True)
 
         entity.setId(BaseResource.storage.addObject(entity, Request(Columns.Exclude("id"))))
-        LogAction.create(BaseResource.getUserId(), entity)
-        BaseResource.storage.addPermission(Permission(User.__class__, BaseResource.getUserId(), self.baseClass, entity.getId()))
-        self._cacheManager.invalidatePermission(True, User.__class__, BaseResource.getUserId(), self.baseClass, entity.getId())
-        self._connectionManager.invalidatePermission(True, User.__class__, BaseResource.getUserId(), self.baseClass, entity.getId())
-        LogAction.link(BaseResource.getUserId(), User.__class__, BaseResource.getUserId(), self.baseClass, entity.getId())
+        LogAction.create(BaseResource.get_user_id(), entity)
+        BaseResource.storage.addPermission(
+            Permission(User.__class__, BaseResource.get_user_id(), self.base_class, entity.getId()))
+        self.cache_manager.invalidatePermission(True, User.__class__, BaseResource.get_user_id(), self.base_class,
+                                                entity.getId())
+        self.connection_manager.invalidatePermission(True, User.__class__, BaseResource.get_user_id(), self.base_class,
+                                                     entity.getId())
+        LogAction.link(BaseResource.get_user_id(), User.__class__, BaseResource.get_user_id(), self.base_class,
+                       entity.getId())
 
         return Response.ok(entity).build()
 
     def update(self, entity):
-        BaseResource.permissionsService.checkEdit(BaseResource.getUserId(), entity, False)
-        BaseResource.permissionsService.checkPermission(self.baseClass,BaseResource.getUserId(), entity.getId())
+        BaseResource.permissionsService.checkEdit(BaseResource.get_user_id(), entity, False)
+        BaseResource.permissionsService.checkPermission(self.base_class, BaseResource.get_user_id(), entity.getId())
 
         if isinstance(entity, User):
-            before = BaseResource.storage.getObject(User.__class__, Request(Columns.All(), Condition.Equals("id", entity.getId())))
-            BaseResource.permissionsService.checkUserUpdate(BaseResource.getUserId(), before, entity)
+            before = BaseResource.storage.getObject(User.__class__,
+                                                    Request(Columns.All(), Equals("id", entity.getId())))
+            BaseResource.permissionsService.checkUserUpdate(BaseResource.get_user_id(), before, entity)
         elif isinstance(entity, Group):
             group = entity
             if group.getId() == group.getGroupId():
                 raise Exception("Cycle in group hierarchy")
 
-        BaseResource.storage.updateObject(entity, Request(Columns.Exclude("id"), Condition.Equals("id", entity.getId())))
+        BaseResource.storage.updateObject(entity,
+                                          Request(Columns.Exclude("id"), Equals("id", entity.getId())))
         if isinstance(entity, User):
             user = entity
             if user.getHashedPassword() is not None:
-                BaseResource.storage.updateObject(entity, Request(Columns.Include("hashedPassword", "salt"), Condition.Equals("id", entity.getId())))
-        self._cacheManager.updateOrInvalidate(True, entity)
-        LogAction.edit(BaseResource.getUserId(), entity)
+                BaseResource.storage.updateObject(entity, Request(Columns.Include("hashedPassword", "salt"),
+                                                                  Equals("id", entity.getId())))
+        self.cache_manager.updateOrInvalidate(True, entity)
+        LogAction.edit(BaseResource.get_user_id(), entity)
 
         return Response.ok(entity).build()
 
     def remove(self, id):
-        BaseResource.permissionsService.checkEdit(BaseResource.getUserId(), self.baseClass, False)
-        BaseResource.permissionsService.checkPermission(self.baseClass, BaseResource.getUserId(), id)
+        BaseResource.permissionsService.checkEdit(BaseResource.get_user_id(), self.base_class, False)
+        BaseResource.permissionsService.checkPermission(self.base_class, BaseResource.get_user_id(), id)
 
-        BaseResource.storage.removeObject(self.baseClass, Request(Condition.Equals("id", id)))
-        self._cacheManager.invalidate(self.baseClass, id)
+        BaseResource.storage.removeObject(self.base_class, Request(Equals("id", id)))
+        self.cache_manager.invalidate(self.base_class, id)
 
-        LogAction.remove(BaseResource.getUserId(), self.baseClass, id)
+        LogAction.remove(BaseResource.get_user_id(), self.base_class, id)
 
         return Response.noContent().build()

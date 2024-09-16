@@ -10,5 +10,5 @@ from src.examples.program.traccar.storage.query.request import Request
 class StatisticsResource(BaseResource):
 
     def get(self, from_, to):
-        self.permissionsService.checkAdmin(self.getUserId())
+        self.permissions_service.checkAdmin(self.get_user_id())
         return self.storage.getObjects(Statistics.__class__, Request(Columns.All(), Condition.Between("captureTime", "from", from_, "to", to), Order("captureTime")))

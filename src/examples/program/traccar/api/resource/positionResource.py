@@ -26,22 +26,22 @@ class PositionResource(BaseResource):
             positions = []
             for positionId in positionIds:
                 position = self.storage.getObject(Position.__class__, Request(Columns.All(), Condition.Equals("id", positionId)))
-                self.permissionsService.checkPermission(Device.__class__, self.getUserId(), position.getDeviceId())
+                self.permissions_service.checkPermission(Device.__class__, self.get_user_id(), position.getDeviceId())
                 positions.append(position)
             return positions
         elif deviceId > 0:
-            self.permissionsService.checkPermission(Device.__class__, self.getUserId(), deviceId)
+            self.permissions_service.checkPermission(Device.__class__, self.get_user_id(), deviceId)
             if from_ is not None and to is not None:
-                self.permissionsService.checkRestriction(self.getUserId(), UserRestrictions.getDisableReports())
+                self.permissions_service.checkRestriction(self.get_user_id(), UserRestrictions.getDisableReports())
                 return PositionUtil.getPositions(self.storage, deviceId, from_, to)
             else:
                 return self.storage.getObjects(Position.__class__, Request(Columns.All(), Condition.LatestPositions(deviceId)))
         else:
-            return PositionUtil.getLatestPositions(self.storage, self.getUserId())
+            return PositionUtil.getLatestPositions(self.storage, self.get_user_id())
 
     def remove(self, deviceId, from_, to):
-        self.permissionsService.checkPermission(Device.__class__, self.getUserId(), deviceId)
-        self.permissionsService.checkRestriction(self.getUserId(), UserRestrictions.getReadonly())
+        self.permissions_service.checkPermission(Device.__class__, self.get_user_id(), deviceId)
+        self.permissions_service.checkRestriction(self.get_user_id(), UserRestrictions.getReadonly())
 
         conditions = list()
         conditions.append(Condition.Equals("deviceId", deviceId))
@@ -51,7 +51,7 @@ class PositionResource(BaseResource):
         return Response.status(Response.Status.NO_CONTENT).build()
 
     def getKml(self, deviceId, from_, to):
-        self.permissionsService.checkPermission(Device.__class__, self.getUserId(), deviceId)
+        self.permissions_service.checkPermission(Device.__class__, self.get_user_id(), deviceId)
         #        StreamingOutput stream = output ->
         #        {
         #            try
@@ -66,7 +66,7 @@ class PositionResource(BaseResource):
         return Response.ok(self.stream).header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=positions.kml").build()
 
     def getCsv(self, deviceId, from_, to):
-        self.permissionsService.checkPermission(Device.__class__, self.getUserId(), deviceId)
+        self.permissions_service.checkPermission(Device.__class__, self.get_user_id(), deviceId)
         #        StreamingOutput stream = output ->
         #        {
         #            try
@@ -81,7 +81,7 @@ class PositionResource(BaseResource):
         return Response.ok(self.stream).header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=positions.csv").build()
 
     def getGpx(self, deviceId, from_, to):
-        self.permissionsService.checkPermission(Device.__class__, self.getUserId(), deviceId)
+        self.permissions_service.checkPermission(Device.__class__, self.get_user_id(), deviceId)
         #        StreamingOutput stream = output ->
         #        {
         #            try

@@ -5,13 +5,14 @@ from src.examples.program.traccar.model.device import Device
 from src.examples.program.traccar.model.event import Event
 from src.examples.program.traccar.storage.storageException import StorageException
 from src.examples.program.traccar.storage.query.columns import Columns
-from src.examples.program.traccar.storage.query.condition import Condition
+from src.examples.program.traccar.storage.query.condition import Equals
 from src.examples.program.traccar.storage.query.request import Request
+
 
 class EventResource(BaseResource):
     def get(self, id):
-        event = self.storage.getObject(Event.__class__, Request(Columns.All(), Condition.Equals("id", id)))
+        event = self.storage.getObject(Event.__class__, Request(Columns.All(), Equals("id", id)))
         if event is None:
             raise Exception(Response.status(Response.Status.NOT_FOUND).build())
-        self.permissionsService.checkPermission(Device.__class__, self.getUserId(), event.getDeviceId())
+        self.permissions_service.checkPermission(Device.__class__, self.get_user_id(), event.getDeviceId())
         return event

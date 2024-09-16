@@ -38,7 +38,7 @@ class ServerResource(BaseResource):
         server.setGeocoderEnabled(self._geocoder is not None)
         server.setOpenIdEnabled(self._openIdProvider is not None)
         server.setOpenIdForce(self._openIdProvider is not None and self._openIdProvider.getForce())
-        user = self.permissionsService.getUser(self.getUserId())
+        user = self.permissions_service.getUser(self.get_user_id())
         if user is not None:
             if user.getAdministrator():
                 server.setStorageSpace(Log.getStorageSpace())
@@ -49,10 +49,10 @@ class ServerResource(BaseResource):
         return server
 
     def update(self, entity):
-        self.permissionsService.checkAdmin(self.getUserId())
+        self.permissions_service.checkAdmin(self.get_user_id())
         self.storage.updateObject(entity, Request(Columns.Exclude("id"), Condition.Equals("id", entity.getId())))
         self._cacheManager.updateOrInvalidate(True, entity)
-        LogAction.edit(self.getUserId(), entity)
+        LogAction.edit(self.get_user_id(), entity)
         return Response.ok(entity).build()
 
     def geocode(self, latitude, longitude):

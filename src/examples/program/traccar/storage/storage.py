@@ -31,6 +31,6 @@ class Storage:
     def getPermissions(self, ownerClass, propertyClass) -> array():
         return self.getPermissions(ownerClass, 0, propertyClass, 0)
 
-    def getObject(self, clazz, request: Request) -> Type:
+    def getObject(self, clazz, request: Request):
         objects = self.getObjects(clazz, request)
         return objects[0] if objects else None

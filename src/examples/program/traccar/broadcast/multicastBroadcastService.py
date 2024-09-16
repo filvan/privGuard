@@ -83,8 +83,8 @@ class MulticastBroadcastService(BroadcastService):
             self._listeners.forEach(lambda listener : listener.updateDevice(False, message.getDevice()))
         elif message.getPosition() is not None:
             self._listeners.forEach(lambda listener : listener.updatePosition(False, message.getPosition()))
-        elif message.getUserId() is not None and message.getEvent() is not None:
-            self._listeners.forEach(lambda listener : listener.updateEvent(False, message.getUserId(), message.getEvent()))
+        elif message.get_user_id() is not None and message.getEvent() is not None:
+            self._listeners.forEach(lambda listener : listener.updateEvent(False, message.get_user_id(), message.getEvent()))
         elif message.getCommandDeviceId() is not None:
             self._listeners.forEach(lambda listener : listener.updateCommand(False, message.getCommandDeviceId()))
         elif message.getChanges() is not None:

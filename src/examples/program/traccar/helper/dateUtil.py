@@ -36,17 +36,17 @@ class DateUtil:
         return calendar
 
     @staticmethod
-    def parseDate(value):
+    def parse_date(value):
         return datetime.from_(datetime.from_(format(value)))
 
     @staticmethod
 
-    def formatDate(date):
+    def format_date(date):
         return DateUtil.formatDate(date, True)
 
     @staticmethod
 
-    def formatDate(date, zoned):
+    def format_date(date, zoned):
         if zoned:
             return "DateTimeFormatter.ISO_OFFSET_DATE_TIME.withZone(ZoneId.systemDefault()).format(date.toInstant())"
         else:
