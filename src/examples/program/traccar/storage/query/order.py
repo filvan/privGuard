@@ -1,14 +1,13 @@
 class Order:
 
     def _initialize_instance_fields(self):
-
         self._column = None
         self._descending = False
         self._limit = 0
 
-
     def __init__(self, column):
         self(column, False, 0)
+
     def __init__(self, column, descending, limit):
         self._initialize_instance_fields()
 

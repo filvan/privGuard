@@ -1,5 +1,4 @@
 def run(data_folder, **kwargs):
-
     pd = kwargs.get('pandas')
     clazz = kwargs.get('extra_args').get('clazz')
     columns = kwargs.get('extra_args').get('columns')
@@ -16,5 +15,5 @@ def run(data_folder, **kwargs):
         for cond in conditions:
             traccar_data = traccar_data[cond]
     if sort_cond is not None:
-        traccar_data = traccar_data.sort_values(by=sort_cond[0],axis=1,ascending=sort_cond[1])
+        traccar_data = traccar_data.sort_values(by=sort_cond[0], axis=1, ascending=sort_cond[1])
     return traccar_data

@@ -8,6 +8,8 @@ from .query.request import Request
 from collections import OrderedDict
 from atomiclong import AtomicLong
 from array import array
+
+
 class MemoryStorage(Storage):
 
     def __init__(self):
@@ -18,10 +20,11 @@ class MemoryStorage(Storage):
         server = Server()
         server.setId(1)
         server.setRegistration(True)
-        self._objects[Server.__class__] = { server.getId(): server }
+        self._objects[Server.__class__] = {server.getId(): server}
 
     def getObjects(self, clazz, request):
-        return self._objects.computeIfAbsent(clazz, lambda key : {}).values().stream().filter(lambda object : self._checkCondition(request.getCondition(), object)).map(lambda object : object)
+        return self._objects.computeIfAbsent(clazz, lambda key: {}).values().stream().filter(
+            lambda object: self._checkCondition(request.getCondition(), object)).map(lambda object: object)
 
     def _checkCondition(self, genericCondition, object):
         if genericCondition is None:
@@ -58,9 +61,11 @@ class MemoryStorage(Storage):
 
             condition = genericCondition
             if condition.getOperator() is "AND":
-                return self._checkCondition(condition.getFirst(), object) and self._checkCondition(condition.getSecond(), object)
+                return self._checkCondition(condition.getFirst(), object) and self._checkCondition(
+                    condition.getSecond(), object)
             elif condition.getOperator() is "OR":
-                return self._checkCondition(condition.getFirst(), object) or self._checkCondition(condition.getSecond(), object)
+                return self._checkCondition(condition.getFirst(), object) or self._checkCondition(condition.getSecond(),
+                                                                                                  object)
 
         elif isinstance(genericCondition, Condition.Permission):
 
@@ -84,7 +89,6 @@ class MemoryStorage(Storage):
 
             return False
 
-
         return False
 
     def _retrieveValue(self, object, key):
@@ -96,7 +100,7 @@ class MemoryStorage(Storage):
 
     def addObject(self, entity, request):
         id = self._increment.incrementAndGet()
-        self._objects.computeIfAbsent(type(entity), lambda key : {}).put(id, entity)
+        self._objects.computeIfAbsent(type(entity), lambda key: {}).put(id, entity)
         return id
 
     def updateObject(self, entity, request):
@@ -104,11 +108,12 @@ class MemoryStorage(Storage):
         items = None
         if request.getCondition() is not None:
             id = int((request.getCondition()).getValue())
-            items = array(self._objects.computeIfAbsent(type(entity), lambda key : {}).get(id))
+            items = array(self._objects.computeIfAbsent(type(entity), lambda key: {}).get(id))
         else:
-            items = self._objects.computeIfAbsent(type(entity), lambda key : {}).values()
+            items = self._objects.computeIfAbsent(type(entity), lambda key: {}).values()
         for setter in type(entity).getMethods():
-            if setter.getName().startsWith("set") and setter.getParameterCount() == 1 and columns.contains(setter.getName().lower()):
+            if setter.getName().startsWith("set") and setter.getParameterCount() == 1 and columns.contains(
+                    setter.getName().lower()):
                 try:
                     getter = type(entity).getMethod(setter.getName().replaceFirst("set", "get"))
                     value = getter.invoke(entity)
@@ -119,16 +124,21 @@ class MemoryStorage(Storage):
 
     def removeObject(self, clazz, request):
         id = int((request.getCondition()).getValue())
-        self._objects.computeIfAbsent(clazz, lambda key : {}).remove(id)
+        self._objects.computeIfAbsent(clazz, lambda key: {}).remove(id)
 
     def _getPermissionsSet(self, ownerClass, propertyClass):
-        return self._permissions.computeIfAbsent(Pair(ownerClass, propertyClass), lambda k : OrderedDict())
+        return self._permissions.computeIfAbsent(Pair(ownerClass, propertyClass), lambda k: OrderedDict())
 
     def getPermissions(self, ownerClass, ownerId, propertyClass, propertyId):
-        return self._getPermissionsSet(ownerClass, propertyClass).stream().filter(lambda pair : ownerId == 0 or pair.getFirst() is ownerId).filter(lambda pair : propertyId == 0 or pair.getSecond() is propertyId).map(lambda pair : Permission(ownerClass, pair.getFirst(), propertyClass, pair.getSecond()))
+        return self._getPermissionsSet(ownerClass, propertyClass).stream().filter(
+            lambda pair: ownerId == 0 or pair.getFirst() is ownerId).filter(
+            lambda pair: propertyId == 0 or pair.getSecond() is propertyId).map(
+            lambda pair: Permission(ownerClass, pair.getFirst(), propertyClass, pair.getSecond()))
 
     def addPermission(self, permission):
-        self._getPermissionsSet(permission.getOwnerClass(), permission.getPropertyClass()).add(Pair(permission.getOwnerId(), permission.getPropertyId()))
+        self._getPermissionsSet(permission.getOwnerClass(), permission.getPropertyClass()).add(
+            Pair(permission.getOwnerId(), permission.getPropertyId()))
 
     def removePermission(self, permission):
-        self._getPermissionsSet(permission.getOwnerClass(), permission.getPropertyClass()).remove(Pair(permission.getOwnerId(), permission.getPropertyId()))
+        self._getPermissionsSet(permission.getOwnerClass(), permission.getPropertyClass()).remove(
+            Pair(permission.getOwnerId(), permission.getPropertyId()))

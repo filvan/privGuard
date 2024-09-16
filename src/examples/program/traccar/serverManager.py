@@ -9,9 +9,7 @@ from .globalTimer import GlobalTimer
 
 
 class ServerManager(LifecycleObject):
-
     _LOGGER = "LoggerFactory.getLogger(ServerManager.class)"
-
 
     def __init__(self, injector, config):
 

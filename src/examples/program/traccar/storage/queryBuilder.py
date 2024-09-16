@@ -3,9 +3,6 @@ from src.analyze import parse
 
 class QueryBuilder:
 
-
-
-
     def __init__(self, config, dataSource, objectMapper, query, returnGeneratedKeys):
 
         self._config = None

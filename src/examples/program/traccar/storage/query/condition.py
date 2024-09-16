@@ -2,6 +2,7 @@ import this
 
 from src.examples.program.traccar.model.groupModel import GroupedModel
 
+
 class Condition:
     def merge(self, conditions):
         result = None
@@ -13,7 +14,6 @@ class Condition:
         return result
 
     class Equals(this.Compare):
-
 
         def __init__(self, outerInstance, column, value):
             super().__init__(outerInstance, column, "=", column, value)
@@ -115,7 +115,6 @@ class Condition:
     class Permission(this.Condition):
 
         def _initialize_instance_fields(self):
-
             self._ownerClass = None
             self._ownerId = 0
             self._propertyClass = None
@@ -162,7 +161,6 @@ class Condition:
     class LatestPositions(this.Condition):
 
         def _initialize_instance_fields(self):
-
             self._deviceId = 0
 
         def __init__(self, deviceId):
@@ -175,4 +173,3 @@ class Condition:
 
         def getDeviceId(self):
             return self._deviceId
-

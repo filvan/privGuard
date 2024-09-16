@@ -1,4 +1,3 @@
-
 from numpy import array
 
 from .query.columns import Columns
@@ -30,15 +29,16 @@ class DatabaseStorage(Storage):
             self._databaseType = dataSource.getConnection().getMetaData().getDatabaseProductName()
         except RuntimeError as e:
             raise RuntimeError(e)
+
     def getObjects(self, clazz, request):
         query = ("SELECT ")
         if isinstance(request.getColumns(), Columns.All):
-           query = query +('*')
+            query = query + ('*')
         else:
-            query += (request.getColumns().getColumns(clazz, "set"), lambda c : c)
+            query += (request.getColumns().getColumns(clazz, "set"), lambda c: c)
         query += (" FROM " + Permission.getStorageName(clazz))
         query += request.getCondition()
-        query+=(request.getOrder())
+        query += (request.getOrder())
         try:
             builder = QueryBuilder.create(self._config, self._dataSource, self._objectMapper, str(query))
             for variable in self._getConditionVariables(request.getCondition()).entrySet():
@@ -46,14 +46,15 @@ class DatabaseStorage(Storage):
             return builder.executeQuery(clazz)
         except Exception as e:
             raise Exception(e)
+
     def addObject(self, entity, request):
         columns = request.getColumns().getColumns(type(entity), "get")
         query = ("INSERT INTO ")
         query += (self._getStorageName(type(entity)))
         query += ("(")
-        query += (self._formatColumns(columns, lambda c : c))
+        query += (self._formatColumns(columns, lambda c: c))
         query += (") VALUES (")
-        query += (self._formatColumns(columns, lambda c : ':' + c))
+        query += (self._formatColumns(columns, lambda c: ':' + c))
         query += (")")
         try:
             builder = QueryBuilder.create(self._config, self._dataSource, self._objectMapper, str(query), True)
@@ -61,12 +62,13 @@ class DatabaseStorage(Storage):
             return builder.executeUpdate()
         except Exception as e:
             raise StorageException(e)
+
     def updateObject(self, entity, request):
         columns = request.getColumns().getColumns(type(entity), "get")
-        query  = ("UPDATE ")
+        query = ("UPDATE ")
         query += (self._getStorageName(type(entity)))
         query += (" SET ")
-        query += (self._formatColumns(columns, lambda c : c + " = :" + c))
+        query += (self._formatColumns(columns, lambda c: c + " = :" + c))
         query += (self._formatCondition(request.getCondition()))
         try:
             builder = QueryBuilder.create(self._config, self._dataSource, self._objectMapper, str(query))
@@ -76,6 +78,7 @@ class DatabaseStorage(Storage):
             builder.executeUpdate()
         except Exception as e:
             raise StorageException(e)
+
     def removeObject(self, clazz, request):
         query = ("DELETE FROM ")
         query += (self._getStorageName(clazz))
@@ -137,7 +140,6 @@ class DatabaseStorage(Storage):
     def _getStorageName(self, clazz):
         storageName = clazz.getAnnotation(StorageName.__class__)
         if storageName is None:
-
             raise StorageException("StorageName annotation is missing")
         return storageName.value()
 
@@ -256,7 +258,7 @@ class DatabaseStorage(Storage):
 
         storageName = Permission.getStorageName(condition.getOwnerClass(), condition.getPropertyClass())
         result += ("SELECT ")
-        result += (storageName) +('.') +(outputKey)
+        result += (storageName) + ('.') + (outputKey)
         result += (" FROM ")
         result += (storageName)
         result += (" WHERE ")
@@ -311,7 +313,7 @@ class DatabaseStorage(Storage):
                 result += (" INNER JOIN (")
 
             result += ("SELECT groupId as parentId, id as deviceId FROM ")
-            result += (self._getStorageName(Device.__class__ ))
+            result += (self._getStorageName(Device.__class__))
             result += (" WHERE groupId IS NOT NULL")
             result += (") AS devices ON all_groups.groupId = devices.parentId")
 
@@ -321,8 +323,3 @@ class DatabaseStorage(Storage):
             result += (conditionKey)
 
         return str(result)
-
-
-
-
-
