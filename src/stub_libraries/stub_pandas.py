@@ -49,7 +49,7 @@ def read_csv(filename, schema=[], usecols=None, **kwargs):
         # print('Data Schema: ' + str(complete_schema))
 
     if not schema and usecols is None:
-        return DataFrame(complete_schema, policy, shape=[len(schema), rows])
+        return DataFrame(complete_schema, policy, shape=[len(complete_schema), rows])
     elif schema:
         return DataFrame(schema, policy, shape=[len(schema), rows])
     elif usecols is not None:
