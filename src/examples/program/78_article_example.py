@@ -8,6 +8,7 @@ def run(data_folder, **kwargs):
     # print(patients)
     # print('Policy: ' + str(patients.policy))
 
+    patients = patients[patients.GENDER == 'FEMALE']
     patients = patients[patients.AGE >= 18]
     patients = patients['ID']
 
