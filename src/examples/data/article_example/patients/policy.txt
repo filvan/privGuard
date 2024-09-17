@@ -1,0 +1,4 @@
+ALLOW SCHEMA ID
+    AND FILTER AGE >= 18
+    ARTICLE 1(2)(a)
+    REFERENCES 1(2)(a) -> 5 -> 7(4)

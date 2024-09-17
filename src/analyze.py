@@ -94,34 +94,36 @@ program_map = {
     # selfmailbot
 
     50: "./examples/program/selfmailbot/bot/confirm_email.py",
-    51: "./examples/program/selfmailbot/bot/resend.py",
-    52: "./examples/program/selfmailbot/bot/reset_email.py",
-    53: "./examples/program/selfmailbot/bot/send_confirmation.py",
-    54: "./examples/program/selfmailbot/bot/send_photo.py",
-    55: "./examples/program/selfmailbot/bot/send_text_message.py",
-    57: "./examples/program/selfmailbot/celery/send_confirmation_mail.py",
-    58: "./examples/program/selfmailbot/celery/send_file.py",
-    59: "./examples/program/selfmailbot/celery/send_text.py",
-    60: "./examples/program/selfmailbot/mail/send_confirmation_mail.py",
-    61: "./examples/program/selfmailbot/mail/send_mail.py",
-    62: "./examples/program/selfmailbot/models/get_user_by_confirmation_link.py",
-    63: "./examples/program/selfmailbot/models/get_user_instance.py",
+    51: "./examples/program/selfmailbot/bot/prompt_for_confirm.py",
+    52: "./examples/program/selfmailbot/bot/prompt_for_setting_email.py",
+    53: "./examples/program/selfmailbot/bot/reset_email.py",
+    54: "./examples/program/selfmailbot/bot/send_confirmation.py",
+    55: "./examples/program/selfmailbot/bot/send_photo.py",
+    56: "./examples/program/selfmailbot/bot/send_text_message.py",
+    57: "./examples/program/selfmailbot/bot/start.py",
+    58: "./examples/program/selfmailbot/celery/send_confirmation_mail.py",
+    59: "./examples/program/selfmailbot/celery/send_file.py",
+    60: "./examples/program/selfmailbot/celery/send_text.py",
+    61: "./examples/program/selfmailbot/mail/send_confirmation_mail.py",
+    62: "./examples/program/selfmailbot/mail/send_mail.py",
+    63: "./examples/program/selfmailbot/models/get_user_by_confirmation_link.py",
+    64: "./examples/program/selfmailbot/models/get_user_instance.py",
 
     # traccar
 
-    70: "./examples/program/traccar/analyze/columns/get_all_columns_analizer.py",
+    70: "./examples/program/traccar/analyze/columns/get_all_columns_analyzer.py",
     71: "./examples/program/traccar/analyze/columns/exclude_columns.py",
-    72: "./examples/program/traccar/analyze/columns/include_columns_analizer.py",
+    72: "./examples/program/traccar/analyze/columns/include_columns_analyzer.py",
     73: "./examples/program/traccar/analyze/latest_position.py",
     74: "./examples/program/traccar/analyze/manage_user_getter.py",
     75: "./examples/program/traccar/analyze/manage_user_setter.py",
-    76: "./examples/program/traccar/analyze/send_mail_analizer.py",
+    76: "./examples/program/traccar/analyze/send_mail_analyzer.py",
 
     # soundness example
     77: "./examples/program/77_soundness_example.py",
 
-    # alert example
-    78: "./examples/program/78_alert_example.py",
+    # article example
+    78: "./examples/program/78_article_example.py",
 
     # full gdpr toy example
     79: "./examples/program/79_full_gdpr_toy_example.py",
@@ -152,7 +154,9 @@ data_map = {
     # 21: "./examples/data/home_value_prediction/",
     # 22: "./examples/data/malware_prediction/",
     23: "./examples/data/web_traffic_forecasting/",
+
     24: "./examples/data/cpra/",
+
     25: "./examples/data/libretaxi_cpra/",
     26: "./examples/data/libretaxi_cpra/",
     # 27: "./examples/data/libretaxi_cpra/",
@@ -169,8 +173,10 @@ data_map = {
     38: "./examples/data/libretaxi_cpra/",
     39: "./examples/data/libretaxi_cpra/",
     40: "./examples/data/libretaxi_cpra/",
+
     41: "./examples/data/bank_customer_churn/",
     42: "./examples/data/bank_customer_churn/",
+
     50: "./examples/data/selfmailbot/",
     51: "./examples/data/selfmailbot/",
     52: "./examples/data/selfmailbot/",
@@ -199,8 +205,8 @@ data_map = {
     # soundness example
     77: "./examples/data/soundness_example/",
 
-    # alert example
-    78: "./examples/data/alert_example/",
+    # article example
+    78: "./examples/data/article_example/",
 
     # full gdpr toy example
     79: "./examples/data/gdpr/",
@@ -213,12 +219,12 @@ lib_map = {
     5: {'lgb': stub_lightgbm, 'metrics': stub_metrics, 'model_selection': stub_model_selection, 'numpy': stub_numpy,
         'pandas': stub_pandas, 'random': stub_random},
     6: {'numpy': stub_numpy, 'pandas': stub_pandas},
-
     7: {'numpy': stub_numpy, 'pandas': stub_pandas, 'lgb': stub_lightgbm, 'metrics': stub_metrics,
         'model_selection': stub_model_selection},
-
     23: {'numpy': stub_numpy, 'pandas': stub_pandas, 'arima': stub_arima},
+
     24: {'numpy': stub_numpy, 'pandas': stub_pandas},
+
     25: {'numpy': stub_numpy, 'pandas': stub_pandas},
     26: {'numpy': stub_numpy, 'pandas': stub_pandas},
     # 27: {'numpy': stub_numpy, 'pandas': stub_pandas},
@@ -235,8 +241,10 @@ lib_map = {
     38: {'numpy': stub_numpy, 'pandas': stub_pandas},
     39: {'numpy': stub_numpy, 'pandas': stub_pandas},
     40: {'numpy': stub_numpy, 'pandas': stub_pandas},
+
     41: {'numpy': stub_numpy, 'pandas': stub_pandas},
     42: {'numpy': stub_numpy, 'pandas': stub_pandas, 'cross_validation': stub_cross_validation},
+
     50: {'pandas': stub_pandas},
     51: {'pandas': stub_pandas},
     52: {'pandas': stub_pandas},

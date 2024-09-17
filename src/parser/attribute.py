@@ -311,22 +311,31 @@ class PurposeAttribute(Attribute):
 
 
 # Author: Filippo Vannutelli
-class AlertAttribute(Attribute):
+class ArticleAttribute(Attribute):
     """
-    The Alert attribute (under construction).
+    The Article attribute (under construction).
     """
 
-    def __init__(self, alert_type):
-        self.alert_type = alert_type
-
-    def is_stricter_than(self, other: Attribute):
-        if isinstance(other, AlertAttribute):
-            if self.alert_type == other.alert_type:
-                return True
-        return False
+    def __init__(self, article_name):
+        self.article_name = article_name
 
     def __str__(self):
-        return 'alert: ' + str(self.alert_type)
+        return 'article: ' + str(self.article_name)
+
+    def __repr__(self):
+        return self.__str__()
+
+
+class ReferencesAttribute(Attribute):
+    """
+    The References attribute (under construction).
+    """
+
+    def __init__(self, article_name):
+        self.article_name = article_name
+
+    def __str__(self):
+        return 'references: ' + str(self.article_name)
 
     def __repr__(self):
         return self.__str__()

@@ -23,11 +23,11 @@
 """ The parser for Legalease policy. """
 
 from pyparsing import oneOf, Word, Literal, pyparsing_common, Regex, Optional, Suppress, infix_notation, OneOrMore, \
-    OpAssoc, nums, alphanums, delimitedList
+    OpAssoc, nums, alphanums, delimitedList, Group, Combine
 from src.parser.typed_value import IntegerV, StringV, ExtendV
 from src.parser.abstract_domain import ClosedIntervalL
 from src.parser.attribute import RoleAttribute, PurposeAttribute, RedactAttribute, PrivacyAttribute, FilterAttribute, \
-    SchemaAttribute, AlertAttribute
+    SchemaAttribute, ArticleAttribute, ReferencesAttribute
 
 # define basic parsers for tokens in the policy.
 COMPARATOR = oneOf(['==', '!=', '>', '>=', '<', '<=']).setName('COMPARATOR')
@@ -38,6 +38,8 @@ SCALAR_FLOAT = pyparsing_common.fnumber
 STRING = Regex("'(''|[^'])*'").setName('STRING').addParseAction(lambda toks: StringV(toks[0][1:-1]))
 LIST = delimitedList(COLUMN)
 VARIABLE = Word(alphanums).setName('VARIABLE')
+ARTICLE_NAME = Regex(r"\d+((\(\d+\))(\([a-z]\))?)?").setName('ARTICLE_NAME')
+COF = Combine(delimitedList(ARTICLE_NAME, delim=' -> ', combine=True), adjacent=False).setName('COF')
 
 
 def filter_action(toks):
@@ -108,9 +110,14 @@ def purpose_action(toks):
     return PurposeAttribute(toks[1])
 
 
-def alert_action(toks):
-    """ How to parse an alert attribute. """
-    return AlertAttribute(toks[1])
+def article_action(toks):
+    """ How to parse an article attribute. """
+    return ArticleAttribute(toks[1])
+
+
+def references_action(toks):
+    """ How to parse a references attribute, i.e. a chain of references (COF). """
+    return ReferencesAttribute(toks[1])
 
 
 # parsers for attributes.
@@ -121,14 +128,15 @@ SCHEMA_ATTRIBUTE = ('SCHEMA' + LIST).addParseAction(schema_action)
 PRIVACY_ATTRIBUTE = ('PRIVACY' + (Literal('Anonymization') | Literal('Aggregation') | ('K-Anonymity' + SCALAR_INT) | (
         'L-Diversity' + SCALAR_INT) | ('T-Closeness' + SCALAR_INT) | (
                                           'DP' + Suppress('(') + SCALAR_FLOAT + Suppress(
-                                            ',') + SCALAR_FLOAT + Suppress(')')))).addParseAction(privacy_action)
+                                      ',') + SCALAR_FLOAT + Suppress(')')))).addParseAction(privacy_action)
 ROLE_ATTRIBUTE = ('ROLE' + VARIABLE).addParseAction(role_action)
 PURPOSE_ATTRIBUTE = ('PURPOSE' + VARIABLE).addParseAction(purpose_action)
-ALERT_ATTRIBUTE = ('ALERT' + STRING).addParseAction(alert_action)
-ATTRIBUTE = FILTER_ATTRIBUTE | REDACT_ATTRIBUTE | SCHEMA_ATTRIBUTE | PRIVACY_ATTRIBUTE | ROLE_ATTRIBUTE | PURPOSE_ATTRIBUTE | ALERT_ATTRIBUTE
+ARTICLE_ATTRIBUTE = ('ARTICLE' + ARTICLE_NAME).addParseAction(article_action)
+REFERENCES_ATTRIBUTE = ('REFERENCES' + COF).addParseAction(references_action)
+ATTRIBUTE = FILTER_ATTRIBUTE | REDACT_ATTRIBUTE | SCHEMA_ATTRIBUTE | PRIVACY_ATTRIBUTE | ROLE_ATTRIBUTE | PURPOSE_ATTRIBUTE
 
 # the parser for clauses
-CLAUSE = (Suppress('ALLOW') + infix_notation(ATTRIBUTE, [('AND', 2, OpAssoc.RIGHT), ('OR', 2, OpAssoc.RIGHT)]))
+CLAUSE = (Suppress('ALLOW') + infix_notation(ATTRIBUTE, [('AND', 2, OpAssoc.RIGHT), ('OR', 2, OpAssoc.RIGHT)]) + Optional(ARTICLE_ATTRIBUTE + Optional(REFERENCES_ATTRIBUTE)))
 
 # the parser for policies
 policy_parser = OneOrMore(CLAUSE)
