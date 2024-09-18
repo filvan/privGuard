@@ -30,7 +30,7 @@ ALLOW SCHEMA PersonalData
 	AND ROLE Controller
 	AND PURPOSE X
 
-# 1.c-1.d
+# 1.c, 1.d
 ALLOW SCHEMA PersonalData
 	AND ROLE Controller
 	AND PURPOSE LegalObligation
@@ -60,7 +60,7 @@ ALLOW SCHEMA ConsentData
 
 
 # Art. 8 GDPR - Conditions applicable to child's consent in relation to information society services
-# 1-2
+# 1, 2
 ALLOW SCHEMA PersonalData
 	AND ROLE Controller
 	AND FILTER GuardianConsentProcessing == 'Y'
@@ -72,51 +72,51 @@ ALLOW SCHEMA PersonalData
 
 
 # Art. 9 GDPR - Processing of special categories of personal data
-# 1-2.a
+# 1, 2.a
 ALLOW SCHEMA SpecialPersonalData
 	AND FILTER DataSubjectCanLiftProhibition == 'Y'
 	AND FILTER ConsentProcessingIdentifiable == 'Y'
 
-# 1-2.b
+# 1, 2.b
 ALLOW SCHEMA SpecialPersonalData
 	AND (PURPOSE EmploymentRights&ObligationsOfControllerOrDataSubject
 	OR PURPOSE SocialSecurityRights&ObligationsOfControllerOrDataSubject
 	OR PURPOSE SocialProtectionRights&ObligationsOfControllerOrDataSubject)
 
-# 1-2.c
+# 1, 2.c
 ALLOW SCHEMA SpecialPersonalData
 	AND PURPOSE VitalInterests
 
-# 1-2.d
+# 1, 2.d
 ALLOW SCHEMA SpecialPersonalData
 	AND PURPOSE LegitimateNoProfitActivitiesWithAppropriateSafeguards
 	AND (PURPOSE PoliticalPurpose OR PURPOSE PhilosophicalPurpose
 		OR PURPOSE ReligiousPurpose OR PURPOSE TradeUnionPurpose)
 	AND ROLE NoProfitBody
 
-# 1-2.e
+# 1, 2.e
 ALLOW SCHEMA SpecialPersonalData
 	AND FILTER ManifestlyMadePublicByDataSubject == 'Y'
 
-# 1-2.f
+# 1, 2.f
 ALLOW SCHEMA SpecialPersonalData
 	AND (ROLE CourtActingInJudicialCapacity OR PURPOSE LegalClaim)
 
-# 1-2.g
+# 1, 2.g
 ALLOW SCHEMA SpecialPersonalData
 	AND PURPOSE PublicInterestProportionateToTheAimPursued
 
-# 1-2.h
+# 1, 2.h
 ALLOW SCHEMA SpecialPersonalData
 	AND ROLE PersonSubjectToObligationOfSecrecy
 	AND PURPOSE MedicalPurpose
 
-# 1-2.i
+# 1, 2.i
 ALLOW SCHEMA SpecialPersonalData
 	AND ROLE PersonSubjectToObligationOfSecrecy
 	AND PURPOSE PublicHealthInterest
 
-# 1-2.j
+# 1, 2.j
 ALLOW SCHEMA SpecialPersonalData
 	AND (PURPOSE PublicInterest OR PURPOSE ScientificResearch
 		OR PURPOSE HistoricalResearch OR PURPOSE Statistical)
@@ -131,7 +131,7 @@ ALLOW SCHEMA CriminalData
 
 
 # Art. 13 GDPR - Information to be provided where personal data are collected from the data subject
-# 1-2
+# 1, 2
 ALLOW SCHEMA InfoAboutController&DPO&Processing&Recipients
 	AND SCHEMA StoragePeriod&DataSubjectRightsAndObligations
 	AND ROLE DataSubject
@@ -139,7 +139,7 @@ ALLOW SCHEMA InfoAboutController&DPO&Processing&Recipients
 
 
 # Art. 14 GDPR - Information to be provided where personal data have not been obtained from the data subject
-# 1-2
+# 1, 2
 ALLOW SCHEMA InfoAboutController&DPO&Processing&Recipients
 	AND SCHEMA StoragePeriod&DataSubjectRights&Source
 	AND ROLE DataSubject
@@ -249,7 +249,7 @@ ALLOW ROLE Controller
 	AND FILTER ObjectionToSpecificKindOfProcessing == 'Y'
 	AND (FILTER CompellingLegitimateGrounds == 'Y' OR PURPOSE LegalClaims)
 
-# 2-3
+# 2, 3
 ALLOW ROLE Controller
 	AND SCHEMA PersonalData
 	AND FILTER ConsentDirectMarketing == 'Y'
@@ -295,7 +295,7 @@ ALLOW (ROLE Controller OR ROLE Processor)
 
 
 # Art. 49 GDPR - Derogations for specific situations
-# 1.a-1.b-1.c-1.d-1.e-1.f-1.g
+# 1.a, 1.b, 1.c, 1.d, 1.e, 1.f, 1.g
 ALLOW (ROLE Controller OR ROLE Processor)
 	AND SCHEMA PersonalData
 	AND PURPOSE TransferToThirdCountryOrInternationalOrganisation

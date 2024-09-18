@@ -25,7 +25,7 @@
 from typing import List
 from copy import deepcopy
 from src.parser.attribute import Attribute, Satisfied, Unsatisfiable, FilterAttribute, SchemaAttribute, \
-    PrivacyAttribute, RedactAttribute, PurposeAttribute, AlertAttribute
+    PrivacyAttribute, RedactAttribute, PurposeAttribute, ArticleAttribute, ReferencesAttribute
 from src.parser.typed_value import ExtendV
 from src.parser.abstract_domain import ClosedIntervalL
 from src.parser.policy_parser import policy_parser
@@ -500,19 +500,46 @@ class Policy(object):
             newPolicy = [[Unsatisfiable()]]
         return Policy(newPolicy)
 
+    """
+        def dealUnsat(self):
+        newPolicy = []
+        for idx, clause in enumerate(self.policy):
+            notes: List[Attribute] = []
+            clause_flag = False
+            for attr in clause:
+                if isinstance(attr, ArticleAttribute) or isinstance(attr, ReferencesAttribute):
+                    notes.append(attr)
+                elif isinstance(attr, Unsatisfiable):
+                    clause_flag = True
+                    # break
+            if not clause_flag:
+                newPolicy.append(clause.attr_lst)
+        if not newPolicy:
+            newPolicy += [[Unsatisfiable()]]
+        if len(newPolicy) == 1 and len(newPolicy[0]) == 1 and isinstance(newPolicy[0][0], Unsatisfiable):
+            newPolicy.append(notes)
+        return Policy(newPolicy)
+    """
+
     def dealSat(self):
         newPolicy = []
         for clause in self.policy:
             newClause = []
+            notes: List[Attribute] = []
             clause_flag = True
             for attr in clause:
                 if not isinstance(attr, Satisfied):
-                    clause_flag = False
+                    if not isinstance(attr, ArticleAttribute) and not isinstance(attr, ReferencesAttribute):
+                        clause_flag = False
+                    else:
+                        notes.append(attr)
                     newClause.append(attr)
             if clause_flag:
                 newPolicy = [[Satisfied()]]
                 break
             newPolicy.append(newClause)
+        if len(newPolicy) == 1 and len(newPolicy[0]) == 1 and isinstance(newPolicy[0][0], Satisfied):
+            newPolicy.append(notes)
         return Policy(newPolicy)
 
     def unSat(self, attr, **kwargs):

@@ -39,7 +39,9 @@ STRING = Regex("'(''|[^'])*'").setName('STRING').addParseAction(lambda toks: Str
 LIST = delimitedList(COLUMN)
 VARIABLE = Word(alphanums).setName('VARIABLE')
 ARTICLE_NAME = Regex(r"\d+((\(\d+\))(\([a-z]\))?)?").setName('ARTICLE_NAME')
-COF = Combine(delimitedList(ARTICLE_NAME, delim=' -> ', combine=True), adjacent=False).setName('COF')
+ARTICLES_INTERVAL = Combine(ARTICLE_NAME + Optional(oneOf(['-', ' -', '- ', ' - ']) + ARTICLE_NAME)).setName('ARTICLES_INTERVAL')
+ARTICLES_LIST = Combine(delimitedList(ARTICLES_INTERVAL, delim=', ', combine=True), adjacent=False).setName('ARTICLES_LIST')
+COF = Combine(delimitedList(ARTICLE_NAME, delim=oneOf(['->', ' ->', '-> ', ' -> ']), combine=True), adjacent=False).setName('COF')
 
 
 def filter_action(toks):
@@ -131,12 +133,12 @@ PRIVACY_ATTRIBUTE = ('PRIVACY' + (Literal('Anonymization') | Literal('Aggregatio
                                       ',') + SCALAR_FLOAT + Suppress(')')))).addParseAction(privacy_action)
 ROLE_ATTRIBUTE = ('ROLE' + VARIABLE).addParseAction(role_action)
 PURPOSE_ATTRIBUTE = ('PURPOSE' + VARIABLE).addParseAction(purpose_action)
-ARTICLE_ATTRIBUTE = ('ARTICLE' + ARTICLE_NAME).addParseAction(article_action)
-REFERENCES_ATTRIBUTE = ('REFERENCES' + COF).addParseAction(references_action)
-ATTRIBUTE = FILTER_ATTRIBUTE | REDACT_ATTRIBUTE | SCHEMA_ATTRIBUTE | PRIVACY_ATTRIBUTE | ROLE_ATTRIBUTE | PURPOSE_ATTRIBUTE
+ARTICLE_ATTRIBUTE = ('ARTICLE' + ARTICLES_LIST).addParseAction(article_action)
+REFERENCES_ATTRIBUTE = ('REFERENCES' + Combine(delimitedList(COF, delim=', ', combine=True), adjacent=False)).addParseAction(references_action)
+ATTRIBUTE = FILTER_ATTRIBUTE | REDACT_ATTRIBUTE | SCHEMA_ATTRIBUTE | PRIVACY_ATTRIBUTE | ROLE_ATTRIBUTE | PURPOSE_ATTRIBUTE | ARTICLE_ATTRIBUTE | REFERENCES_ATTRIBUTE
 
 # the parser for clauses
-CLAUSE = (Suppress('ALLOW') + infix_notation(ATTRIBUTE, [('AND', 2, OpAssoc.RIGHT), ('OR', 2, OpAssoc.RIGHT)]) + Optional(ARTICLE_ATTRIBUTE + Optional(REFERENCES_ATTRIBUTE)))
+CLAUSE = (Suppress('ALLOW') + infix_notation(ATTRIBUTE, [('AND', 2, OpAssoc.RIGHT), ('OR', 2, OpAssoc.RIGHT)]))
 
 # the parser for policies
 policy_parser = OneOrMore(CLAUSE)
