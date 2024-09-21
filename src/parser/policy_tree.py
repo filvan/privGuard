@@ -473,7 +473,7 @@ class Policy(object):
     def _runPrivacy(self, attr: Attribute, priv_tech, **kwargs):
         if isinstance(attr, PrivacyAttribute) and attr.priv_tech == priv_tech:
             if priv_tech == 'K-Anonymity':
-                if kwargs['K'] >= attr.k:
+                if kwargs['k'] >= attr.k:
                     return Satisfied()
             elif priv_tech == 'L-Diversity':
                 raise NotImplemented

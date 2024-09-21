@@ -114,7 +114,8 @@ ALLOW SCHEMA SpecialPersonalData
 ALLOW SCHEMA SpecialPersonalData
 	AND (PURPOSE PublicInterest OR PURPOSE ScientificResearch
 		OR PURPOSE HistoricalResearch OR PURPOSE Statistical)
-	AND (PRIVACY Anonymization OR PRIVACY Aggregation)
+	AND (PRIVACY Anonymization OR PRIVACY Aggregation
+		OR PRIVACY K-Anonymity 100 OR PRIVACY DP(1.0, 1e-5))
 	AND ARTICLE 9(1), 9(2)(j)
 	AND REFERENCES 9(2)(j) -> 89(1)
 
@@ -261,7 +262,8 @@ ALLOW ROLE DataSubject
 
 ALLOW ROLE Controller
 	AND SCHEMA PersonalData
-	AND (PRIVACY Anonymization OR PRIVACY Aggregation)
+	AND (PRIVACY Anonymization OR PRIVACY Aggregation
+		OR PRIVACY K-Anonymity 100 OR PRIVACY DP(1.0, 1e-5))
 	AND ARTICLE 25(1)
 
 ALLOW ROLE Controller

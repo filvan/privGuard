@@ -245,11 +245,11 @@ class PrivacyAttribute(Attribute):
         self.priv_tech = priv_tech
         self.kwargs = kwargs
         if priv_tech == 'K-Anonymity':
-            self.k = kwargs.get('K')
+            self.k = kwargs.get('k')
         elif priv_tech == 'L-Diversity':
-            self.l = kwargs.get('L')
+            self.l = kwargs.get('l')
         elif priv_tech == 'T-Closeness':
-            self.t = kwargs.get('T')
+            self.t = kwargs.get('t')
         elif priv_tech == 'DP':
             self.eps = kwargs.get('eps')
             self.delta = kwargs.get('delta')

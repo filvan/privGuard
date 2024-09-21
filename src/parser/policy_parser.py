@@ -129,8 +129,7 @@ REDACT_ATTRIBUTE = ('REDACT' + COLUMN + Suppress('(') + Optional(SCALAR_INT) + '
 SCHEMA_ATTRIBUTE = ('SCHEMA' + LIST).addParseAction(schema_action)
 PRIVACY_ATTRIBUTE = ('PRIVACY' + (Literal('Anonymization') | Literal('Aggregation') | ('K-Anonymity' + SCALAR_INT) | (
         'L-Diversity' + SCALAR_INT) | ('T-Closeness' + SCALAR_INT) | (
-                                          'DP' + Suppress('(') + SCALAR_FLOAT + Suppress(
-                                      ',') + SCALAR_FLOAT + Suppress(')')))).addParseAction(privacy_action)
+                                          'DP' + Suppress('(') + SCALAR_FLOAT + Suppress(',') + SCALAR_FLOAT + Suppress(')')))).addParseAction(privacy_action)
 ROLE_ATTRIBUTE = ('ROLE' + VARIABLE).addParseAction(role_action)
 PURPOSE_ATTRIBUTE = ('PURPOSE' + VARIABLE).addParseAction(purpose_action)
 ARTICLE_ATTRIBUTE = ('ARTICLE' + ARTICLES_LIST).addParseAction(article_action)
