@@ -31,9 +31,11 @@ ALLOW SCHEMA PersonalData
 ALLOW SCHEMA PersonalData
 	AND ROLE Controller
 	AND PURPOSE LegalObligation
+    AND ARTICLE 6(1)(c)
+
 ALLOW SCHEMA PersonalData
 	AND PURPOSE VitalInterests
-	AND ARTICLE 6(1)(c), 6(1)(d)
+	AND ARTICLE 6(1)(d)
 
 ALLOW SCHEMA PersonalData
 	AND ROLE Controller
