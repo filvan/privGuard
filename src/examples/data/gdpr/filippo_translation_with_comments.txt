@@ -31,10 +31,12 @@ ALLOW SCHEMA PersonalData
 	AND ROLE Controller
 	AND PURPOSE X
 
-# 6.1.c, 6.1.d
+# 6.1.c
 ALLOW SCHEMA PersonalData
 	AND ROLE Controller
 	AND PURPOSE LegalObligation
+
+# 6.1.d
 ALLOW SCHEMA PersonalData
 	AND PURPOSE VitalInterests
 
