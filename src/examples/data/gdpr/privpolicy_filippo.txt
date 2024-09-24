@@ -85,10 +85,10 @@ ALLOW SCHEMA SpecialPersonalData
 	AND ARTICLE 9(1), 9(2)(c)
 
 ALLOW SCHEMA SpecialPersonalData
+    AND ROLE NoProfitBody
 	AND PURPOSE LegitimateNoProfitActivitiesWithAppropriateSafeguards
 	AND (PURPOSE PoliticalPurpose OR PURPOSE PhilosophicalPurpose
 		OR PURPOSE ReligiousPurpose OR PURPOSE TradeUnionPurpose)
-	AND ROLE NoProfitBody
 	AND ARTICLE 9(1), 9(2)(d)
 
 ALLOW SCHEMA SpecialPersonalData
@@ -152,16 +152,16 @@ ALLOW SCHEMA InfoAboutProcessingAndRecipientsAndStoragePeriodAndDataSubjectRight
 	AND REFERENCES 15(2) -> 46
 
 
-ALLOW ROLE Controller
-	AND SCHEMA PersonalData
+ALLOW SCHEMA PersonalData
+	AND ROLE Controller
 	AND FILTER RequireRectification == 'Y'
 	AND FILTER DataSubjectID == 'n_data_subject'
 	AND PURPOSE Rectification
 	AND ARTICLE 16
 
 
-ALLOW ROLE Controller
-	AND SCHEMA PersonalData
+ALLOW SCHEMA PersonalData
+	AND ROLE Controller
 	AND (FILTER NoLongerNecessary == 'Y'
 		AND FILTER NecessaryForRightOfFreedomOfExpression == 'N'
 		AND FILTER NecessaryForPublicInterestOrLegalObligation == 'N'
@@ -171,8 +171,8 @@ ALLOW ROLE Controller
 	AND ARTICLE 17(1)(a), 17(3)
 	AND REFERENCES 17(3)(c) -> 9(2)(h), 17(3)(c) -> 9(2)(i), 17(3)(c) -> 9(3), 17(3)(d) -> 89(1)
 
-ALLOW ROLE Controller
-	AND SCHEMA PersonalData
+ALLOW SCHEMA PersonalData
+	AND ROLE Controller
 	AND (FILTER ConsentProcessing == 'N'
 		AND FILTER NecessaryForRightOfFreedomOfExpression == 'N'
 		AND FILTER NecessaryForPublicInterestOrLegalObligation == 'N'
@@ -182,8 +182,8 @@ ALLOW ROLE Controller
 	AND ARTICLE 17(1)(b), 17(3)
 	AND REFERENCES 17(1)(b) -> 6(1)(a), 17(1)(b) -> 9(2)(a), 17(3)(c) -> 9(2)(h), 17(3)(c) -> 9(2)(i), 17(3)(c) -> 9(3), 17(3)(d) -> 89(1)
 
-ALLOW ROLE Controller
-	AND SCHEMA PersonalData
+ALLOW SCHEMA PersonalData
+	AND ROLE Controller
 	AND (FILTER ObjectionAndNoOverridingLegitimateGrounds == 'Y'
 		OR FILTER ObjectionToProcessingForDirectMarketing == 'Y')
 		AND FILTER NecessaryForRightOfFreedomOfExpression == 'N'
@@ -194,8 +194,8 @@ ALLOW ROLE Controller
 	AND ARTICLE 17(1)(c), 17(3)
 	AND REFERENCES 17(1)(c) -> 21(1) -> 6(1)(e), 17(1)(c) -> 21(1) -> 6(1)(f), 17(1)(c) -> 21(2), 17(3)(c) -> 9(2)(h), 17(3)(c) -> 9(2)(i), 17(3)(c) -> 9(3), 17(3)(d) -> 89(1)
 
-ALLOW ROLE Controller
-	AND SCHEMA PersonalData
+ALLOW SCHEMA PersonalData
+	AND ROLE Controller
 	AND (FILTER UnlawfullyProcessed == 'Y'
 		AND FILTER NecessaryForRightOfFreedomOfExpression == 'N'
 		AND FILTER NecessaryForPublicInterestOrLegalObligation == 'N'
@@ -205,8 +205,8 @@ ALLOW ROLE Controller
 	AND ARTICLE 17(1)(d), 17(3)
 	AND REFERENCES 17(3)(c) -> 9(2)(h), 17(3)(c) -> 9(2)(i), 17(3)(c) -> 9(3), 17(3)(d) -> 89(1)
 
-ALLOW ROLE Controller
-	AND SCHEMA PersonalData
+ALLOW SCHEMA PersonalData
+	AND ROLE Controller
 	AND (FILTER ToBeErasedForComplianceWithLegalObligation == 'Y'
 		AND FILTER NecessaryForRightOfFreedomOfExpression == 'N'
 		AND FILTER NecessaryForPublicInterestOrLegalObligation == 'N'
@@ -216,8 +216,8 @@ ALLOW ROLE Controller
 	AND ARTICLE 17(1)(e), 17(3)
 	AND REFERENCES 17(3)(c) -> 9(2)(h), 17(3)(c) -> 9(2)(i), 17(3)(c) -> 9(3), 17(3)(d) -> 89(1)
 
-ALLOW ROLE Controller
-	AND SCHEMA PersonalData
+ALLOW SCHEMA PersonalData
+	AND ROLE Controller
 	AND (FILTER InRelationToOfferOfInformationSocietyServices == 'Y'
 		AND FILTER NecessaryForRightOfFreedomOfExpression == 'N'
 		AND FILTER NecessaryForPublicInterestOrLegalObligation == 'N'
@@ -228,16 +228,16 @@ ALLOW ROLE Controller
 	AND REFERENCES 17(1)(f) -> 8(1) -> 6(1), 17(3)(c) -> 9(2)(h), 17(3)(c) -> 9(2)(i), 17(3)(c) -> 9(3), 17(3)(d) -> 89(1)
 
 
-ALLOW ROLE DataSubject
-	AND SCHEMA PersonalData
+ALLOW SCHEMA PersonalData
+	AND ROLE DataSubject
 	AND FILTER ConsentProcessing == 'Y'
 	AND FILTER DataSubjectID == 'n_data_subject'
 	AND PURPOSE DataPortability
 	AND ARTICLE 20(1)(a)
 	AND REFERENCES 20(1)(a) -> 6(1)(a), 20(1)(a) -> 6(1)(b), 20(1)(a) -> 9(2)(a)
 
-ALLOW ROLE Controller
-	AND SCHEMA PersonalData
+ALLOW SCHEMA PersonalData
+	AND ROLE Controller
 	AND FILTER RequestPortability == 'Y'
 	AND FILTER ConsentProcessing == 'Y'
 	AND FILTER DataSubjectID == 'n_data_subject'
@@ -245,76 +245,76 @@ ALLOW ROLE Controller
 	AND ARTICLE 20(2)
 
 
-ALLOW ROLE Controller
-	AND SCHEMA PersonalData
+ALLOW SCHEMA PersonalData
+	AND ROLE Controller
 	AND FILTER ObjectionToSpecificKindOfProcessing == 'Y'
 	AND (FILTER CompellingLegitimateGrounds == 'Y' OR PURPOSE LegalClaims)
 	AND ARTICLE 21(1)
 	AND REFERENCES 21(1) -> 6(1)(e), 21(1) -> 6(1)(f)
 
-ALLOW ROLE Controller
-	AND SCHEMA PersonalData
+ALLOW SCHEMA PersonalData
+	AND ROLE Controller
 	AND FILTER ConsentDirectMarketing == 'Y'
 	AND PURPOSE DirectMarketing
-ALLOW ROLE DataSubject
-	AND SCHEMA ConsentDirectMarketingData
+ALLOW SCHEMA ConsentDirectMarketingData
+	AND ROLE DataSubject
 	AND PURPOSE ConsentWithdrawal
 	AND ARTICLE 21(2), 21(3)
 
 
-ALLOW ROLE Controller
-	AND SCHEMA PersonalData
+ALLOW SCHEMA PersonalData
+	AND ROLE Controller
 	AND (PRIVACY Anonymization OR PRIVACY Aggregation
 		OR PRIVACY K-Anonymity 100 OR PRIVACY DP(1.0, 1e-5))
 	AND ARTICLE 25(1)
 
-ALLOW ROLE Controller
-	AND SCHEMA PersonalData
+ALLOW SCHEMA PersonalData
+	AND ROLE Controller
 	AND PURPOSE DataMinimisation
 	AND ARTICLE 25(2)
 
 
-ALLOW ROLE PersonUnderAuthorityOfControllerOrProcessor
-	AND SCHEMA PersonalData
+ALLOW SCHEMA PersonalData
+	AND ROLE PersonUnderAuthorityOfControllerOrProcessor
 	AND (PURPOSE ProcessingOnInstructionsFromController OR PURPOSE LawFulfillment)
 	AND ARTICLE 32(4)
 
 
-ALLOW ROLE DataProtectionOfficer
-	AND SCHEMA PersonalData
+ALLOW SCHEMA PersonalData
+	AND ROLE DataProtectionOfficer
 	AND PURPOSE MonitorProtection
 	AND ARTICLE 39(1)(b)
 
 
-ALLOW (ROLE Controller OR ROLE Processor)
-	AND SCHEMA PersonalDataUnderAppropriateSafeguardsAndConditions
+ALLOW SCHEMA PersonalDataUnderAppropriateSafeguardsAndConditions
+	AND (ROLE Controller OR ROLE Processor)
 	AND PURPOSE TransferToThirdCountryOrIntnlOrg
 	AND ARTICLE 44, 46(1)
 	AND REFERENCES 46(1) -> 45(3) -> 93(2)
 
 
-ALLOW (ROLE Controller OR ROLE Processor)
-	AND SCHEMA PersonalData
+ALLOW SCHEMA PersonalData
+	AND (ROLE Controller OR ROLE Processor)
 	AND PURPOSE TransferToThirdCountryOrInternationalOrganisation
 	AND (FILTER ConsentTransfer == 'Y' OR PURPOSE BusinessPurpose
 	    OR PURPOSE PublicInterest OR PURPOSE LegalClaim
 	    OR PURPOSE VitalInterests
 	    OR (FILTER InfoFromRegister == 'Y' AND FILTER DataSubjectID == 'n_data_subject'))
-ALLOW (ROLE Controller OR ROLE Processor)
-	AND SCHEMA PersonalData
+ALLOW SCHEMA PersonalData
+	AND (ROLE Controller OR ROLE Processor)
 	AND PURPOSE TransferToThirdCountryOrInternationalOrganisation
 	AND PURPOSE CompellingLegitimateInterests
 	AND ARTICLE 49(1)
 	AND REFERENCES 49(1) -> 13, 49(1) -> 14, 49(1) -> 45, 49(1) -> 46
 
-ALLOW ROLE PublicAuthority
-	AND SCHEMA PersonalData
+ALLOW SCHEMA PersonalData
+	AND ROLE PublicAuthority
 	AND PURPOSE TransferToThirdCountryOrInternationalOrganisation
 	AND PURPOSE PublicAuthorityTasks
 	AND ARTICLE 49(3)
 
 
-ALLOW ROLE SupervisoryAuthority
-	AND SCHEMA PersonalData
+ALLOW SCHEMA PersonalData
+	AND ROLE SupervisoryAuthority
 	AND PURPOSE SupervisionTasks
 	AND ARTICLE 58(2)(e)
