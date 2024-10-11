@@ -42,11 +42,10 @@ ALLOW SCHEMA PersonalData
 	AND ARTICLE 6(1)(e)
 
 ALLOW SCHEMA PersonalData
-	AND (ROLE Controller OR ROLE ThirdParty)
-	AND PURPOSE LegitimateInterests
-ALLOW SCHEMA PersonalData
-	AND ROLE PublicAuthority
-	AND PURPOSE PublicAuthorityTasks
+	AND (((ROLE Controller OR ROLE ThirdParty)
+	        AND PURPOSE LegitimateInterests)
+        OR (ROLE PublicAuthority
+	        AND PURPOSE PublicAuthorityTasks))
 	AND ARTICLE 6(1)(f)
 
 
@@ -57,13 +56,11 @@ ALLOW SCHEMA ConsentData
 
 ALLOW SCHEMA PersonalData
 	AND ROLE Controller
-	AND FILTER GuardianConsentProcessing == 'Y'
-	AND FILTER Age < 13
-ALLOW SCHEMA PersonalData
-	AND ROLE Controller
-	AND (FILTER ConsentProcessing == 'Y' OR FILTER GuardianConsentProcessing == 'Y')
-	AND (FILTER Age < 16 AND FILTER Age >= 13)
-	AND ARTICLE 8(1), 8(2)
+	AND ((FILTER GuardianConsentProcessing == 'Y'
+	        AND FILTER Age < 13)
+	    OR ((FILTER ConsentProcessing == 'Y' OR FILTER GuardianConsentProcessing == 'Y')
+	        AND (FILTER Age < 16 AND FILTER Age >= 13)))
+	AND ARTICLE 8(1)
 	AND REFERENCES 8(1) -> 6(1)
 
 
@@ -250,13 +247,13 @@ ALLOW SCHEMA PersonalData
 	AND ARTICLE 21(1)
 	AND REFERENCES 21(1) -> 6(1)(e), 21(1) -> 6(1)(f)
 
-ALLOW SCHEMA PersonalData
-	AND ROLE Controller
-	AND FILTER ConsentDirectMarketing == 'Y'
-	AND PURPOSE DirectMarketing
-ALLOW SCHEMA ConsentDirectMarketingData
-	AND ROLE DataSubject
-	AND PURPOSE ConsentWithdrawal
+ALLOW (SCHEMA PersonalData
+	    AND ROLE Controller
+	    AND FILTER ConsentDirectMarketing == 'Y'
+	    AND PURPOSE DirectMarketing)
+    AND (SCHEMA ConsentDirectMarketingData
+	    AND ROLE DataSubject
+	    AND PURPOSE ConsentWithdrawal)
 	AND ARTICLE 21(2), 21(3)
 
 
@@ -297,11 +294,8 @@ ALLOW SCHEMA PersonalData
 	AND (FILTER ConsentTransfer == 'Y' OR PURPOSE BusinessPurpose
 	    OR PURPOSE PublicInterest OR PURPOSE LegalClaim
 	    OR PURPOSE VitalInterests
-	    OR (FILTER InfoFromRegister == 'Y' AND FILTER DataSubjectID == 'n_data_subject'))
-ALLOW SCHEMA PersonalData
-	AND (ROLE Controller OR ROLE Processor)
-	AND PURPOSE TransferToThirdCountryOrInternationalOrganisation
-	AND PURPOSE CompellingLegitimateInterests
+	    OR (FILTER InfoFromRegister == 'Y' AND FILTER DataSubjectID == 'n_data_subject')
+	    OR PURPOSE CompellingLegitimateInterests)
 	AND ARTICLE 49(1)
 	AND REFERENCES 49(1) -> 13, 49(1) -> 14, 49(1) -> 45, 49(1) -> 46
 
