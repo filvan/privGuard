@@ -1,8 +1,6 @@
 ALLOW SCHEMA PersonalData
   	AND ROLE Controller
 	AND PURPOSE X
-ALLOW SCHEMA PersonalData
-	AND ROLE Controller
 	AND (PURPOSE PublicInterest OR PURPOSE ScientificResearch
 	    OR PURPOSE HistoricalResearch
 	    OR PURPOSE Statistical)
@@ -186,9 +184,9 @@ ALLOW SCHEMA PersonalData
 	AND ROLE Controller
 	AND (FILTER ObjectionAndNoOverridingLegitimateGrounds == 'Y'
 		OR FILTER ObjectionToProcessingForDirectMarketing == 'Y')
-		AND FILTER NecessaryForRightOfFreedomOfExpression == 'N'
-		AND FILTER NecessaryForPublicInterestOrLegalObligation == 'N'
-		AND FILTER NecessaryForLegalClaim == 'N'
+	AND FILTER NecessaryForRightOfFreedomOfExpression == 'N'
+	AND FILTER NecessaryForPublicInterestOrLegalObligation == 'N'
+	AND FILTER NecessaryForLegalClaim == 'N'
 	AND FILTER DataSubjectID == 'n_data_subject'
 	AND PURPOSE Erasure
 	AND ARTICLE 17(1)(c), 17(3)

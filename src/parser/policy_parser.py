@@ -23,7 +23,7 @@
 """ The parser for Legalease policy. """
 
 from pyparsing import oneOf, Word, Literal, pyparsing_common, Regex, Optional, Suppress, infix_notation, OneOrMore, \
-    OpAssoc, nums, alphanums, delimitedList, Group, Combine
+    OpAssoc, nums, alphanums, delimitedList, Combine
 from src.parser.typed_value import IntegerV, StringV, ExtendV
 from src.parser.abstract_domain import ClosedIntervalL
 from src.parser.attribute import RoleAttribute, PurposeAttribute, RedactAttribute, PrivacyAttribute, FilterAttribute, \
@@ -41,7 +41,7 @@ VARIABLE = Word(alphanums).setName('VARIABLE')
 ARTICLE_NAME = Regex(r"\d+((\(\d+\))(\([a-z]\))?)?").setName('ARTICLE_NAME')
 ARTICLES_INTERVAL = Combine(ARTICLE_NAME + Optional(oneOf(['-', ' -', '- ', ' - ']) + ARTICLE_NAME)).setName('ARTICLES_INTERVAL')
 ARTICLES_LIST = Combine(delimitedList(ARTICLES_INTERVAL, delim=', ', combine=True), adjacent=False).setName('ARTICLES_LIST')
-COF = Combine(delimitedList(ARTICLE_NAME, delim=oneOf(['->', ' ->', '-> ', ' -> ']), combine=True), adjacent=False).setName('COF')
+COR = Combine(delimitedList(ARTICLE_NAME, delim=oneOf(['->', ' ->', '-> ', ' -> ']), combine=True), adjacent=False).setName('COR')
 
 
 def filter_action(toks):
@@ -118,7 +118,7 @@ def article_action(toks):
 
 
 def references_action(toks):
-    """ How to parse a references attribute, i.e. a chain of references (COF). """
+    """ How to parse a references attribute, i.e. a chain of references (COR). """
     return ReferencesAttribute(toks[1])
 
 
@@ -133,7 +133,7 @@ PRIVACY_ATTRIBUTE = ('PRIVACY' + (Literal('Anonymization') | Literal('Aggregatio
 ROLE_ATTRIBUTE = ('ROLE' + VARIABLE).addParseAction(role_action)
 PURPOSE_ATTRIBUTE = ('PURPOSE' + VARIABLE).addParseAction(purpose_action)
 ARTICLE_ATTRIBUTE = ('ARTICLE' + ARTICLES_LIST).addParseAction(article_action)
-REFERENCES_ATTRIBUTE = ('REFERENCES' + Combine(delimitedList(COF, delim=', ', combine=True), adjacent=False)).addParseAction(references_action)
+REFERENCES_ATTRIBUTE = ('REFERENCES' + Combine(delimitedList(COR, delim=', ', combine=True), adjacent=False)).addParseAction(references_action)
 ATTRIBUTE = FILTER_ATTRIBUTE | REDACT_ATTRIBUTE | SCHEMA_ATTRIBUTE | PRIVACY_ATTRIBUTE | ROLE_ATTRIBUTE | PURPOSE_ATTRIBUTE | ARTICLE_ATTRIBUTE | REFERENCES_ATTRIBUTE
 
 # the parser for clauses
@@ -143,11 +143,12 @@ CLAUSE = (Suppress('ALLOW') + infix_notation(ATTRIBUTE, [('AND', 2, OpAssoc.RIGH
 policy_parser = OneOrMore(CLAUSE)
 
 if __name__ == '__main__':
-    policy_str = input("Please input a valid Legalease policy: \n")
-    print(policy_parser.parseString(policy_str))
+    # policy_str = input("Please input a valid Legalease policy: \n")
+    # print(policy_parser.parseString(policy_str))
 
     # Uncomment the below examples to test corresponding functionality of the parser.
-    # print(policy_parser.parseString("ALLOW FILTER age >= 18 AND SCHEMA NotPHI, h2 AND FILTER gender == 'M' ALLOW (FILTER gender == 'M' OR (FILTER gender == 'F' AND SCHEMA PHI))"))
+    result = policy_parser.parseString("ALLOW FILTER age >= 18 AND SCHEMA NotPHI, h2 AND FILTER gender == 'M' ALLOW (FILTER gender == 'M' OR (FILTER gender == 'F' AND SCHEMA PHI))")
+    print(result)
     # print(policy_parser.parseString("ALLOW SCHEMA HF2 AND (SCHEMA HF2 OR FILTER HR1 <= 8)"))
     # print(policy_parser.parseString("ALLOW ((ROLE guest OR SCHEMA NotHR1) OR SCHEMA NotHF2)"))
 
