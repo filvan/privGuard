@@ -7,4 +7,4 @@ def run(data_folder, **kwargs):
     libretaxi_users = libretaxi_users[libretaxi_users.Longitude == lon]
     libretaxi_users = libretaxi_users[libretaxi_users.Latitude == lat]
 
-    return libretaxi_users['ConsumerID']
+    return libretaxi_users['DataSubjectID']

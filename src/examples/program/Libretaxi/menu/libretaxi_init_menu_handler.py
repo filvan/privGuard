@@ -6,7 +6,8 @@ def postToPublicChannel(user):
     text = ""
 
     if not user['Username']:
-        userTextContact = "[" + EscapeMarkdown(user['FirstName']) + " " + EscapeMarkdown(user['LastName']) + "](tg://user?id=" + user['ConsumerID'] + ")"
+        userTextContact = "[" + EscapeMarkdown(user['FirstName']) + " " + EscapeMarkdown(
+            user['LastName']) + "](tg://user?id=" + user['DataSubjectID'] + ")"
         text = userTextContact + " has joined LibreTaxi"
     else:
         text = "@" + user['Username'] + " has joined LibreTaxi"
@@ -17,11 +18,12 @@ def postToPublicChannel(user):
 
     return user
 
+
 def run(data_folder, **kwargs):
     print("Init menu")
     locales = kwargs.get('locales')
     user_infos = kwargs.get('extra_args').get('user')
-    msg = user_infos['ConsumerID'] + locales.init_menu_welcome
+    msg = user_infos['DataSubjectID'] + locales.init_menu_welcome
 
     kwargs.__setitem__("menu_id", "Menu_Ask_Location")
     postToPublicChannel(user_infos)

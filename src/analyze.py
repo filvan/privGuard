@@ -29,7 +29,7 @@ from src.stub_libraries.stub_statsmodels.tsa.arima import model as stub_arima
 from src.stub_libraries.stub_sklearn import cross_validation as stub_cross_validation
 from src.stub_libraries.stub_sklearn import metrics as stub_metrics
 from src.stub_libraries.stub_sklearn import model_selection as stub_model_selection
-from examples.program.libretaxi.locales import english, es, pt_br, pt_pt, ru
+from examples.program.libretaxi.locales import en, es, pt_br, pt_pt, ru
 # from shutil import copyfile
 # from src.parser.attribute import Satisfied
 # from src.parser.policy_tree import Policy
@@ -80,16 +80,16 @@ program_map = {
     28: "./examples/program/libretaxi/libretaxi_callback.py",
     # 29: "./examples/program/libretaxi/libretaxi_validation.py",
     30: "./examples/program/libretaxi/repository/libretaxi_savePost.py",
-    31: "./examples/program/libretaxi/repository/libretaxi_findUserAround.py",
-    32: "./examples/program/libretaxi/repository/libretaxi_recentPosts.py",
-    33: "./examples/program/libretaxi/menu/libretaxi_ask_location.py",
-    34: "./examples/program/libretaxi/menu/libretaxi_feed_menu.py",
-    35: "./examples/program/libretaxi/menu/libretaxi_init_menu.py",
+    31: "./examples/program/libretaxi/repository/libretaxi_userIdsAround.py",
+    32: "./examples/program/libretaxi/repository/libretaxi_userPostedRecently.py",
+    33: "./examples/program/libretaxi/menu/libretaxi_ask_location_menu_handler.py",
+    34: "./examples/program/libretaxi/menu/libretaxi_feed_menu_handler.py",
+    35: "./examples/program/libretaxi/menu/libretaxi_init_menu_handler.py",
     36: "./examples/program/libretaxi/menu/libretaxi_menu.py",
-    37: "./examples/program/libretaxi/menu/libretaxi_post_menu.py",
+    37: "./examples/program/libretaxi/menu/libretaxi_post_menu_handler.py",
     38: "./examples/program/libretaxi/repository/libretaxi_findPost.py",
     39: "./examples/program/libretaxi/repository/libretaxi_findUser.py",
-    40: "./examples/program/libretaxi/libretaxi_locale.py",
+    40: "./examples/program/libretaxi/libretaxi_objects_user_locale.py",
 
     # selfmailbot
 

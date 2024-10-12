@@ -21,7 +21,7 @@ post_menu_wait = "🕙 Wait for 5 minutes"
 # Do not translate /cancel
 post_menu_copy_and_paste = "Copy & paste text starting with 🚗 (driver) or 👋 (passenger) in the following format, or /cancel, examples:"
 
-post_menu_driver_example="🚗 Ride offer\nFrom: foobar square\nTo: airport\nDate: today\nTime: now\nPayment: cash, venmo"
+post_menu_driver_example = "🚗 Ride offer\nFrom: foobar square\nTo: airport\nDate: today\nTime: now\nPayment: cash, venmo"
 
 post_menu_passenger_example = "👋 Ride wanted\nFrom: foobar st, 42\nTo: downtown\nDate: today\nTime: now\nPax: 1"
 

@@ -3,6 +3,6 @@ def run(data_folder, **kwargs):
     post_id = kwargs.get('extra_args').get('post_id')
 
     libretaxi_posts = pd.read_csv(data_folder + "posts/data.csv")
-    libretaxi_posts = libretaxi_posts[libretaxi_posts.Longitude == post_id]
+    libretaxi_posts = libretaxi_posts[libretaxi_posts.PostID == post_id]
 
     return libretaxi_posts

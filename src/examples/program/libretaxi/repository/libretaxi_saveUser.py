@@ -1,6 +1,6 @@
 def run(data_folder, **kwargs):
     pd = kwargs.get('pandas')
-    ConsumerID = kwargs.get('extra_args').get('user_id')
+    DataSubjectID = kwargs.get('extra_args').get('user_id')
     MenuID = kwargs.get('extra_args').get('menu_id')
     lon = kwargs.get('extra_args').get('lon')
     lat = kwargs.get('extra_args').get('lat')
@@ -13,7 +13,7 @@ def run(data_folder, **kwargs):
     # saving of user based on previous research if user already exists
     libretaxi_users = pd.read_csv(data_folder + "users/data.csv")
     # check for userID duplicates
-    if not libretaxi_users[libretaxi_users.ConsumerID == ConsumerID]:
+    if not libretaxi_users[libretaxi_users.DataSubjectID == DataSubjectID]:
         # get new id
         last_el = str(int(str(libretaxi_users.iloc[-1:].PostID)) + 1)
 
