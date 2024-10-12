@@ -1,5 +1,4 @@
 DataSubjectID
-ConsumerID
 
 ConsentProcessing
 GuardianConsentProcessing

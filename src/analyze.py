@@ -76,7 +76,6 @@ program_map = {
 
     25: "./examples/program/libretaxi/libretaxi_example.py",
     26: "./examples/program/libretaxi/repository/libretaxi_saveUser.py",
-    # 27: "./examples/program/libretaxi/libretaxi_ModifyUser.py",
     28: "./examples/program/libretaxi/libretaxi_callback.py",
     # 29: "./examples/program/libretaxi/libretaxi_validation.py",
     30: "./examples/program/libretaxi/repository/libretaxi_savePost.py",
@@ -85,7 +84,7 @@ program_map = {
     33: "./examples/program/libretaxi/menu/libretaxi_ask_location_menu_handler.py",
     34: "./examples/program/libretaxi/menu/libretaxi_feed_menu_handler.py",
     35: "./examples/program/libretaxi/menu/libretaxi_init_menu_handler.py",
-    36: "./examples/program/libretaxi/menu/libretaxi_menu.py",
+    36: "./examples/program/libretaxi/menu/libretaxi_handle_message.py",
     37: "./examples/program/libretaxi/menu/libretaxi_post_menu_handler.py",
     38: "./examples/program/libretaxi/repository/libretaxi_findPost.py",
     39: "./examples/program/libretaxi/repository/libretaxi_findUser.py",
@@ -278,7 +277,7 @@ lib_map = {
 }
 
 locales = {
-    'english': english,
+    'english': en,
     'spanish': es,
     'portugese': pt_pt,
     'portugese_brasil': pt_br,
