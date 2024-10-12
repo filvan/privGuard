@@ -1,6 +1,6 @@
-from src.examples.program.Libretaxi.menu import libretaxi_init_menu, libretaxi_ask_location, libretaxi_feed_menu, \
+from src.examples.program.libretaxi.menu import libretaxi_init_menu, libretaxi_ask_location, libretaxi_feed_menu, \
     libretaxi_post_menu
-from src.examples.program.Libretaxi.repository import libretaxi_findUser, libretaxi_saveUser
+from src.examples.program.libretaxi.repository import libretaxi_findUser, libretaxi_saveUser
 
 
 def oneTimeMessages(user, locales):

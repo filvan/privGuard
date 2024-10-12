@@ -1,5 +1,5 @@
-from src.examples.program.Libretaxi.repository import libretaxi_saveUser
-from src.examples.program.Libretaxi.util.util import EscapeMarkdown
+from src.examples.program.libretaxi.repository import libretaxi_saveUser
+from src.examples.program.libretaxi.util.util import EscapeMarkdown
 
 
 def postToPublicChannel(user):

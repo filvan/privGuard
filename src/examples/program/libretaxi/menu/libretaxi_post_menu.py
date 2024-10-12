@@ -1,8 +1,8 @@
 #post_menu functions based on input user informations
-from src.examples.program.Libretaxi.repository import libretaxi_findUserAround, libretaxi_saveUser,libretaxi_savePost, \
+from src.examples.program.libretaxi.repository import libretaxi_findUserAround, libretaxi_saveUser,libretaxi_savePost, \
     libretaxi_recentPosts
-from src.examples.program.Libretaxi.util.util import EscapeMarkdown
-from src.examples.program.Libretaxi import libretaxi_validation
+from src.examples.program.libretaxi.util.util import EscapeMarkdown
+from src.examples.program.libretaxi import libretaxi_validation
 
 def postToAdminChannel(text, user):
     #configure channel to send message I translated and set the message

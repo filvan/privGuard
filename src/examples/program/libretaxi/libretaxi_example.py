@@ -1,4 +1,4 @@
-from src.examples.program.Libretaxi.menu import libretaxi_menu
+from src.examples.program.libretaxi.menu import libretaxi_menu
 
 
 def run(data_folder, **kwargs):

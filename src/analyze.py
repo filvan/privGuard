@@ -29,7 +29,7 @@ from src.stub_libraries.stub_statsmodels.tsa.arima import model as stub_arima
 from src.stub_libraries.stub_sklearn import cross_validation as stub_cross_validation
 from src.stub_libraries.stub_sklearn import metrics as stub_metrics
 from src.stub_libraries.stub_sklearn import model_selection as stub_model_selection
-from examples.program.Libretaxi.locales import english, es, pt_br, pt_pt, ru
+from examples.program.libretaxi.locales import english, es, pt_br, pt_pt, ru
 # from shutil import copyfile
 # from src.parser.attribute import Satisfied
 # from src.parser.policy_tree import Policy
@@ -74,22 +74,22 @@ program_map = {
 
     # libretaxi
 
-    25: "./examples/program/Libretaxi/libretaxi_example.py",
-    26: "./examples/program/Libretaxi/repository/libretaxi_saveUser.py",
-    # 27: "./examples/program/Libretaxi/libretaxi_ModifyUser.py",
-    28: "./examples/program/Libretaxi/libretaxi_callback.py",
-    # 29: "./examples/program/Libretaxi/libretaxi_validation.py",
-    30: "./examples/program/Libretaxi/repository/libretaxi_savePost.py",
-    31: "./examples/program/Libretaxi/repository/libretaxi_findUserAround.py",
-    32: "./examples/program/Libretaxi/repository/libretaxi_recentPosts.py",
-    33: "./examples/program/Libretaxi/menu/libretaxi_ask_location.py",
-    34: "./examples/program/Libretaxi/menu/libretaxi_feed_menu.py",
-    35: "./examples/program/Libretaxi/menu/libretaxi_init_menu.py",
-    36: "./examples/program/Libretaxi/menu/libretaxi_menu.py",
-    37: "./examples/program/Libretaxi/menu/libretaxi_post_menu.py",
-    38: "./examples/program/Libretaxi/repository/libretaxi_findPost.py",
-    39: "./examples/program/Libretaxi/repository/libretaxi_findUser.py",
-    40: "./examples/program/Libretaxi/libretaxi_locale.py",
+    25: "./examples/program/libretaxi/libretaxi_example.py",
+    26: "./examples/program/libretaxi/repository/libretaxi_saveUser.py",
+    # 27: "./examples/program/libretaxi/libretaxi_ModifyUser.py",
+    28: "./examples/program/libretaxi/libretaxi_callback.py",
+    # 29: "./examples/program/libretaxi/libretaxi_validation.py",
+    30: "./examples/program/libretaxi/repository/libretaxi_savePost.py",
+    31: "./examples/program/libretaxi/repository/libretaxi_findUserAround.py",
+    32: "./examples/program/libretaxi/repository/libretaxi_recentPosts.py",
+    33: "./examples/program/libretaxi/menu/libretaxi_ask_location.py",
+    34: "./examples/program/libretaxi/menu/libretaxi_feed_menu.py",
+    35: "./examples/program/libretaxi/menu/libretaxi_init_menu.py",
+    36: "./examples/program/libretaxi/menu/libretaxi_menu.py",
+    37: "./examples/program/libretaxi/menu/libretaxi_post_menu.py",
+    38: "./examples/program/libretaxi/repository/libretaxi_findPost.py",
+    39: "./examples/program/libretaxi/repository/libretaxi_findUser.py",
+    40: "./examples/program/libretaxi/libretaxi_locale.py",
 
     # selfmailbot
 
@@ -157,22 +157,22 @@ data_map = {
 
     24: "./examples/data/cpra/",
 
-    25: "./examples/data/libretaxi_cpra/",
-    26: "./examples/data/libretaxi_cpra/",
-    # 27: "./examples/data/libretaxi_cpra/",
-    28: "./examples/data/libretaxi_cpra/",
-    # 29: "./examples/data/libretaxi_cpra/",
-    30: "./examples/data/libretaxi_cpra/",
-    31: "./examples/data/libretaxi_cpra/",
-    32: "./examples/data/libretaxi_cpra/",
-    33: "./examples/data/libretaxi_cpra/",
-    34: "./examples/data/libretaxi_cpra/",
-    35: "./examples/data/libretaxi_cpra/",
-    36: "./examples/data/libretaxi_cpra/",
-    37: "./examples/data/libretaxi_cpra/",
-    38: "./examples/data/libretaxi_cpra/",
-    39: "./examples/data/libretaxi_cpra/",
-    40: "./examples/data/libretaxi_cpra/",
+    25: "./examples/data/libretaxi/",
+    26: "./examples/data/libretaxi/",
+    # 27: "./examples/data/libretaxi/",
+    28: "./examples/data/libretaxi/",
+    # 29: "./examples/data/libretaxi/",
+    30: "./examples/data/libretaxi/",
+    31: "./examples/data/libretaxi/",
+    32: "./examples/data/libretaxi/",
+    33: "./examples/data/libretaxi/",
+    34: "./examples/data/libretaxi/",
+    35: "./examples/data/libretaxi/",
+    36: "./examples/data/libretaxi/",
+    37: "./examples/data/libretaxi/",
+    38: "./examples/data/libretaxi/",
+    39: "./examples/data/libretaxi/",
+    40: "./examples/data/libretaxi/",
 
     41: "./examples/data/bank_customer_churn/",
     42: "./examples/data/bank_customer_churn/",

@@ -1,7 +1,7 @@
 #handle of callback.go
 #we marshal the data for identifying how to act on post
 
-from src.examples.program.Libretaxi.repository import libretaxi_findPost, libretaxi_findUser,libretaxi_saveUser, libretaxi_savePost
+from src.examples.program.libretaxi.repository import libretaxi_findPost, libretaxi_findUser,libretaxi_saveUser, libretaxi_savePost
 
 def run(data_folder, **kwargs):
 
