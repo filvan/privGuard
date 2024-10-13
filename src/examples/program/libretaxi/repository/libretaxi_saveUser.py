@@ -15,10 +15,19 @@ def run(data_folder, **kwargs):
     # check for userID duplicates
     if not libretaxi_users[libretaxi_users.DataSubjectID == DataSubjectID]:
         # get new id
-        last_el = str(int(str(libretaxi_users.iloc[-1:].PostID)) + 1)
+        last_el = str(int(str(libretaxi_users.iloc[-1:].DataSubjectID)) + 1)
 
     # add to database the new user  with received infos
 
     return libretaxi_users.drop(
-        ['ConsentUse', 'ConsentShare', 'ConsentSell', 'ConsentRetetention', 'ConsentCollection', 'ConsentRetention',
-         'GuardianConsent', 'RequestDeletion', 'RequestDisclosure', 'RequestInaccurate'], axis=1)
+        ['ConsentProcessing', 'GuardianConsentProcessing', 'Age', 'DataSubjectCanLiftProhibition',
+         'ConsentProcessingIdentifiable', 'ManifestlyMadePublicByDataSubject', 'RequireRectification',
+         'NoLongerNecessary', 'NecessaryForRightOfFreedomOfExpression', 'NecessaryForPublicInterestOrLegalObligation',
+         'NecessaryForLegalClaim', 'Objection&NoOverridingLegitimateGrounds', 'ObjectionToProcessingForDirectMarketing',
+         'UnlawfullyProcessed', 'ToBeErasedForComplianceWithLegalObligation',
+         'InRelationToOfferOfInformationSocietyServices', 'RequestPortability', 'ObjectionToSpecificKindOfProcessing',
+         'CompellingLegitimateGrounds', 'ConsentDirectMarketing', 'ConsentTransfer', 'InfoFromRegister', 'ConsentData',
+         'SpecialPersonalData', 'CriminalData', 'InfoAboutController&DPO&Processing&Recipients',
+         'StoragePeriod&DataSubjectRightsAndObligations', 'StoragePeriod&DataSubjectRights&Source',
+         'InfoAboutProcessing&Recipients&StoragePeriod&DataSubjectRights&Source', 'ConsentDirectMarketingData',
+         'PersonalDataUnderAppropriateSafeguards&Conditions', 'Date', 'MenuID'], axis=1)
