@@ -1,4 +1,4 @@
-ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude, Text
+ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude
   	AND ROLE Controller
 	AND PURPOSE X
 	AND (PURPOSE PublicInterest OR PURPOSE ScientificResearch
@@ -7,41 +7,41 @@ ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude, 
 	AND ARTICLE 5(1)(b)
 	AND REFERENCES 5(1)(b) -> 89(1)
 
-ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude, Text
+ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude
 	AND ROLE Controller
 	AND (PURPOSE Erasure OR PURPOSE Rectification)
 	AND ARTICLE 5(1)(d)
 
-ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude, Text
+ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude
 	AND ROLE AuthorisedPeople
     AND ARTICLE 5(1)(f)
 
-ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude, Text
+ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude
 	AND ROLE Controller
 	AND FILTER ConsentProcessing == 'Y'
 	AND ARTICLE 6(1)(a)
 
-ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude, Text
+ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude
 	AND ROLE Controller
 	AND PURPOSE X
 	AND ARTICLE 6(1)(b)
 
-ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude, Text
+ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude
 	AND ROLE Controller
 	AND PURPOSE LegalObligation
     AND ARTICLE 6(1)(c)
 
-ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude, Text
+ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude
 	AND PURPOSE VitalInterests
 	AND ARTICLE 6(1)(d)
 
-ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude, Text
+ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude
 	AND ROLE Controller
 	AND (PURPOSE PublicInterestTask OR
 		PURPOSE OfficialAuthorityExercise)
 	AND ARTICLE 6(1)(e)
 
-ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude, Text
+ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude
 	AND (((ROLE Controller OR ROLE ThirdParty)
 	        AND PURPOSE LegitimateInterests)
         OR (ROLE PublicAuthority
@@ -54,7 +54,7 @@ ALLOW SCHEMA ConsentData
 	AND PURPOSE ConsentWithdrawal
     AND ARTICLE 7(3)
 
-ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude, Text
+ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude
 	AND ROLE Controller
 	AND ((FILTER GuardianConsentProcessing == 'Y'
 	        AND FILTER Age < 13)
@@ -140,14 +140,14 @@ ALLOW SCHEMA InfoAboutControllerAndDPOAndProcessingAndRecipients
 
 
 ALLOW SCHEMA InfoAboutProcessingAndRecipientsAndStoragePeriodAndDataSubjectRightsAndSource
-	AND SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude, Text
+	AND SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude
 	AND ROLE DataSubject
 	AND FILTER DataSubjectID == 'n_data_subject'
 	AND ARTICLE 15(1)(a)-15(1)(g), 15(2), 15(3)
 	AND REFERENCES 15(2) -> 46
 
 
-ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude, Text
+ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude
 	AND ROLE Controller
 	AND FILTER RequireRectification == 'Y'
 	AND FILTER DataSubjectID == 'n_data_subject'
@@ -155,7 +155,7 @@ ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude, 
 	AND ARTICLE 16
 
 
-ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude, Text
+ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude
 	AND ROLE Controller
 	AND (FILTER NoLongerNecessary == 'Y'
 		AND FILTER NecessaryForRightOfFreedomOfExpression == 'N'
@@ -166,7 +166,7 @@ ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude, 
 	AND ARTICLE 17(1)(a), 17(3)
 	AND REFERENCES 17(3)(c) -> 9(2)(h), 17(3)(c) -> 9(2)(i), 17(3)(c) -> 9(3), 17(3)(d) -> 89(1)
 
-ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude, Text
+ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude
 	AND ROLE Controller
 	AND (FILTER ConsentProcessing == 'N'
 		AND FILTER NecessaryForRightOfFreedomOfExpression == 'N'
@@ -177,7 +177,7 @@ ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude, 
 	AND ARTICLE 17(1)(b), 17(3)
 	AND REFERENCES 17(1)(b) -> 6(1)(a), 17(1)(b) -> 9(2)(a), 17(3)(c) -> 9(2)(h), 17(3)(c) -> 9(2)(i), 17(3)(c) -> 9(3), 17(3)(d) -> 89(1)
 
-ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude, Text
+ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude
 	AND ROLE Controller
 	AND (FILTER ObjectionAndNoOverridingLegitimateGrounds == 'Y'
 		OR FILTER ObjectionToProcessingForDirectMarketing == 'Y')
@@ -189,7 +189,7 @@ ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude, 
 	AND ARTICLE 17(1)(c), 17(3)
 	AND REFERENCES 17(1)(c) -> 21(1) -> 6(1)(e), 17(1)(c) -> 21(1) -> 6(1)(f), 17(1)(c) -> 21(2), 17(3)(c) -> 9(2)(h), 17(3)(c) -> 9(2)(i), 17(3)(c) -> 9(3), 17(3)(d) -> 89(1)
 
-ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude, Text
+ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude
 	AND ROLE Controller
 	AND (FILTER UnlawfullyProcessed == 'Y'
 		AND FILTER NecessaryForRightOfFreedomOfExpression == 'N'
@@ -200,7 +200,7 @@ ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude, 
 	AND ARTICLE 17(1)(d), 17(3)
 	AND REFERENCES 17(3)(c) -> 9(2)(h), 17(3)(c) -> 9(2)(i), 17(3)(c) -> 9(3), 17(3)(d) -> 89(1)
 
-ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude, Text
+ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude
 	AND ROLE Controller
 	AND (FILTER ToBeErasedForComplianceWithLegalObligation == 'Y'
 		AND FILTER NecessaryForRightOfFreedomOfExpression == 'N'
@@ -211,7 +211,7 @@ ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude, 
 	AND ARTICLE 17(1)(e), 17(3)
 	AND REFERENCES 17(3)(c) -> 9(2)(h), 17(3)(c) -> 9(2)(i), 17(3)(c) -> 9(3), 17(3)(d) -> 89(1)
 
-ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude, Text
+ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude
 	AND ROLE Controller
 	AND (FILTER InRelationToOfferOfInformationSocietyServices == 'Y'
 		AND FILTER NecessaryForRightOfFreedomOfExpression == 'N'
@@ -223,7 +223,7 @@ ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude, 
 	AND REFERENCES 17(1)(f) -> 8(1) -> 6(1), 17(3)(c) -> 9(2)(h), 17(3)(c) -> 9(2)(i), 17(3)(c) -> 9(3), 17(3)(d) -> 89(1)
 
 
-ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude, Text
+ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude
 	AND ROLE DataSubject
 	AND FILTER ConsentProcessing == 'Y'
 	AND FILTER DataSubjectID == 'n_data_subject'
@@ -231,7 +231,7 @@ ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude, 
 	AND ARTICLE 20(1)(a)
 	AND REFERENCES 20(1)(a) -> 6(1)(a), 20(1)(a) -> 6(1)(b), 20(1)(a) -> 9(2)(a)
 
-ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude, Text
+ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude
 	AND ROLE Controller
 	AND FILTER RequestPortability == 'Y'
 	AND FILTER ConsentProcessing == 'Y'
@@ -240,14 +240,14 @@ ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude, 
 	AND ARTICLE 20(2)
 
 
-ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude, Text
+ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude
 	AND ROLE Controller
 	AND FILTER ObjectionToSpecificKindOfProcessing == 'Y'
 	AND (FILTER CompellingLegitimateGrounds == 'Y' OR PURPOSE LegalClaims)
 	AND ARTICLE 21(1)
 	AND REFERENCES 21(1) -> 6(1)(e), 21(1) -> 6(1)(f)
 
-ALLOW (SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude, Text
+ALLOW (SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude
 	    AND ROLE Controller
 	    AND FILTER ConsentDirectMarketing == 'Y'
 	    AND PURPOSE DirectMarketing)
@@ -257,25 +257,25 @@ ALLOW (SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude,
 	AND ARTICLE 21(2), 21(3)
 
 
-ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude, Text
+ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude
 	AND ROLE Controller
 	AND (PRIVACY Anonymization OR PRIVACY Aggregation
 		OR PRIVACY K-Anonymity 100 OR PRIVACY DP(1.0, 1e-5))
 	AND ARTICLE 25(1)
 
-ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude, Text
+ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude
 	AND ROLE Controller
 	AND PURPOSE DataMinimisation
 	AND ARTICLE 25(2)
 
 
-ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude, Text
+ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude
 	AND ROLE PersonUnderAuthorityOfControllerOrProcessor
 	AND (PURPOSE ProcessingOnInstructionsFromController OR PURPOSE LawFulfillment)
 	AND ARTICLE 32(4)
 
 
-ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude, Text
+ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude
 	AND ROLE DataProtectionOfficer
 	AND PURPOSE MonitorProtection
 	AND ARTICLE 39(1)(b)
@@ -288,7 +288,7 @@ ALLOW SCHEMA PersonalDataUnderAppropriateSafeguardsAndConditions
 	AND REFERENCES 46(1) -> 45(3) -> 93(2)
 
 
-ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude, Text
+ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude
 	AND (ROLE Controller OR ROLE Processor)
 	AND PURPOSE TransferToThirdCountryOrInternationalOrganisation
 	AND (FILTER ConsentTransfer == 'Y' OR PURPOSE BusinessPurpose
@@ -299,14 +299,14 @@ ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude, 
 	AND ARTICLE 49(1)
 	AND REFERENCES 49(1) -> 13, 49(1) -> 14, 49(1) -> 45, 49(1) -> 46
 
-ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude, Text
+ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude
 	AND ROLE PublicAuthority
 	AND PURPOSE TransferToThirdCountryOrInternationalOrganisation
 	AND PURPOSE PublicAuthorityTasks
 	AND ARTICLE 49(3)
 
 
-ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude, Text
+ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude
 	AND ROLE SupervisoryAuthority
 	AND PURPOSE SupervisionTasks
 	AND ARTICLE 58(2)(e)

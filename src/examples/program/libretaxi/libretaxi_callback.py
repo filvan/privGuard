@@ -1,5 +1,5 @@
-#handle of callback.go
-#we marshal the data for identifying how to act on post
+# handle of callback.go
+# we marshal the data for identifying how to act on post
 
 from src.examples.program.libretaxi.repository import libretaxi_findPost, libretaxi_findUser, libretaxi_saveUser, \
     libretaxi_savePost

@@ -13,7 +13,7 @@ def isStateChanged(data_folder, **kwargs):
 
 
 def oneTimeMessages(user, locales):
-    msg = user.ConsumerID + locales.main_welcome_link
+    msg = user.DataSubjectID + locales.main_welcome_link
     return user
 
 
