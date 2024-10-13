@@ -17,4 +17,4 @@ def run(data_folder, **kwargs):
          'SpecialPersonalData', 'CriminalData', 'InfoAboutController&DPO&Processing&Recipients',
          'StoragePeriod&DataSubjectRightsAndObligations', 'StoragePeriod&DataSubjectRights&Source',
          'InfoAboutProcessing&Recipients&StoragePeriod&DataSubjectRights&Source', 'ConsentDirectMarketingData',
-         'PersonalDataUnderAppropriateSafeguards&Conditions', 'Date', 'MenuID'], axis=1)
+         'PersonalDataUnderAppropriateSafeguards&Conditions', 'Date'], axis=1)
