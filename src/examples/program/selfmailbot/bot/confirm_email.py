@@ -15,6 +15,4 @@ def run(data_folder, **kwargs):
     else:
         specific_user.IsConfirmed = 'Y'
         render_messages("email_is_confirmed")
-    return specific_user.drop(
-        ['ConsentUse', 'ConsentShare', 'ConsentShare', 'ConsentSell', 'ConsentCollection', 'GuardianConsent',
-         'RequestDeletion', 'RequestDisclosure', 'RequestInaccurate', 'LimitUse', 'Age'], axis=1)
+    return specific_user

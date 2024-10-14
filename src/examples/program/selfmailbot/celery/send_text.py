@@ -18,6 +18,4 @@ def run(data_folder, **kwargs):
     kwargs.__setitem__('extra_args', extra_args)
     send_mail.run(data_folder, **kwargs)
 
-    return specific_user.drop(
-        ['ConsentUse', 'ConsentShare', 'ConsentShare', 'ConsentSell', 'ConsentCollection', 'GuardianConsent',
-         'RequestDeletion', 'RequestDisclosure', 'RequestInaccurate', 'LimitUse', 'Age'], axis=1)
+    return specific_user
