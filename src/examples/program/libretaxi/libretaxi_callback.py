@@ -22,19 +22,4 @@ def run(data_folder, **kwargs):
         kwargs.__setitem__('shadow_banned', user_infos.ShadowBanned)
         libretaxi_saveUser.run(data_folder, **kwargs)
 
-        return libretaxi_users.iloc[-1:0].drop(
-            ['ConsentProcessing', 'GuardianConsentProcessing', 'Age', 'DataSubjectCanLiftProhibition',
-             'ConsentProcessingIdentifiable', 'ManifestlyMadePublicByDataSubject', 'RequireRectification',
-             'NoLongerNecessary', 'NecessaryForRightOfFreedomOfExpression',
-             'NecessaryForPublicInterestOrLegalObligation',
-             'NecessaryForLegalClaim', 'Objection&NoOverridingLegitimateGrounds',
-             'ObjectionToProcessingForDirectMarketing',
-             'UnlawfullyProcessed', 'ToBeErasedForComplianceWithLegalObligation',
-             'InRelationToOfferOfInformationSocietyServices', 'RequestPortability',
-             'ObjectionToSpecificKindOfProcessing',
-             'CompellingLegitimateGrounds', 'ConsentDirectMarketing', 'ConsentTransfer', 'InfoFromRegister',
-             'ConsentData',
-             'SpecialPersonalData', 'CriminalData', 'InfoAboutController&DPO&Processing&Recipients',
-             'StoragePeriod&DataSubjectRightsAndObligations', 'StoragePeriod&DataSubjectRights&Source',
-             'InfoAboutProcessing&Recipients&StoragePeriod&DataSubjectRights&Source', 'ConsentDirectMarketingData',
-             'PersonalDataUnderAppropriateSafeguards&Conditions', 'Date', 'MenuID'], axis=1)
+        return libretaxi_users.iloc[-1:0]
