@@ -291,7 +291,7 @@ def parse():
     parser.add_argument('--post_report', help='Post action', type=str, default='REPORT_POST')
     parser.add_argument('--lat', help="Latitude for user", type=str, default="")
     parser.add_argument('--lon', help="Longitude for user", type=str, default="")
-    parser.add_argument('--user_id', help='User to find', type=str, default='n_consumer')
+    parser.add_argument('--user_id', help='User to find', type=str, default='n_data_subject')
     parser.add_argument('--consent_use', help='Consent use data', type=str, default='N')
     parser.add_argument('--consent_share', help='Consent share data', type=str, default='N')
     parser.add_argument('--consent_sell', help='Consent sell data', type=str, default='N')
