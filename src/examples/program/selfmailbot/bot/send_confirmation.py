@@ -13,7 +13,7 @@ def run(data_folder, **kwargs):
     else:
         render_messages("message_is_sent")
         extra_args = kwargs.get('extra_args')
-        extra_args.__setitem__('userid', selfmailbot_users.ConsumerID)
+        extra_args.__setitem__('userid', selfmailbot_users.DataSubjectID)
 
         kwargs.__setitem__('extra_args', extra_args)
         send_confirmation_mail.run(data_folder, **kwargs)

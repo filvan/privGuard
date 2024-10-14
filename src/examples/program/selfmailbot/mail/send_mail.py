@@ -1,5 +1,5 @@
 def run(data_folder, **kwargs):
-    to = kwargs.get('extra_args').get('to')
+    to = kwargs.get('extra_args').get('email')
     subject = kwargs.get('extra_args').get('subject')
     text = kwargs.get('extra_args').get('text')
     attachment = kwargs.get('extra_args').get('attachment')

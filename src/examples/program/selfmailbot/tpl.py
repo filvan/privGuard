@@ -2,8 +2,8 @@ import os
 
 
 def get_template(template_name: str):
-    file_dir = os.path.dirname(os.path.realpath('__file__'))
-    file_dir = file_dir[:file_dir.rfind("selfmailbot/") + 12]
+    project_dir = os.path.dirname(os.path.realpath('__file__'))
+    file_dir = os.path.join(project_dir, "examples/program/selfmailbot")
     return os.path.join(file_dir, template_name)
 
 
