@@ -20,6 +20,5 @@ def run(data_folder, **kwargs):
     extra_args.__setitem__('attachment_name', attachment_name)
 
     kwargs.__setitem__('extra_args', extra_args)
-    send_mail.run(data_folder, **kwargs)
 
-    return specific_user
+    return send_mail.run(data_folder, **kwargs)

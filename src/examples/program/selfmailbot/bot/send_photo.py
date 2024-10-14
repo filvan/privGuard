@@ -10,7 +10,7 @@ def run(data_folder, **kwargs):
         subject = f"Photo: {get_subject(text)}"
     extra_args = kwargs.get('extra_args')
     extra_args.__setitem__('subject', subject)
-
+    extra_args.__setitem__('text', text)
     kwargs.__setitem__('extra_args', extra_args)
 
     return send_file.run(data_folder, **kwargs)

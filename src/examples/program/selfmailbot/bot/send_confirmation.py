@@ -11,11 +11,10 @@ def run(data_folder, **kwargs):
     if specific_user:
         render_messages("email_is_occupied")
     else:
-        render_messages("message_is_sent")
+        render_messages("confirmation_message_is_sent")
         extra_args = kwargs.get('extra_args')
         extra_args.__setitem__('userid', selfmailbot_users.DataSubjectID)
 
         kwargs.__setitem__('extra_args', extra_args)
-        send_confirmation_mail.run(data_folder, **kwargs)
 
-    return selfmailbot_users
+    return send_confirmation_mail.run(data_folder, **kwargs)

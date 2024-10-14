@@ -9,7 +9,8 @@ def run(data_folder, **kwargs):
     render_messages("message_is_sent")
     extra_args = kwargs.get('extra_args')
     extra_args.__setitem__('subject', subject)
+    extra_args.__setitem__('text', text)
 
     kwargs.__setitem__('extra_args', extra_args)
-
+    render_messages("message_is_sent")
     return send_text.run(data_folder, **kwargs)
