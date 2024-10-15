@@ -64,7 +64,7 @@ ALLOW SCHEMA ConsentData
 
 # Art. 8 GDPR - Conditions applicable to child's consent in relation to information society services
 # 8.1, 8.2
-# 8.1 -> 6.1
+# 8.1 -> 6.1(a)
 ALLOW SCHEMA PersonalData
 	AND ROLE Controller
 	AND FILTER GuardianConsentProcessing == 'Y'
