@@ -1,259 +1,312 @@
-ALLOW SCHEMA PositionID, DeviceID, Latitude, Longitude, Altitude, Address
+ALLOW SCHEMA PersonalData
   	AND ROLE Controller
 	AND PURPOSE X
-ALLOW SCHEMA PositionID, DeviceID, Latitude, Longitude, Altitude, Address
-	AND ROLE Controller
 	AND (PURPOSE PublicInterest OR PURPOSE ScientificResearch
 	    OR PURPOSE HistoricalResearch
 	    OR PURPOSE Statistical)
+	AND ARTICLE 5(1)(b)
+	AND REFERENCES 5(1)(b) -> 89(1)
 
-ALLOW SCHEMA PositionID, DeviceID, Latitude, Longitude, Altitude, Address
+ALLOW SCHEMA PersonalData
 	AND ROLE Controller
 	AND (PURPOSE Erasure OR PURPOSE Rectification)
+	AND ARTICLE 5(1)(d)
 
-ALLOW SCHEMA PositionID, DeviceID, Latitude, Longitude, Altitude, Address
+ALLOW SCHEMA PersonalData
 	AND ROLE AuthorisedPeople
+    AND ARTICLE 5(1)(f)
 
-
-ALLOW SCHEMA PositionID, DeviceID, Latitude, Longitude, Altitude, Address
+ALLOW SCHEMA PersonalData
 	AND ROLE Controller
 	AND FILTER ConsentProcessing == 'Y'
+	AND ARTICLE 6(1)(a)
 
-ALLOW SCHEMA PositionID, DeviceID, Latitude, Longitude, Altitude, Address
+ALLOW SCHEMA PersonalData
 	AND ROLE Controller
 	AND PURPOSE X
+	AND ARTICLE 6(1)(b)
 
-ALLOW SCHEMA PositionID, DeviceID, Latitude, Longitude, Altitude, Address
+ALLOW SCHEMA PersonalData
 	AND ROLE Controller
 	AND PURPOSE LegalObligation
-ALLOW SCHEMA PositionID, DeviceID, Latitude, Longitude, Altitude, Address
-	AND PURPOSE VitalInterests
+    AND ARTICLE 6(1)(c)
 
-ALLOW SCHEMA PositionID, DeviceID, Latitude, Longitude, Altitude, Address
+ALLOW SCHEMA PersonalData
+	AND PURPOSE VitalInterests
+	AND ARTICLE 6(1)(d)
+
+ALLOW SCHEMA PersonalData
 	AND ROLE Controller
 	AND (PURPOSE PublicInterestTask OR
 		PURPOSE OfficialAuthorityExercise)
+	AND ARTICLE 6(1)(e)
 
-ALLOW SCHEMA PositionID, DeviceID, Latitude, Longitude, Altitude, Address
-	AND (ROLE Controller OR ROLE ThirdParty)
-	AND PURPOSE LegitimateInterests
-ALLOW SCHEMA PositionID, DeviceID, Latitude, Longitude, Altitude, Address
-	AND ROLE PublicAuthority
-	AND PURPOSE PublicAuthorityTasks
+ALLOW SCHEMA PersonalData
+	AND (((ROLE Controller OR ROLE ThirdParty)
+	        AND PURPOSE LegitimateInterests)
+        OR (ROLE PublicAuthority
+	        AND PURPOSE PublicAuthorityTasks))
+	AND ARTICLE 6(1)(f)
 
 
 ALLOW SCHEMA ConsentData
 	AND ROLE DataSubject
 	AND PURPOSE ConsentWithdrawal
+    AND ARTICLE 7(3)
 
-
-ALLOW SCHEMA PositionID, DeviceID, Latitude, Longitude, Altitude, Address
+ALLOW SCHEMA PersonalData
 	AND ROLE Controller
-	AND FILTER GuardianConsentProcessing == 'Y'
-	AND FILTER Age < 13
-ALLOW SCHEMA PositionID, DeviceID, Latitude, Longitude, Altitude, Address
-	AND ROLE Controller
-	AND (FILTER ConsentProcessing == 'Y' OR FILTER GuardianConsentProcessing == 'Y')
-	AND (FILTER Age < 16 AND FILTER Age >= 13)
+	AND ((FILTER GuardianConsentProcessing == 'Y'
+	        AND FILTER Age < 13)
+	    OR ((FILTER ConsentProcessing == 'Y' OR FILTER GuardianConsentProcessing == 'Y')
+	        AND (FILTER Age < 16 AND FILTER Age >= 13)))
+	AND ARTICLE 8(1)
+	AND REFERENCES 8(1) -> 6(1)(a)
 
 
 ALLOW SCHEMA SpecialPersonalData
 	AND FILTER DataSubjectCanLiftProhibition == 'Y'
 	AND FILTER ConsentProcessingIdentifiable == 'Y'
+	AND ARTICLE 9(1), 9(2)(a)
 
 ALLOW SCHEMA SpecialPersonalData
 	AND (PURPOSE EmploymentRightsAndObligationsOfControllerOrDataSubject OR
 	    PURPOSE SocialSecurityRightsAndObligationsOfControllerOrDataSubject OR
 	    PURPOSE SocialProtectionRightsAndObligationsOfControllerOrDataSubject)
+	AND ARTICLE 9(1), 9(2)(b)
 
 ALLOW SCHEMA SpecialPersonalData
 	AND PURPOSE VitalInterests
+	AND ARTICLE 9(1), 9(2)(c)
 
 ALLOW SCHEMA SpecialPersonalData
+    AND ROLE NoProfitBody
 	AND PURPOSE LegitimateNoProfitActivitiesWithAppropriateSafeguards
 	AND (PURPOSE PoliticalPurpose OR PURPOSE PhilosophicalPurpose
 		OR PURPOSE ReligiousPurpose OR PURPOSE TradeUnionPurpose)
-	AND ROLE NoProfitBody
+	AND ARTICLE 9(1), 9(2)(d)
 
 ALLOW SCHEMA SpecialPersonalData
 	AND FILTER ManifestlyMadePublicByDataSubject == 'Y'
+	AND ARTICLE 9(1), 9(2)(e)
 
 ALLOW SCHEMA SpecialPersonalData
 	AND (ROLE CourtActingInJudicialCapacity OR PURPOSE LegalClaim)
+	AND ARTICLE 9(1), 9(2)(f)
 
 ALLOW SCHEMA SpecialPersonalData
 	AND PURPOSE PublicInterestProportionateToTheAimPursued
+	AND ARTICLE 9(1), 9(2)(g)
 
 ALLOW SCHEMA SpecialPersonalData
 	AND ROLE PersonSubjectToObligationOfSecrecy
 	AND PURPOSE MedicalPurpose
+	AND ARTICLE 9(1), 9(2)(h)
 
 ALLOW SCHEMA SpecialPersonalData
 	AND ROLE PersonSubjectToObligationOfSecrecy
 	AND PURPOSE PublicHealthInterest
+	AND ARTICLE 9(1), 9(2)(i)
 
 ALLOW SCHEMA SpecialPersonalData
 	AND (PURPOSE PublicInterest OR PURPOSE ScientificResearch
 		OR PURPOSE HistoricalResearch OR PURPOSE Statistical)
-	AND (PRIVACY Anonymization OR PRIVACY Aggregation)
+	AND (PRIVACY Anonymization OR PRIVACY Aggregation
+		OR PRIVACY K-Anonymity 100 OR PRIVACY DP(1.0, 1e-5))
+	AND ARTICLE 9(1), 9(2)(j)
+	AND REFERENCES 9(2)(j) -> 89(1)
 
 
 ALLOW SCHEMA CriminalData
 	AND ROLE OfficialAuthority
+	AND ARTICLE 10
+	AND REFERENCES 10 -> 6(1)
 
 
 ALLOW SCHEMA InfoAboutControllerAndDPOAndProcessingAndRecipients
 	AND SCHEMA StoragePeriodAndDataSubjectRightsAndObligations
 	AND ROLE DataSubject
 	AND FILTER DataSubjectID == 'n_data_subject'
+	AND ARTICLE 13(1)(a)-13(1)(e), 13(2)(a)-13(2)(e)
+	AND REFERENCES 13(1)(d) -> 6(1)(f), 13(2)(c) -> 6(1), 13(2)(c) -> 9(2)
 
 
 ALLOW SCHEMA InfoAboutControllerAndDPOAndProcessingAndRecipients
 	AND SCHEMA StoragePeriodAndDataSubjectRightsAndSource
 	AND ROLE DataSubject
 	AND FILTER DataSubjectID == 'n_data_subject'
+	AND ARTICLE 14(1)(a)-14(1)(e), 14(2)(a)-14(2)(f)
+	AND REFERENCES 14(2)(b) -> 6(1)(f), 14(2)(d) -> 6(1)(a), 14(2)(d) -> 9(2)(a)
 
 
 ALLOW SCHEMA InfoAboutProcessingAndRecipientsAndStoragePeriodAndDataSubjectRightsAndSource
-	AND SCHEMA PositionID, DeviceID, Latitude, Longitude, Altitude, Address
+	AND SCHEMA PersonalData
 	AND ROLE DataSubject
 	AND FILTER DataSubjectID == 'n_data_subject'
+	AND ARTICLE 15(1)(a)-15(1)(g), 15(2), 15(3)
+	AND REFERENCES 15(2) -> 46
 
 
-ALLOW ROLE Controller
-	AND SCHEMA PositionID, DeviceID, Latitude, Longitude, Altitude, Address
+ALLOW SCHEMA PersonalData
+	AND ROLE Controller
 	AND FILTER RequireRectification == 'Y'
 	AND FILTER DataSubjectID == 'n_data_subject'
 	AND PURPOSE Rectification
+	AND ARTICLE 16
 
 
-ALLOW ROLE Controller
-	AND SCHEMA PositionID, DeviceID, Latitude, Longitude, Altitude, Address
+ALLOW SCHEMA PersonalData
+	AND ROLE Controller
 	AND (FILTER NoLongerNecessary == 'Y'
 		AND FILTER NecessaryForRightOfFreedomOfExpression == 'N'
 		AND FILTER NecessaryForPublicInterestOrLegalObligation == 'N'
 		AND FILTER NecessaryForLegalClaim == 'N')
 	AND FILTER DataSubjectID == 'n_data_subject'
 	AND PURPOSE Erasure
+	AND ARTICLE 17(1)(a), 17(3)
+	AND REFERENCES 17(3)(c) -> 9(2)(h), 17(3)(c) -> 9(2)(i), 17(3)(c) -> 9(3), 17(3)(d) -> 89(1)
 
-ALLOW ROLE Controller
-	AND SCHEMA PositionID, DeviceID, Latitude, Longitude, Altitude, Address
+ALLOW SCHEMA PersonalData
+	AND ROLE Controller
 	AND (FILTER ConsentProcessing == 'N'
 		AND FILTER NecessaryForRightOfFreedomOfExpression == 'N'
 		AND FILTER NecessaryForPublicInterestOrLegalObligation == 'N'
 		AND FILTER NecessaryForLegalClaim == 'N')
 	AND FILTER DataSubjectID == 'n_data_subject'
 	AND PURPOSE Erasure
+	AND ARTICLE 17(1)(b), 17(3)
+	AND REFERENCES 17(1)(b) -> 6(1)(a), 17(1)(b) -> 9(2)(a), 17(3)(c) -> 9(2)(h), 17(3)(c) -> 9(2)(i), 17(3)(c) -> 9(3), 17(3)(d) -> 89(1)
 
-ALLOW ROLE Controller
-	AND SCHEMA PositionID, DeviceID, Latitude, Longitude, Altitude, Address
+ALLOW SCHEMA PersonalData
+	AND ROLE Controller
 	AND (FILTER ObjectionAndNoOverridingLegitimateGrounds == 'Y'
 		OR FILTER ObjectionToProcessingForDirectMarketing == 'Y')
-		AND FILTER NecessaryForRightOfFreedomOfExpression == 'N'
-		AND FILTER NecessaryForPublicInterestOrLegalObligation == 'N'
-		AND FILTER NecessaryForLegalClaim == 'N'
+	AND FILTER NecessaryForRightOfFreedomOfExpression == 'N'
+	AND FILTER NecessaryForPublicInterestOrLegalObligation == 'N'
+	AND FILTER NecessaryForLegalClaim == 'N'
 	AND FILTER DataSubjectID == 'n_data_subject'
 	AND PURPOSE Erasure
+	AND ARTICLE 17(1)(c), 17(3)
+	AND REFERENCES 17(1)(c) -> 21(1) -> 6(1)(e), 17(1)(c) -> 21(1) -> 6(1)(f), 17(1)(c) -> 21(2), 17(3)(c) -> 9(2)(h), 17(3)(c) -> 9(2)(i), 17(3)(c) -> 9(3), 17(3)(d) -> 89(1)
 
-ALLOW ROLE Controller
-	AND SCHEMA PositionID, DeviceID, Latitude, Longitude, Altitude, Address
+ALLOW SCHEMA PersonalData
+	AND ROLE Controller
 	AND (FILTER UnlawfullyProcessed == 'Y'
 		AND FILTER NecessaryForRightOfFreedomOfExpression == 'N'
 		AND FILTER NecessaryForPublicInterestOrLegalObligation == 'N'
 		AND FILTER NecessaryForLegalClaim == 'N')
 	AND FILTER DataSubjectID == 'n_data_subject'
 	AND PURPOSE Erasure
+	AND ARTICLE 17(1)(d), 17(3)
+	AND REFERENCES 17(3)(c) -> 9(2)(h), 17(3)(c) -> 9(2)(i), 17(3)(c) -> 9(3), 17(3)(d) -> 89(1)
 
-ALLOW ROLE Controller
-	AND SCHEMA PositionID, DeviceID, Latitude, Longitude, Altitude, Address
+ALLOW SCHEMA PersonalData
+	AND ROLE Controller
 	AND (FILTER ToBeErasedForComplianceWithLegalObligation == 'Y'
 		AND FILTER NecessaryForRightOfFreedomOfExpression == 'N'
 		AND FILTER NecessaryForPublicInterestOrLegalObligation == 'N'
 		AND FILTER NecessaryForLegalClaim == 'N')
 	AND FILTER DataSubjectID == 'n_data_subject'
 	AND PURPOSE Erasure
+	AND ARTICLE 17(1)(e), 17(3)
+	AND REFERENCES 17(3)(c) -> 9(2)(h), 17(3)(c) -> 9(2)(i), 17(3)(c) -> 9(3), 17(3)(d) -> 89(1)
 
-ALLOW ROLE Controller
-	AND SCHEMA PositionID, DeviceID, Latitude, Longitude, Altitude, Address
+ALLOW SCHEMA PersonalData
+	AND ROLE Controller
 	AND (FILTER InRelationToOfferOfInformationSocietyServices == 'Y'
 		AND FILTER NecessaryForRightOfFreedomOfExpression == 'N'
 		AND FILTER NecessaryForPublicInterestOrLegalObligation == 'N'
 		AND FILTER NecessaryForLegalClaim == 'N')
 	AND FILTER DataSubjectID == 'n_data_subject'
 	AND PURPOSE Erasure
+	AND ARTICLE 17(1)(f), 17(3)
+	AND REFERENCES 17(1)(f) -> 8(1) -> 6(1), 17(3)(c) -> 9(2)(h), 17(3)(c) -> 9(2)(i), 17(3)(c) -> 9(3), 17(3)(d) -> 89(1)
 
 
-ALLOW ROLE DataSubject
-	AND SCHEMA PositionID, DeviceID, Latitude, Longitude, Altitude, Address
+ALLOW SCHEMA PersonalData
+	AND ROLE DataSubject
 	AND FILTER ConsentProcessing == 'Y'
 	AND FILTER DataSubjectID == 'n_data_subject'
 	AND PURPOSE DataPortability
+	AND ARTICLE 20(1)(a)
+	AND REFERENCES 20(1)(a) -> 6(1)(a), 20(1)(a) -> 6(1)(b), 20(1)(a) -> 9(2)(a)
 
-ALLOW ROLE Controller
-	AND SCHEMA PositionID, DeviceID, Latitude, Longitude, Altitude, Address
+ALLOW SCHEMA PersonalData
+	AND ROLE Controller
 	AND FILTER RequestPortability == 'Y'
 	AND FILTER ConsentProcessing == 'Y'
 	AND FILTER DataSubjectID == 'n_data_subject'
 	AND PURPOSE DataPortability
+	AND ARTICLE 20(2)
 
 
-ALLOW ROLE Controller
-	AND SCHEMA PositionID, DeviceID, Latitude, Longitude, Altitude, Address
+ALLOW SCHEMA PersonalData
+	AND ROLE Controller
 	AND FILTER ObjectionToSpecificKindOfProcessing == 'Y'
 	AND (FILTER CompellingLegitimateGrounds == 'Y' OR PURPOSE LegalClaims)
+	AND ARTICLE 21(1)
+	AND REFERENCES 21(1) -> 6(1)(e), 21(1) -> 6(1)(f)
 
-ALLOW ROLE Controller
-	AND SCHEMA PositionID, DeviceID, Latitude, Longitude, Altitude, Address
-	AND FILTER ConsentDirectMarketing == 'Y'
-	AND PURPOSE DirectMarketing
-ALLOW ROLE DataSubject
-	AND SCHEMA ConsentDirectMarketingData
-	AND PURPOSE ConsentWithdrawal
+ALLOW (SCHEMA PersonalData
+	    AND ROLE Controller
+	    AND FILTER ConsentDirectMarketing == 'Y'
+	    AND PURPOSE DirectMarketing)
+    AND (SCHEMA ConsentDirectMarketingData
+	    AND ROLE DataSubject
+	    AND PURPOSE ConsentWithdrawal)
+	AND ARTICLE 21(2), 21(3)
 
 
-ALLOW ROLE Controller
-	AND SCHEMA PositionID, DeviceID, Latitude, Longitude, Altitude, Address
-	AND (PRIVACY Anonymization OR PRIVACY Aggregation)
+ALLOW SCHEMA PersonalData
+	AND ROLE Controller
+	AND (PRIVACY Anonymization OR PRIVACY Aggregation
+		OR PRIVACY K-Anonymity 100 OR PRIVACY DP(1.0, 1e-5))
+	AND ARTICLE 25(1)
 
-ALLOW ROLE Controller
-	AND SCHEMA PositionID, DeviceID, Latitude, Longitude, Altitude, Address
+ALLOW SCHEMA PersonalData
+	AND ROLE Controller
 	AND PURPOSE DataMinimisation
+	AND ARTICLE 25(2)
 
 
-ALLOW ROLE PersonUnderAuthorityOfControllerOrProcessor
-	AND SCHEMA PositionID, DeviceID, Latitude, Longitude, Altitude, Address
+ALLOW SCHEMA PersonalData
+	AND ROLE PersonUnderAuthorityOfControllerOrProcessor
 	AND (PURPOSE ProcessingOnInstructionsFromController OR PURPOSE LawFulfillment)
+	AND ARTICLE 32(4)
 
 
-ALLOW ROLE DataProtectionOfficer
-	AND SCHEMA PositionID, DeviceID, Latitude, Longitude, Altitude, Address
+ALLOW SCHEMA PersonalData
+	AND ROLE DataProtectionOfficer
 	AND PURPOSE MonitorProtection
+	AND ARTICLE 39(1)(b)
 
 
-ALLOW (ROLE Controller OR ROLE Processor)
-	AND SCHEMA PersonalDataUnderAppropriateSafeguardsAndConditions
+ALLOW SCHEMA PersonalDataUnderAppropriateSafeguardsAndConditions
+	AND (ROLE Controller OR ROLE Processor)
 	AND PURPOSE TransferToThirdCountryOrIntnlOrg
+	AND ARTICLE 44, 46(1)
+	AND REFERENCES 46(1) -> 45(3) -> 93(2)
 
 
-ALLOW (ROLE Controller OR ROLE Processor)
-	AND SCHEMA PositionID, DeviceID, Latitude, Longitude, Altitude, Address
+ALLOW SCHEMA PersonalData
+	AND (ROLE Controller OR ROLE Processor)
 	AND PURPOSE TransferToThirdCountryOrInternationalOrganisation
 	AND (FILTER ConsentTransfer == 'Y' OR PURPOSE BusinessPurpose
 	    OR PURPOSE PublicInterest OR PURPOSE LegalClaim
 	    OR PURPOSE VitalInterests
-	    OR (FILTER InfoFromRegister == 'Y' AND FILTER DataSubjectID == 'n_data_subject'))
+	    OR (FILTER InfoFromRegister == 'Y' AND FILTER DataSubjectID == 'n_data_subject')
+	    OR PURPOSE CompellingLegitimateInterests)
+	AND ARTICLE 49(1)
+	AND REFERENCES 49(1) -> 13, 49(1) -> 14, 49(1) -> 45, 49(1) -> 46
 
-ALLOW (ROLE Controller OR ROLE Processor)
-	AND SCHEMA PositionID, DeviceID, Latitude, Longitude, Altitude, Address
-	AND PURPOSE TransferToThirdCountryOrInternationalOrganisation
-	AND PURPOSE CompellingLegitimateInterests
-
-ALLOW ROLE PublicAuthority
-	AND SCHEMA PositionID, DeviceID, Latitude, Longitude, Altitude, Address
+ALLOW SCHEMA PersonalData
+	AND ROLE PublicAuthority
 	AND PURPOSE TransferToThirdCountryOrInternationalOrganisation
 	AND PURPOSE PublicAuthorityTasks
+	AND ARTICLE 49(3)
 
 
-ALLOW ROLE SupervisoryAuthority
-	AND SCHEMA PositionID, DeviceID, Latitude, Longitude, Altitude, Address
+ALLOW SCHEMA PersonalData
+	AND ROLE SupervisoryAuthority
 	AND PURPOSE SupervisionTasks
+	AND ARTICLE 58(2)(e)
