@@ -5,10 +5,11 @@ from .extendedModel import ExtendedModel
 from .disableable import Disableable
 from .userRestriction import UserRestrictions
 
+
 class User(ExtendedModel, UserRestrictions, Disableable):
 
     def __init__(self):
-
+        super().__init__()
         self._name = None
         self._login = None
         self._email = None
@@ -33,14 +34,11 @@ class User(ExtendedModel, UserRestrictions, Disableable):
         self._hashedPassword = None
         self._salt = None
 
-
-
     def getName(self):
         return self._name
 
     def setName(self, name):
         self._name = name
-
 
     def getLogin(self):
         return self._login
@@ -48,20 +46,17 @@ class User(ExtendedModel, UserRestrictions, Disableable):
     def setLogin(self, login):
         self._login = login
 
-
     def getEmail(self):
         return self._email
 
     def setEmail(self, email):
         self._email = email.trim()
 
-
     def getPhone(self):
         return self._phone
 
     def setPhone(self, phone):
         self._phone = phone
-
 
     def getReadonly(self):
         return self._readonly
@@ -78,13 +73,11 @@ class User(ExtendedModel, UserRestrictions, Disableable):
     def setAdministrator(self, administrator):
         self._administrator = administrator
 
-
     def getMap(self):
         return self._map
 
     def setMap(self, map):
         self._map = map
-
 
     def getLatitude(self):
         return self._latitude
@@ -92,13 +85,11 @@ class User(ExtendedModel, UserRestrictions, Disableable):
     def setLatitude(self, latitude):
         self._latitude = latitude
 
-
     def getLongitude(self):
         return self._longitude
 
     def setLongitude(self, longitude):
         self._longitude = longitude
-
 
     def getZoom(self):
         return self._zoom
@@ -106,13 +97,11 @@ class User(ExtendedModel, UserRestrictions, Disableable):
     def setZoom(self, zoom):
         self._zoom = zoom
 
-
     def getTwelveHourFormat(self):
         return self._twelveHourFormat
 
     def setTwelveHourFormat(self, twelveHourFormat):
         self._twelveHourFormat = twelveHourFormat
-
 
     def getCoordinateFormat(self):
         return self._coordinateFormat
@@ -120,13 +109,11 @@ class User(ExtendedModel, UserRestrictions, Disableable):
     def setCoordinateFormat(self, coordinateFormat):
         self._coordinateFormat = coordinateFormat
 
-
     def getDisabled(self):
         return self._disabled
 
     def setDisabled(self, disabled):
         self._disabled = disabled
-
 
     def getExpirationTime(self):
         return self._expirationTime
@@ -134,13 +121,11 @@ class User(ExtendedModel, UserRestrictions, Disableable):
     def setExpirationTime(self, expirationTime):
         self._expirationTime = expirationTime
 
-
     def getDeviceLimit(self):
         return self._deviceLimit
 
     def setDeviceLimit(self, deviceLimit):
         self._deviceLimit = deviceLimit
-
 
     def getUserLimit(self):
         return self._userLimit
@@ -148,20 +133,17 @@ class User(ExtendedModel, UserRestrictions, Disableable):
     def setUserLimit(self, userLimit):
         self._userLimit = userLimit
 
-
     def getDeviceReadonly(self):
         return self._deviceReadonly
 
     def setDeviceReadonly(self, deviceReadonly):
         self._deviceReadonly = deviceReadonly
 
-
     def getLimitCommands(self):
         return self._limitCommands
 
     def setLimitCommands(self, limitCommands):
         self._limitCommands = limitCommands
-
 
     def getDisableReports(self):
         return self._disableReports

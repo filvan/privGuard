@@ -1,6 +1,5 @@
 class Pair:
 
-
     def __init__(self, first, second):
 
         self._first = None
@@ -25,5 +24,5 @@ class Pair:
 
         return self._first == pair._first and self._second == pair._second
 
-    #def hashCode(self):
-     #   return Objects.hash(self._first, self._second)
+    # def hashCode(self):
+    #   return Objects.hash(self._first, self._second)

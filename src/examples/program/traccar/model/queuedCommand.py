@@ -1,6 +1,7 @@
 from src.examples.program.traccar.storage.storageName import StorageName
 from .baseCommand import BaseCommand
 
+
 class QueuedCommand(BaseCommand):
 
     @staticmethod
@@ -20,4 +21,3 @@ class QueuedCommand(BaseCommand):
         command.setTextChannel(self.getTextChannel())
         command.setAttributes(dict(self.getAttributes()))
         return command
-

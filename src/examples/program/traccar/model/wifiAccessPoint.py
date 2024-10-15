@@ -1,14 +1,13 @@
 class WifiAccessPoint:
 
     def __init__(self):
-        #instance fields found by Java to Python Converter:
+        # instance fields found by Java to Python Converter:
         self._macAddress = None
         self._signalStrength = 0
         self._channel = 0
 
-
     @staticmethod
-#JAVA TO PYTHON CONVERTER TASK: Python does not allow method overloads:
+    # JAVA TO PYTHON CONVERTER TASK: Python does not allow method overloads:
     def from_(macAddress, signalStrength):
         wifiAccessPoint = WifiAccessPoint()
         wifiAccessPoint.setMacAddress(macAddress)
@@ -16,12 +15,11 @@ class WifiAccessPoint:
         return wifiAccessPoint
 
     @staticmethod
-#JAVA TO PYTHON CONVERTER TASK: Python does not allow method overloads:
+    # JAVA TO PYTHON CONVERTER TASK: Python does not allow method overloads:
     def from_(macAddress, signalStrength, channel):
         wifiAccessPoint = WifiAccessPoint.from_(macAddress, signalStrength)
         wifiAccessPoint.setChannel(channel)
         return wifiAccessPoint
-
 
     def getMacAddress(self):
         return self._macAddress
@@ -29,13 +27,11 @@ class WifiAccessPoint:
     def setMacAddress(self, macAddress):
         self._macAddress = macAddress
 
-
     def getSignalStrength(self):
         return self._signalStrength
 
     def setSignalStrength(self, signalStrength):
         self._signalStrength = signalStrength
-
 
     def getChannel(self):
         return self._channel
@@ -50,5 +46,3 @@ class WifiAccessPoint:
             return False
         that = o
         return self._macAddress == that._macAddress and self._signalStrength == that._signalStrength and self._channel == that._channel
-
-

@@ -7,7 +7,7 @@ from src.examples.program.traccar.config.keys import Keys
 from src.examples.program.traccar.database.mediaManager import MediaManager
 from src.examples.program.traccar.helper.logAction import LogAction
 from src.examples.program.traccar.model.device import Device
-from src.examples.program.traccar.model.deviceAccumulator import DeviceAccumulators
+from src.examples.program.traccar.model.deviceAccumulators import DeviceAccumulators
 from src.examples.program.traccar.model.position import Position
 from src.examples.program.traccar.model.user import User
 from src.examples.program.traccar.session.connectionManager import ConnectionManager

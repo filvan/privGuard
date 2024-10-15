@@ -1,12 +1,13 @@
 from src.examples.program.traccar.model.baseModel import BaseModel
 from collections import OrderedDict
+
+
 class ExtendedModel(BaseModel):
 
     def __init__(self):
 
+        super().__init__()
         self._attributes = OrderedDict()
-
-
 
     def hasAttribute(self, key):
         return key in self._attributes.keys()
@@ -65,7 +66,7 @@ class ExtendedModel(BaseModel):
     def getDouble(self, key):
         if key in self._attributes.keys():
             value = self._attributes[key]
-            if isinstance(value, float) | isinstance(value,int):
+            if isinstance(value, float) | isinstance(value, int):
                 return (self._attributes[key]).doubleValue()
             else:
                 return float(str(value))

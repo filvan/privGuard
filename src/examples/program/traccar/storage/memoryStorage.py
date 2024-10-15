@@ -34,7 +34,7 @@ class MemoryStorage(Storage):
 
             condition = genericCondition
             value = self._retrieveValue(object, condition.getVariable())
-            result = (value).compareTo(condition.getValue())
+            result = value.compareTo(condition.getValue())
             if condition.getOperator() is "<":
                 return result < 0
             elif condition.getOperator() is "<=":
@@ -52,10 +52,10 @@ class MemoryStorage(Storage):
 
             condition = genericCondition
             fromValue = self._retrieveValue(object, condition.getFromVariable())
-            fromResult = (fromValue).compareTo(condition.getFromValue())
+            fromResult = fromValue.compareTo(condition.getFromValue())
             toValue = self._retrieveValue(object, condition.getToVariable())
-            toResult = (toValue).compareTo(condition.getToValue())
-            return fromResult >= 0 and toResult <= 0
+            toResult = toValue.compareTo(condition.getToValue())
+            return fromResult >= 0 >= toResult
 
         elif isinstance(genericCondition, Condition.Binary):
 
@@ -71,7 +71,7 @@ class MemoryStorage(Storage):
 
             condition = genericCondition
             id = int(self._retrieveValue(object, "id"))
-            #JAVA TO PYTHON CONVERTER TASK: Only expression lambdas are converted by Java to Python Converter:
+            # JAVA TO PYTHON CONVERTER TASK: Only expression lambdas are converted by Java to Python Converter:
             #            return getPermissionsSet(condition.getOwnerClass(), condition.getPropertyClass()).stream().anyMatch(pair ->
             #            {
             #                        if (condition.getOwnerId() > 0)

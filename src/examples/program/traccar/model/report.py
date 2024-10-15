@@ -1,21 +1,19 @@
 from src.examples.program.traccar.storage.storageName import StorageName
-from .scheduledModel import ScheduledModel
+from .schedulable import Schedulable
 
-class Report(ScheduledModel):
+
+class Report(Schedulable):
 
     def __init__(self):
-
+        super().__init__()
         self._type = None
         self._description = None
-
-
 
     def getType(self):
         return self._type
 
     def setType(self, type):
         self._type = type
-
 
     def getDescription(self):
         return self._description

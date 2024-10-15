@@ -3,11 +3,11 @@ from src.examples.program.traccar.model.baseModel import BaseModel
 from src.examples.program.traccar.model.calendar import Calendar
 from src.examples.program.traccar.model.command import Command
 from src.examples.program.traccar.model.device import Device
-from src.examples.program.traccar.model.groupModel import GroupedModel
+from src.examples.program.traccar.model.groupedModel import GroupedModel
 from src.examples.program.traccar.model.group import Group
 from src.examples.program.traccar.model.managedUser import ManagedUser
 from src.examples.program.traccar.model.notification import Notification
-from src.examples.program.traccar.model.scheduledModel import ScheduledModel
+from src.examples.program.traccar.model.schedulable import Schedulable
 from src.examples.program.traccar.model.server import Server
 from src.examples.program.traccar.model.user import User
 from src.examples.program.traccar.model.userRestriction import UserRestrictions
@@ -87,7 +87,7 @@ class PermissionsService:
                         before = self._storage.getObject(type(after), Request(Columns.Include("groupId"), Condition.Equals("id", after.getId())))
                     if before is None or before.getGroupId() != after.getGroupId():
                         self.checkPermission(Group.__class__, userId, after.getGroupId())
-            if isinstance(object, ScheduledModel):
+            if isinstance(object, Schedulable):
                 after = (object)
                 if after.getCalendarId() > 0:
                     before = None

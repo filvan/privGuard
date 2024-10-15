@@ -7,7 +7,6 @@ from .message import Message
 
 
 class Position(Message):
-
     KEY_ORIGINAL = "raw"
     KEY_INDEX = "index"
     KEY_HDOP = "hdop"
@@ -32,8 +31,6 @@ class Position(Message):
     KEY_IMAGE = "image"
     KEY_VIDEO = "video"
     KEY_AUDIO = "audio"
-
-
 
     KEY_POWER = "power"
     KEY_BATTERY = "battery"
@@ -85,7 +82,6 @@ class Position(Message):
     KEY_DRIVER_UNIQUE_ID = "driverUniqueId"
     KEY_CARD = "card"
 
-
     PREFIX_TEMP = "temp"
     PREFIX_ADC = "adc"
     PREFIX_IO = "io"
@@ -134,6 +130,7 @@ class Position(Message):
 
     def __init__(self):
 
+        super().__init__()
         self._protocol = None
         self._serverTime = date()
         self._deviceTime = None
@@ -149,10 +146,6 @@ class Position(Message):
         self._accuracy = 0
         self._network = None
         self._geofenceIds = None
-
-
-
-
 
     def __init__(self, protocol):
         self._protocol = protocol
@@ -181,18 +174,12 @@ class Position(Message):
     def setFixTime(self, fixTime):
         self._fixTime = fixTime
 
-
-
     def setTime(self, time):
         self.setDeviceTime(time)
         self.setFixTime(time)
 
-
-
     def getOutdated(self):
         return self._outdated
-
-
 
     def setOutdated(self, outdated):
         self._outdated = outdated
@@ -264,14 +251,8 @@ class Position(Message):
         else:
             self._geofenceIds = None
 
-
-
     def getType(self):
         return super().getType()
 
-
-
     def setType(self, type):
         super().setType(type)
-
-

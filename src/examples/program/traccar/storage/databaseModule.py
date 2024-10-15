@@ -3,7 +3,7 @@ import this
 from src.examples.program.traccar.config.keys import Keys
 
 
-class DatabaseModule():
+class DatabaseModule:
 
     @staticmethod
     def provideDataSource(config):
@@ -14,7 +14,7 @@ class DatabaseModule():
             try:
                 method = type(classLoader).getDeclaredMethod("addURL", str.__class__)
                 method.setAccessible(True)
-                #method.invoke(classLoader, (File(driverFile)).toURI().toURL())
+                # method.invoke(classLoader, (File(driverFile)).toURI().toURL())
             except Exception as e:
                 method = type(classLoader).getDeclaredMethod("appendToClassPathForInstrumentation", str.__class__)
                 method.setAccessible(True)
@@ -24,7 +24,7 @@ class DatabaseModule():
         if driver is not None:
             __class__.forName(driver)
 
-        hikariConfig = ""  #HikariConfig()
+        hikariConfig = ""  # HikariConfig()
         hikariConfig.setDriverClassName(driver)
         hikariConfig.setJdbcUrl(config.getString(Keys.DATABASE_URL))
         hikariConfig.setUsername(config.getString(Keys.DATABASE_USER))
@@ -36,10 +36,10 @@ class DatabaseModule():
         if maxPoolSize != 0:
             hikariConfig.setMaximumPoolSize(maxPoolSize)
 
-        dataSource = ""  #ikariDataSource(hikariConfig)
+        dataSource = ""  # HikariDataSource(hikariConfig)
 
         if config.hasKey(Keys.DATABASE_CHANGELOG):
-            resourceAccessor = ""  #DirectoryResourceAccessor(File("."))
+            resourceAccessor = ""  # DirectoryResourceAccessor(File("."))
 
             database = "DatabaseFactory.getInstance().openDatabase(config.getString(Keys.DATABASE_URL), config.getString(Keys.DATABASE_USER), config.getString(Keys.DATABASE_PASSWORD), config.getString(Keys.DATABASE_DRIVER), None, None, None, resourceAccessor)"
 

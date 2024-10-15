@@ -1,8 +1,7 @@
 class Typed:
 
-
     def __init__(self, type):
-        #instance fields found by Java to Python Converter:
+        # instance fields found by Java to Python Converter:
         self._type = None
 
         self._type = type
@@ -19,5 +18,3 @@ class Typed:
         if o is None or self.__class__ != type(o):
             return False
         return self._type == (o)._type
-
-

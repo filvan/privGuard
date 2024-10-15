@@ -2,20 +2,20 @@ from src.examples.program.traccar.geofence.geofenceGeometry import GeofenceGeome
 from src.examples.program.traccar.geofence.geofencePolyline import GeofencePolyline
 from src.examples.program.traccar.geofence.geofencePolygon import GeofencePolygon
 from src.examples.program.traccar.geofence.geofenceCircle import GeofenceCircle
-from .scheduledModel import ScheduledModel
+from .schedulable import Schedulable
 from src.examples.program.traccar.storage.queryIgnore import QueryIgnore
 from src.examples.program.traccar.storage.storageName import StorageName
 
-class Geofence(ScheduledModel):
+
+class Geofence(Schedulable):
 
     def __init__(self):
 
+        super().__init__()
         self._name = None
         self._description = None
         self._area = None
         self._geometry = None
-
-
 
     def getName(self):
         return self._name
@@ -23,13 +23,11 @@ class Geofence(ScheduledModel):
     def setName(self, name):
         self._name = name
 
-
     def getDescription(self):
         return self._description
 
     def setDescription(self, description):
         self._description = description
-
 
     def getArea(self):
         return self._area
@@ -46,7 +44,6 @@ class Geofence(ScheduledModel):
             raise Exception("Unknown geometry type", 0)
 
         self._area = area
-
 
     def getGeometry(self):
         return self._geometry

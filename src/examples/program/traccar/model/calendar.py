@@ -4,22 +4,21 @@ from numpy import array
 
 from .extendedModel import ExtendedModel
 
+
 class Calendar(ExtendedModel):
 
     def __init__(self):
 
+        super().__init__()
         self._name = None
         self._data = None
         self._calendar = None
-
-
 
     def getName(self):
         return self._name
 
     def setName(self, name):
         self._name = name
-
 
     def getData(self):
         return self._data
@@ -28,7 +27,6 @@ class Calendar(ExtendedModel):
         builder = OrderedDict()
         self._calendar = builder.build(data)
         self._data = data
-
 
     def getCalendar(self):
         return self._calendar
@@ -42,7 +40,8 @@ class Calendar(ExtendedModel):
 
     def findPeriods(self, date):
         calendarDate = date(date)
-        return self._findEvents(date).stream().flatMap(lambda event : event.getConsumedTime(calendarDate, calendarDate).stream()).collect(array())
+        return self._findEvents(date).stream().flatMap(
+            lambda event: event.getConsumedTime(calendarDate, calendarDate).stream()).collect(array())
 
     def checkMoment(self, date):
         return self._findEvents(date)

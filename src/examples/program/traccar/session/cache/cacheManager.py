@@ -10,11 +10,11 @@ from src.examples.program.traccar.model.device import Device
 from src.examples.program.traccar.model.driver import Driver
 from src.examples.program.traccar.model.geofence import Geofence
 from src.examples.program.traccar.model.group import Group
-from src.examples.program.traccar.model.groupModel import GroupedModel
+from src.examples.program.traccar.model.groupedModel import GroupedModel
 from src.examples.program.traccar.model.maintenance import Maintenance
 from src.examples.program.traccar.model.notification import Notification
 from src.examples.program.traccar.model.position import Position
-from src.examples.program.traccar.model.scheduledModel import ScheduledModel
+from src.examples.program.traccar.model.schedulable import Schedulable
 from src.examples.program.traccar.model.server import Server
 from src.examples.program.traccar.model.user import User
 from src.examples.program.traccar.session.cache.cacheKey import CacheKey
@@ -170,7 +170,7 @@ class CacheManager(BroadcastInterface):
         elif isinstance(object, GroupedModel):
             if (before).getGroupId() != (object).getGroupId():
                 invalidate = True
-        elif isinstance(object, ScheduledModel):
+        elif isinstance(object, Schedulable):
             if (before).getCalendarId() != (object).getCalendarId():
                 invalidate = True
         if invalidate:
@@ -234,7 +234,7 @@ class CacheManager(BroadcastInterface):
                 links[clazz] = objects.stream().map().collect([])
                 for object in objects:
                     self._addObject(deviceId, object)
-                if isinstance(object, ScheduledModel):
+                if isinstance(object, Schedulable):
                     scheduled = object
                 if scheduled.getCalendarId() > 0:
                     calendar = self._storage.getObject(Calendar.__class__ , Request(Columns.All(), Condition.Equals("id", scheduled.getCalendarId())))

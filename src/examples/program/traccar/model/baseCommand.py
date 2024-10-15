@@ -1,8 +1,10 @@
 from .message import Message
 
+
 class BaseCommand(Message):
 
     def __init__(self):
+        super().__init__()
         self._textChannel = False
 
     def getTextChannel(self):

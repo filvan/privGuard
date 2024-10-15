@@ -2,12 +2,12 @@ from src.examples.program.traccar.storage.queryIgnore import QueryIgnore
 from src.examples.program.traccar.storage.storageName import StorageName
 from .baseCommand import BaseCommand
 
+
 class Command(BaseCommand):
 
     def __init__(self):
-
+        super().__init__()
         self._description = None
-
 
     TYPE_CUSTOM = "custom"
     TYPE_IDENTIFICATION = "deviceIdentification"
@@ -74,7 +74,6 @@ class Command(BaseCommand):
 
     def setDeviceId(self, deviceId):
         super().setDeviceId(deviceId)
-
 
     def getDescription(self):
         return self._description

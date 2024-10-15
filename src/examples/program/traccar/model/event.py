@@ -2,17 +2,18 @@ from datetime import date
 
 from src.examples.program.traccar.storage.storageName import StorageName
 from .message import Message
+
+
 class Event(Message):
 
     def _initialize_instance_fields(self):
-
         self._eventTime = None
         self._positionId = 0
         self._geofenceId = 0
         self._maintenanceId = 0
 
-
     def __init__(self, type, position):
+        super().__init__()
         self._initialize_instance_fields()
 
         Message.setType(type)
@@ -29,7 +30,6 @@ class Event(Message):
 
     def __init__(self):
         self._initialize_instance_fields()
-
 
     ALL_EVENTS = "allEvents"
 
@@ -60,13 +60,11 @@ class Event(Message):
     TYPE_DRIVER_CHANGED = "driverChanged"
     TYPE_MEDIA = "media"
 
-
     def getEventTime(self):
         return self._eventTime
 
     def setEventTime(self, eventTime):
         self._eventTime = eventTime
-
 
     def getPositionId(self):
         return self._positionId
@@ -74,17 +72,14 @@ class Event(Message):
     def setPositionId(self, positionId):
         self._positionId = positionId
 
-
     def getGeofenceId(self):
         return self._geofenceId
 
     def setGeofenceId(self, geofenceId):
         self._geofenceId = geofenceId
 
-
     def getMaintenanceId(self):
         return self._maintenanceId
 
     def setMaintenanceId(self, maintenanceId):
         self._maintenanceId = maintenanceId
-

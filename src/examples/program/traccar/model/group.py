@@ -1,13 +1,13 @@
-from .groupModel import GroupedModel
+from .groupedModel import GroupedModel
 from src.examples.program.traccar.storage.storageName import StorageName
+
 
 class Group(GroupedModel):
 
     def __init__(self):
-        #instance fields found by Java to Python Converter:
+        # instance fields found by Java to Python Converter:
+        super().__init__()
         self._name = None
-
-
 
     def getName(self):
         return self._name

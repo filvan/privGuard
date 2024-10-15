@@ -1,8 +1,10 @@
 from .extendedModel import ExtendedModel
 from .userRestriction import UserRestrictions
 
+
 class Server(ExtendedModel, UserRestrictions):
     def __init__(self):
+        super().__init__()
         self._openIdForce = None
         self._openIdEnabled = None
         self._newServer = None
@@ -28,13 +30,11 @@ class Server(ExtendedModel, UserRestrictions):
         self._overlayUrl = None
         self._latitude = None
 
-
     def getRegistration(self):
         return self._registration
 
     def setRegistration(self, registration):
         self._registration = registration
-
 
     def getReadonly(self):
         return self._readonly
@@ -42,13 +42,11 @@ class Server(ExtendedModel, UserRestrictions):
     def setReadonly(self, readonly):
         self._readonly = readonly
 
-
     def getDeviceReadonly(self):
         return self._deviceReadonly
 
     def setDeviceReadonly(self, deviceReadonly):
         self._deviceReadonly = deviceReadonly
-
 
     def getMap(self):
         return self._map
@@ -56,13 +54,11 @@ class Server(ExtendedModel, UserRestrictions):
     def setMap(self, map):
         self._map = map
 
-
     def getBingKey(self):
         return self._bingKey
 
     def setBingKey(self, bingKey):
         self._bingKey = bingKey
-
 
     def getMapUrl(self):
         return self._mapUrl
@@ -142,8 +138,8 @@ class Server(ExtendedModel, UserRestrictions):
     def setAnnouncement(self, announcement):
         self._announcement = announcement
 
-    #def getVersion(self):
-     #   return getClass().getPackage().getImplementationVersion()
+    # def getVersion(self):
+    #   return getClass().getPackage().getImplementationVersion()
 
     def setEmailEnabled(self, emailEnabled):
         self._emailEnabled = emailEnabled
@@ -180,6 +176,3 @@ class Server(ExtendedModel, UserRestrictions):
 
     def setOpenIdForce(self, openIdForce):
         self._openIdForce = openIdForce
-
-
-

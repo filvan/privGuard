@@ -5,7 +5,7 @@ from .query.condition import Condition
 from .queryBuilder import QueryBuilder
 from src.examples.program.traccar.model.device import Device
 from src.examples.program.traccar.model.group import Group
-from src.examples.program.traccar.model.groupModel import GroupedModel
+from src.examples.program.traccar.model.groupedModel import GroupedModel
 from src.examples.program.traccar.model.permission import Permission
 from .storage import Storage
 from .storageException import StorageException
@@ -31,9 +31,9 @@ class DatabaseStorage(Storage):
             raise RuntimeError(e)
 
     def getObjects(self, clazz, request):
-        query = ("SELECT ")
+        query = "SELECT "
         if isinstance(request.getColumns(), Columns.All):
-            query = query + ('*')
+            query = query + '*'
         else:
             query += (request.getColumns().getColumns(clazz, "set"), lambda c: c)
         query += (" FROM " + Permission.getStorageName(clazz))
@@ -49,13 +49,13 @@ class DatabaseStorage(Storage):
 
     def addObject(self, entity, request):
         columns = request.getColumns().getColumns(type(entity), "get")
-        query = ("INSERT INTO ")
+        query = "INSERT INTO "
         query += (self._getStorageName(type(entity)))
-        query += ("(")
+        query += "("
         query += (self._formatColumns(columns, lambda c: c))
-        query += (") VALUES (")
+        query += ") VALUES ("
         query += (self._formatColumns(columns, lambda c: ':' + c))
-        query += (")")
+        query += ")"
         try:
             builder = QueryBuilder.create(self._config, self._dataSource, self._objectMapper, str(query), True)
             builder.setObject(entity, columns)
@@ -65,9 +65,9 @@ class DatabaseStorage(Storage):
 
     def updateObject(self, entity, request):
         columns = request.getColumns().getColumns(type(entity), "get")
-        query = ("UPDATE ")
+        query = "UPDATE "
         query += (self._getStorageName(type(entity)))
-        query += (" SET ")
+        query += " SET "
         query += (self._formatColumns(columns, lambda c: c + " = :" + c))
         query += (self._formatCondition(request.getCondition()))
         try:
@@ -80,7 +80,7 @@ class DatabaseStorage(Storage):
             raise StorageException(e)
 
     def removeObject(self, clazz, request):
-        query = ("DELETE FROM ")
+        query = "DELETE FROM "
         query += (self._getStorageName(clazz))
         query += (self._formatCondition(request.getCondition()))
         try:
@@ -92,7 +92,7 @@ class DatabaseStorage(Storage):
             raise StorageException(e)
 
     def getPermissions(self, ownerClass, ownerId, propertyClass, propertyId):
-        query = ("SELECT * FROM ")
+        query = "SELECT * FROM "
         query += (Permission.getStorageName(ownerClass, propertyClass))
         conditions = array()
         if ownerId > 0:
@@ -110,11 +110,11 @@ class DatabaseStorage(Storage):
             raise StorageException(e)
 
     def addPermission(self, permission):
-        query = ("INSERT INTO ")
+        query = "INSERT INTO "
         query += (permission.getStorageName())
-        query += (" VALUES (")
+        query += " VALUES ("
         query += permission.get().keySet().stream().map(lambda key: ':' + key).join(", ")
-        query += (")")
+        query += ")"
         try:
             builder = QueryBuilder.create(self._config, self._dataSource, self._objectMapper, str(query), True)
             for entry in permission.get().entrySet():
@@ -124,9 +124,9 @@ class DatabaseStorage(Storage):
             raise StorageException(e)
 
     def removePermission(self, permission):
-        query = ("DELETE FROM ")
+        query = "DELETE FROM "
         query += (permission.getStorageName())
-        query += (" WHERE ")
+        query += " WHERE "
         query += (
             permission.get().keySet().stream().map(lambda key: key + " = :" + key).join("AND"))
         try:
@@ -179,68 +179,68 @@ class DatabaseStorage(Storage):
         result = ""
         if genericCondition is not None:
             if appendWhere:
-                result += (" WHERE ")
+                result += " WHERE "
             if isinstance(genericCondition, Condition.Compare):
 
                 condition = genericCondition
                 result += (condition.getColumn())
-                result += (" ")
+                result += " "
                 result += (condition.getOperator())
-                result += (" :")
+                result += " :"
                 result += (condition.getVariable())
 
             elif isinstance(genericCondition, Condition.Between):
 
                 condition = genericCondition
                 result += (condition.getColumn())
-                result += (" BETWEEN :")
+                result += " BETWEEN :"
                 result += (condition.getFromVariable())
-                result += (" AND :")
+                result += " AND :"
                 result += (condition.getToVariable())
 
             elif isinstance(genericCondition, Condition.Binary):
 
                 condition = genericCondition
                 result += (self._formatCondition(condition.getFirst(), False))
-                result += (" ")
+                result += " "
                 result += (condition.getOperator())
-                result += (" ")
+                result += " "
                 result += (self._formatCondition(condition.getSecond(), False))
 
             elif isinstance(genericCondition, Condition.Permission):
 
                 condition = genericCondition
-                result += ("id IN (")
+                result += "id IN ("
                 result += (self._formatPermissionQuery(condition))
-                result += (")")
+                result += ")"
 
             elif isinstance(genericCondition, Condition.LatestPositions):
 
                 condition = genericCondition
-                result += ("id IN (")
-                result += ("SELECT positionId FROM ")
+                result += "id IN ("
+                result += "SELECT positionId FROM "
                 result += (self._getStorageName(Device.__class__))
                 if condition.getDeviceId() > 0:
-                    result += (" WHERE id = :deviceId")
+                    result += " WHERE id = :deviceId"
 
-                result += (")")
+                result += ")"
 
         return str(result)
 
     def _formatOrder(self, order):
         result = ""
         if order is not None:
-            result += (" ORDER BY ")
+            result += " ORDER BY "
             result += (order.getColumn())
             if order.getDescending():
-                result += (" DESC")
+                result += " DESC"
             if order.getLimit() > 0:
                 if self._databaseType is "Microsoft SQL Server":
-                    result += (" OFFSET 0 ROWS FETCH FIRST ")
+                    result += " OFFSET 0 ROWS FETCH FIRST "
                     result += (order.getLimit())
-                    result += (" ROWS ONLY")
+                    result += " ROWS ONLY"
                 else:
-                    result += (" LIMIT ")
+                    result += " LIMIT "
                     result += (order.getLimit())
         return str(result)
 
@@ -257,14 +257,14 @@ class DatabaseStorage(Storage):
             conditionKey = Permission.getKey(condition.getPropertyClass())
 
         storageName = Permission.getStorageName(condition.getOwnerClass(), condition.getPropertyClass())
-        result += ("SELECT ")
-        result += (storageName) + ('.') + (outputKey)
-        result += (" FROM ")
-        result += (storageName)
-        result += (" WHERE ")
-        result += (conditionKey)
-        result += (" = :")
-        result += (conditionKey)
+        result += "SELECT "
+        result += storageName + '.' + outputKey
+        result += " FROM "
+        result += storageName
+        result += " WHERE "
+        result += conditionKey
+        result += " = :"
+        result += conditionKey
 
         if condition.getIncludeGroups():
 
@@ -279,47 +279,47 @@ class DatabaseStorage(Storage):
 
                 groupStorageName = Permission.getStorageName(condition.getOwnerClass(), Group.__class__)
 
-            result += (" UNION ")
-            result += ("SELECT DISTINCT ")
+            result += " UNION "
+            result += "SELECT DISTINCT "
             if not expandDevices:
                 if outputKey == "groupId":
-                    result += ("all_groups.")
+                    result += "all_groups."
                 else:
-                    result += (groupStorageName) + ('.')
-            result += (outputKey)
-            result += (" FROM ")
-            result += (groupStorageName)
+                    result += groupStorageName + '.'
+            result += outputKey
+            result += " FROM "
+            result += groupStorageName
 
-            result += (" INNER JOIN (")
-            result += ("SELECT id as parentId, id as groupId FROM ")
+            result += " INNER JOIN ("
+            result += "SELECT id as parentId, id as groupId FROM "
             result += (self._getStorageName(Group.__class__))
-            result += (" UNION ")
-            result += ("SELECT groupId as parentId, id as groupId FROM ")
+            result += " UNION "
+            result += "SELECT groupId as parentId, id as groupId FROM "
             result += (self._getStorageName(Group.__class__))
-            result += (" WHERE groupId IS NOT NULL")
-            result += (" UNION ")
-            result += ("SELECT g2.groupId as parentId, g1.id as groupId FROM ")
+            result += " WHERE groupId IS NOT NULL"
+            result += " UNION "
+            result += "SELECT g2.groupId as parentId, g1.id as groupId FROM "
             result += (self._getStorageName(Group.__class__))
-            result += (" AS g2")
-            result += (" INNER JOIN ")
+            result += " AS g2"
+            result += " INNER JOIN "
             result += (self._getStorageName(Group.__class__))
-            result += (" AS g1 ON g2.id = g1.groupId")
-            result += (" WHERE g2.groupId IS NOT NULL")
-            result += (") AS all_groups ON ")
-            result += (groupStorageName)
-            result += (".groupId = all_groups.parentId")
+            result += " AS g1 ON g2.id = g1.groupId"
+            result += " WHERE g2.groupId IS NOT NULL"
+            result += ") AS all_groups ON "
+            result += groupStorageName
+            result += ".groupId = all_groups.parentId"
 
             if expandDevices:
-                result += (" INNER JOIN (")
+                result += " INNER JOIN ("
 
-            result += ("SELECT groupId as parentId, id as deviceId FROM ")
+            result += "SELECT groupId as parentId, id as deviceId FROM "
             result += (self._getStorageName(Device.__class__))
-            result += (" WHERE groupId IS NOT NULL")
-            result += (") AS devices ON all_groups.groupId = devices.parentId")
+            result += " WHERE groupId IS NOT NULL"
+            result += ") AS devices ON all_groups.groupId = devices.parentId"
 
-            result += (" WHERE ")
-            result += (conditionKey)
-            result += (" = :")
-            result += (conditionKey)
+            result += " WHERE "
+            result += conditionKey
+            result += " = :"
+            result += conditionKey
 
         return str(result)

@@ -1,4 +1,4 @@
-from src.examples.program.traccar.model.groupModel import GroupedModel
+from src.examples.program.traccar.model.groupedModel import GroupedModel
 from abc import ABC
 from typing import List, Any
 
