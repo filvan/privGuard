@@ -27,13 +27,13 @@ class ExtendedObjectResource(BaseObjectResource):
                 conditions.append(Permission(User.__class__, self.get_user_id(), self.base_class))
             else:
                 self.permissions_service.checkUser(self.get_user_id(), userId)
-                conditions.append((Permission(User.__class__, userId, self.base_class)).do_exclude_groups())
+                conditions.append((Permission(User.__class__, userId, self.base_class)).exclude_groups())
 
         if groupId > 0:
             self.permissions_service.checkPermission(Group.__class__, self.get_user_id(), groupId)
-            conditions.append((Permission(Group.__class__, groupId, self.base_class)).do_exclude_groups())
+            conditions.append((Permission(Group.__class__, groupId, self.base_class)).exclude_groups())
         if deviceId > 0:
             self.permissions_service.checkPermission(Device.__class__, self.get_user_id(), deviceId)
-            conditions.append((Permission(Device.__class__, deviceId, self.base_class)).do_exclude_groups())
+            conditions.append((Permission(Device.__class__, deviceId, self.base_class)).exclude_groups())
 
         return self.storage.getObjects(self.base_class, Request(Columns.All(), Condition.merge(conditions)))

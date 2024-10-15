@@ -1,9 +1,8 @@
 from src.examples.program.traccar.model.groupedModel import GroupedModel
-from abc import ABC
 from typing import List, Any
 
 
-class Condition(ABC):
+class Condition:
     @staticmethod
     def merge(conditions: List['Condition']) -> 'Condition':
         result = None
@@ -101,7 +100,7 @@ class Permission(Condition):
         self.property_id = property_id
         self.exclude_groups = exclude_groups
 
-    def do_exclude_groups(self) -> 'Permission':
+    def exclude_groups(self) -> 'Permission':
         return Permission(self.owner_class, self.owner_id, self.property_class, self.property_id, True)
 
     def get_owner_class(self) -> type:

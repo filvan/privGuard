@@ -6,7 +6,7 @@ class Order:
         self._limit = 0
 
     def __init__(self, column):
-        self(column, False, 0)
+        Order(column, False, 0)
 
     def __init__(self, column, descending, limit):
         self._initialize_instance_fields()
@@ -20,3 +20,6 @@ class Order:
 
     def getDescending(self):
         return self._descending
+
+    def getLimit(self):
+        return self._limit

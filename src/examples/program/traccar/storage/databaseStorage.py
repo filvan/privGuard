@@ -128,7 +128,7 @@ class DatabaseStorage(Storage):
         query += (permission.getStorageName())
         query += " WHERE "
         query += (
-            permission.get().keySet().stream().map(lambda key: key + " = :" + key).join("AND"))
+            permission.get().keySet().stream().map(lambda key: key + " = :" + key).join(" AND "))
         try:
             builder = QueryBuilder.create(self._config, self._dataSource, self._objectMapper, str(query), True)
             for entry in permission.get().entrySet():

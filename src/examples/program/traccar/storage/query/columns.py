@@ -9,35 +9,38 @@ class Columns:
         pass
 
     def getAllColumns(self, clazz, type):
-        columns = array()
+        columns = []
         methods = clazz.getMethods()
         for method in methods:
             parameterCount = 1 if type == "set" else 0
             if method.getName().startsWith(type) and method.getParameterTypes().length == parameterCount and (
-            not method.isAnnotationPresent(QueryIgnore.__class__)) and method.getName() is not "getClass":
+                    not method.isAnnotationPresent(QueryIgnore.__class__)) and method.getName() is not "getClass":
                 columns.append(method.getName().substring(3).lower())
         return columns
 
-    class All(this.Columns):
-        def getColumns(self, clazz, type):
-            return self.getAllColumns(clazz, type)
 
-    class Include(this.Columns):
+class All(Columns):
+    def getColumns(self, clazz, type):
+        return self.getAllColumns(clazz, type)
 
-        def __init__(self, *columns):
-            self._columns = None
 
-            self._columns = array(columns)
+class Include(Columns):
 
-        def getColumns(self, clazz, type):
-            return self._columns
+    def __init__(self, *columns):
+        self._columns = None
 
-    class Exclude(this.Columns):
+        self._columns = array(columns)
 
-        def __init__(self, *columns):
-            self._columns = None
+    def getColumns(self, clazz, type):
+        return self._columns
 
-            self._columns = array(columns)
 
-        def getColumns(self, clazz, type):
-            return self.getAllColumns(clazz, type).stream().filter(lambda column: (not self._columns.contains(column)))
+class Exclude(Columns):
+
+    def __init__(self, *columns):
+        self._columns = None
+
+        self._columns = array(columns)
+
+    def getColumns(self, clazz, type):
+        return self.getAllColumns(clazz, type).stream().filter(lambda column: (not self._columns.contains(column)))
