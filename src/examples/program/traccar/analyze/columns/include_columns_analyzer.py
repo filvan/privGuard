@@ -4,6 +4,7 @@ def run(data_folder, **kwargs):
     columns = kwargs.get('extra_args').get('columns')
     conditions = kwargs.get('extra_args').get('conditions')
     sort_cond = kwargs.get('extra_args').get('sort_cond')
+    traccar_data = []
     if str(clazz) == 'Device':
         traccar_data = pd.read_csv(data_folder + "devices/data.csv")
     elif str(clazz) == 'User':

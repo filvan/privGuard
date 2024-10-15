@@ -12,13 +12,12 @@ from src.examples.program.traccar.database.statisticManager import StatisticsMan
 from src.examples.program.traccar.notification.propertiesProvider import PropertiesProvider
 from .mailManager import MailManager
 
-class SmtpMailManager(MailManager):
 
+class SmtpMailManager(MailManager):
     _CONTENT_TYPE = "text/html; charset=utf-8"
 
-
     def __init__(self, config, statisticsManager):
-        #instance fields found by Java to Python Converter:
+        # instance fields found by Java to Python Converter:
         self._config = None
         self._statisticsManager = None
 
@@ -63,15 +62,15 @@ class SmtpMailManager(MailManager):
     def getEmailEnabled(self):
         return self._config.hasKey(Keys.MAIL_SMTP_HOST)
 
-#JAVA TO PYTHON CONVERTER WARNING: Method 'throws' clauses are not available in Python:
-#ORIGINAL LINE: @Override public void sendMessage(User user, boolean system, String subject, String body) throws MessagingException
-#JAVA TO PYTHON CONVERTER TASK: Python does not allow method overloads:
+    # JAVA TO PYTHON CONVERTER WARNING: Method 'throws' clauses are not available in Python:
+    # ORIGINAL LINE: @Override public void sendMessage(User user, boolean system, String subject, String body) throws MessagingException
+    # JAVA TO PYTHON CONVERTER TASK: Python does not allow method overloads:
     def sendMessage(self, user, system, subject, body):
         self.sendMessage(user, system, subject, body, None)
 
-#JAVA TO PYTHON CONVERTER WARNING: Method 'throws' clauses are not available in Python:
-#ORIGINAL LINE: @Override public void sendMessage(User user, boolean system, String subject, String body, MimeBodyPart attachment) throws MessagingException
-#JAVA TO PYTHON CONVERTER TASK: Python does not allow method overloads:
+    # JAVA TO PYTHON CONVERTER WARNING: Method 'throws' clauses are not available in Python:
+    # ORIGINAL LINE: @Override public void sendMessage(User user, boolean system, String subject, String body, MimeBodyPart attachment) throws MessagingException
+    # JAVA TO PYTHON CONVERTER TASK: Python does not allow method overloads:
     def sendMessage(self, user, system, subject, body, attachment):
 
         properties = None
@@ -115,5 +114,7 @@ class SmtpMailManager(MailManager):
 
         with session.getTransport() as transport:
             self._statisticsManager.registerMail()
-            transport.connect(properties.getProperty(Keys.MAIL_SMTP_HOST.getKey()), properties.getProperty(Keys.MAIL_SMTP_USERNAME.getKey()), properties.getProperty(Keys.MAIL_SMTP_PASSWORD.getKey()))
+            transport.connect(properties.getProperty(Keys.MAIL_SMTP_HOST.getKey()),
+                              properties.getProperty(Keys.MAIL_SMTP_USERNAME.getKey()),
+                              properties.getProperty(Keys.MAIL_SMTP_PASSWORD.getKey()))
             transport.sendMessage(message, message.getAllRecipients())

@@ -1,5 +1,4 @@
 def run(data_folder, **kwargs):
-
     pd = kwargs.get('pandas')
     clazz = kwargs.get('extra_args').get('clazz')
 
@@ -13,6 +12,5 @@ def run(data_folder, **kwargs):
         return "No valid input clazz"
 
     return traccar_data
-        #.drop(
-        #['GuardianConsent','ConsentProcessingIdentifiable','RequestRectification','RequestDeletion','RequestDisclosure','RequestProcessing','RequestDirectMarketing','ConsentTransfer'], axis=1)
-
+    # .drop(
+    # ['GuardianConsent','ConsentProcessingIdentifiable','RequestRectification','RequestDeletion','RequestDisclosure','RequestProcessing','RequestDirectMarketing','ConsentTransfer'], axis=1)

@@ -1,5 +1,6 @@
 from src.examples.program.traccar.model.user import User
 
+
 class MailManager:
 
     def getEmailEnabled(self):
