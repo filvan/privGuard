@@ -60,7 +60,7 @@ ALLOW SCHEMA DataSubjectID, Username, FirstName, LastName, Longitude, Latitude, 
 	        AND FILTER Age < 13)
 	    OR ((FILTER ConsentProcessing == 'Y' OR FILTER GuardianConsentProcessing == 'Y')
 	        AND (FILTER Age < 16 AND FILTER Age >= 13)))
-	AND ARTICLE 8(1)
+	AND ARTICLE 8(1), 8(2)
 	AND REFERENCES 8(1) -> 6(1)(a)
 
 

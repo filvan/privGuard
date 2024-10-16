@@ -13,5 +13,5 @@ def run(data_folder, **kwargs):
     else:
         return "Wrong input clazz"
 
-    return traccar_data.drop([columns], axis=1)
+    return traccar_data.drop(columns, axis=1)
     # drop(['ConsentUse', 'ConsentShare', 'ConsentSell', 'ConsentRetetention', 'ConsentCollection', 'ConsentRetention','GuardianConsent', 'RequestDeletion', 'RequestDisclosure', 'RequestInaccurate'], axis=1)
