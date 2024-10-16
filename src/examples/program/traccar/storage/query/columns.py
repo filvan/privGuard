@@ -28,7 +28,6 @@ class Include(Columns):
 
     def __init__(self, *columns):
         self._columns = None
-
         self._columns = array(columns)
 
     def getColumns(self, clazz, type):

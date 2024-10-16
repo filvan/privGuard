@@ -110,8 +110,8 @@ program_map = {
 
     # traccar
 
-    70: "./examples/program/traccar/analyze/columns/get_all_columns_analyzer.py",
-    71: "./examples/program/traccar/analyze/columns/exclude_columns.py",
+    70: "./examples/program/traccar/analyze/columns/exclude_columns.py",
+    71: "./examples/program/traccar/analyze/columns/get_all_columns_analyzer.py",
     72: "./examples/program/traccar/analyze/columns/include_columns_analyzer.py",
     73: "./examples/program/traccar/analyze/latest_position.py",
     74: "./examples/program/traccar/analyze/manage_user_getter.py",
