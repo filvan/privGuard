@@ -1,0 +1,5 @@
+ALLOW SCHEMA DataSubjectID, Age
+    AND FILTER Gender == 'FEMALE'
+    AND FILTER Age >= 18
+    AND ARTICLE 1(2)(a)
+    AND REFERENCES 1(2)(a) -> 5 -> 7(4)

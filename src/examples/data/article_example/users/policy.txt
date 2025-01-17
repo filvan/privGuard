@@ -1,0 +1,35 @@
+ALLOW SCHEMA DataSubjectID, FirstName, LastName, Age, Gender
+	AND ROLE Controller
+	AND FILTER ConsentProcessing == 'Y'
+	AND ARTICLE 6(1)(a)
+
+ALLOW SCHEMA DataSubjectID, FirstName, LastName, Age, Gender
+	AND ROLE Controller
+	AND ((FILTER GuardianConsentProcessing == 'Y'
+	        AND FILTER Age < 13)
+	    OR ((FILTER ConsentProcessing == 'Y' OR FILTER GuardianConsentProcessing == 'Y')
+	        AND (FILTER Age < 16 AND FILTER Age >= 13)))
+	AND ARTICLE 8(1), 8(2)
+	AND REFERENCES 8(1) -> 6(1)(a)
+
+ALLOW SCHEMA DataSubjectID, FirstName, LastName, Age, Gender
+	AND ROLE Controller
+	AND (FILTER NoLongerNecessary == 'Y'
+		AND FILTER NecessaryForRightOfFreedomOfExpression == 'N'
+		AND FILTER NecessaryForPublicInterestOrLegalObligation == 'N'
+		AND FILTER NecessaryForLegalClaim == 'N')
+	AND FILTER DataSubjectID == 'n_data_subject'
+	AND PURPOSE Erasure
+	AND ARTICLE 17(1)(a), 17(3)
+	AND REFERENCES 17(3)(c) -> 9(2)(h), 17(3)(c) -> 9(2)(i), 17(3)(c) -> 9(3), 17(3)(d) -> 89(1)
+
+ALLOW SCHEMA DataSubjectID, FirstName, LastName, Age, Gender
+	AND ROLE Controller
+	AND (FILTER ConsentProcessing == 'N'
+		AND FILTER NecessaryForRightOfFreedomOfExpression == 'N'
+		AND FILTER NecessaryForPublicInterestOrLegalObligation == 'N'
+		AND FILTER NecessaryForLegalClaim == 'N')
+	AND FILTER DataSubjectID == 'n_data_subject'
+	AND PURPOSE Erasure
+	AND ARTICLE 17(1)(b), 17(3)
+	AND REFERENCES 17(1)(b) -> 6(1)(a), 17(1)(b) -> 9(2)(a), 17(3)(c) -> 9(2)(h), 17(3)(c) -> 9(2)(i), 17(3)(c) -> 9(3), 17(3)(d) -> 89(1)

@@ -1,0 +1,2 @@
+DataSubjectID,FirstName,LastName,Age,Gender,ConsentProcessing,GuardianConsentProcessing,ConsentDirectMarketing,RequireRectification,NoLongerNecessary,NecessaryForRightOfFreedomOfExpression,NecessaryForPublicInterestOrLegalObligation,NecessaryForLegalClaim
+10

@@ -1,0 +1,11 @@
+﻿DataSubjectID,FirstName,LastName,Age,Gender,ConsentProcessing,GuardianConsentProcessing,ConsentDirectMarketing,RequireRectification,NoLongerNecessary,NecessaryForRightOfFreedomOfExpression,NecessaryForPublicInterestOrLegalObligation,NecessaryForLegalClaim
+1,JOHN,SMITH,11,MALE,N,Y,N,N,N,N,N,N
+2,SUE,MILLER,25,FEMALE,Y,N,Y,N,N,N,N,N
+3,LEWIS,WHITE,44,MALE,N,N,N,Y,N,N,N,N
+4,ELIZABETH,ROGERS,18,FEMALE,Y,N,Y,N,N,N,N,N
+5,GEORGE,STONES,17,MALE,Y,N,Y,N,N,N,N,N
+6,VICTORIA,STACY,80,FEMALE,N,N,N,N,N,N,N,N
+7,HARRY,BLACK,33,MALE,Y,N,Y,N,N,N,N,N
+8,ALICE,TERRY,8,FEMALE,N,N,N,N,N,N,N,N
+9,SEAN,HARRISON,14,MALE,N,Y,N,Y,N,N,N,N
+10,CATHY,WOLF,3,FEMALE,N,N,N,Y,Y,N,N,N
