@@ -123,9 +123,13 @@ program_map = {
 
     # article example
     78: "./examples/program/78_article_example.py",
+    79: "./examples/program/79_article_example_not_stub.py",
 
     # full gdpr toy example
-    79: "./examples/program/79_full_gdpr_toy_example.py",
+    80: "./examples/program/80_full_gdpr_toy_example.py",
+
+    # chatgpt_telegram_bot
+    81: "./examples/program/chatgpt_telegram_bot/bot/config.py",
 }
 
 data_map = {
@@ -206,9 +210,13 @@ data_map = {
 
     # article example
     78: "./examples/data/article_example/",
+    79: "./examples/data/article_example/",
 
     # full gdpr toy example
-    79: "./examples/data/gdpr/",
+    80: "./examples/data/gdpr/",
+
+    # chatgpt_telegram_bot
+    81: "./examples/data/chatgpt_telegram_bot/",
 }
 
 lib_map = {
@@ -271,8 +279,11 @@ lib_map = {
     77: {'pandas': stub_pandas},
 
     78: {'pandas': stub_pandas},
-
     79: {'pandas': stub_pandas},
+
+    80: {'pandas': stub_pandas},
+
+    81: {'pandas': stub_pandas},
 
 }
 
@@ -327,7 +338,7 @@ def parse():
     parser.add_argument('--deviceid', help='Identifier device to find', type=str, default='n_device')
     parser.add_argument('--new_val', help='New value for setter', type=str, default='')
     args = parser.parse_args()
-    user = {'ConsumerID': args.user_id,
+    user = {'DataSubjectID': args.user_id,
             'ConsentUse': args.consent_use,
             'ConsentShare': args.consent_share,
             'ConsentSell': args.consent_sell,
