@@ -38,7 +38,7 @@ int8 = np.int8
 int64 = np.int64
 nan = np.nan
 ptp = np.ptp
-float = np.float
+# float = np.float
 newaxis = np.newaxis
 
 class ndarray(Blackbox):

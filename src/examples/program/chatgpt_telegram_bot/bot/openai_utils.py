@@ -1,6 +1,6 @@
 import base64
 from io import BytesIO
-import config
+from src.examples.program.chatgpt_telegram_bot.bot import config
 import logging
 
 import tiktoken

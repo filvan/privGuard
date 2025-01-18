@@ -129,7 +129,10 @@ program_map = {
     80: "./examples/program/80_full_gdpr_toy_example.py",
 
     # chatgpt_telegram_bot
-    81: "./examples/program/chatgpt_telegram_bot/bot/config.py",
+    81: "./examples/program/chatgpt_telegram_bot/bot/analyze/add_new_user.py",
+    82: "./examples/program/chatgpt_telegram_bot/bot/analyze/check_if_user_exists.py",
+    83: "./examples/program/chatgpt_telegram_bot/bot/analyze/get_dialog_messages.py",
+    84: "./examples/program/chatgpt_telegram_bot/bot/analyze/start_new_dialog.py",
 }
 
 data_map = {
@@ -217,6 +220,9 @@ data_map = {
 
     # chatgpt_telegram_bot
     81: "./examples/data/chatgpt_telegram_bot/",
+    82: "./examples/data/chatgpt_telegram_bot/",
+    83: "./examples/data/chatgpt_telegram_bot/",
+    84: "./examples/data/chatgpt_telegram_bot/",
 }
 
 lib_map = {
@@ -284,6 +290,9 @@ lib_map = {
     80: {'pandas': stub_pandas},
 
     81: {'pandas': stub_pandas},
+    82: {'pandas': stub_pandas},
+    83: {'pandas': stub_pandas},
+    84: {'pandas': stub_pandas},
 
 }
 
@@ -337,6 +346,14 @@ def parse():
     parser.add_argument('--columns', nargs='*', type=str, default=[])
     parser.add_argument('--deviceid', help='Identifier device to find', type=str, default='n_device')
     parser.add_argument('--new_val', help='New value for setter', type=str, default='')
+
+    parser.add_argument('--raise_exception', help='Raise exception', type=bool, default=False)
+    parser.add_argument('--chat_id', help='Id of the chat', type=int, default=0)
+    parser.add_argument('--dialog_id', help='Id of the dialog', type=str, default="")
+    parser.add_argument('--chat_mode', help='Mode of the chat', type=str, default="")
+    parser.add_argument('--model', help='AI Model', type=str, default="")
+    parser.add_argument('--messages', help='List of exchanged messages', type=str, default="")
+
     args = parser.parse_args()
     user = {'DataSubjectID': args.user_id,
             'ConsentUse': args.consent_use,
@@ -384,6 +401,12 @@ def parse():
         'columns': args.columns,
         'deviceid': args.deviceid,
         'new_val': args.new_val,
+        'raise_exception': args.raise_exception,
+        'chat_id': args.chat_id,
+        'dialog_id': args.dialog_id,
+        'chat_mode': args.chat_mode,
+        'model': args.model,
+        'messages': args.messages,
     }
     lib_map[args.example_id].__setitem__('locales', locales[args.locales])
     return program_map[args.example_id], data_map[args.example_id], lib_map[args.example_id], extra_args

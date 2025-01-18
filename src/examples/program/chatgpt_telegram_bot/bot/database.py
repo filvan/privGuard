@@ -4,7 +4,7 @@ import pymongo
 import uuid
 from datetime import datetime
 
-import config
+from src.examples.program.chatgpt_telegram_bot.bot import config
 
 
 class Database:
