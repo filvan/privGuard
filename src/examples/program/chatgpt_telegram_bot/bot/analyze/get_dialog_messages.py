@@ -2,7 +2,7 @@ def run(data_folder, **kwargs):
     pd = kwargs.get('pandas')
     DataSubjectID = kwargs.get('extra_args').get('user_id')
     raise_exception = kwargs.get('extra_args').get('raise_exception')
-    Dialog_id = kwargs.get('extra_args').get('dialog_id')
+    DialogID = kwargs.get('extra_args').get('dialog_id')
 
     users = pd.read_csv(data_folder + "users/data.csv")
     specific_user = users[users.DataSubjectID == DataSubjectID]
@@ -11,6 +11,6 @@ def run(data_folder, **kwargs):
         raise ValueError(f"User {DataSubjectID} does not exist")
 
     dialogs = pd.read_csv(data_folder + "dialogs/data.csv")
-    specific_dialog = dialogs[dialogs.Dialog_id == Dialog_id]
+    specific_dialog = dialogs[dialogs.DialogID == DialogID]
 
     return specific_dialog
